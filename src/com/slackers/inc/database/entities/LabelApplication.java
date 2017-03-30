@@ -6,6 +6,8 @@
 package com.slackers.inc.database.entities;
 
 import com.slackers.inc.database.IEntity;
+
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,11 +98,13 @@ public class LabelApplication implements IEntity{
     }
 
     @Override
-    public Object getPrimaryKeyValue() {
+    public Serializable getPrimaryKeyValue() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    public void setPrimaryKeyValue(Serializable value) {}
+
     public void setPrimaryKeyValue(Object value) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
