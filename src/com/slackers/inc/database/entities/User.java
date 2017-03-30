@@ -6,6 +6,7 @@
 package com.slackers.inc.database.entities;
 
 import com.slackers.inc.database.IEntity;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -99,4 +100,23 @@ public abstract class User implements IEntity{
         temp.put("email", String.class);
         return temp;
     }
+
+    @Override
+    public String getPrimaryKeyName() {
+        return "username";
+    }
+
+    @Override
+    public Serializable getPrimaryKeyValue() {
+        return this.username;
+    }
+
+    @Override
+    public void setPrimaryKeyValue(Serializable value) {
+        this.username = (String) value;
+    }
+
+    
+    
+    
 }

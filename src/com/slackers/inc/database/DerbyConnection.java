@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ public class DerbyConnection {
     private final static String DRIVER_CLASS = "org.apache.derby.jdbc.EmbeddedDriver";
     private final static String DB_PROTOCOL_BASE = "jdbc:derby:";
     private final static String DB_RELATIVE_LOCATION = "database/DB";
-    
+    private final static String COLLECTION_DELIMITER = ":::";
     private static DerbyConnection INSTANCE;
     
     static
@@ -381,7 +382,7 @@ public class DerbyConnection {
         }
     }
     
-    private static Object objectFromString( String s ) throws IOException ,
+    public static Object objectFromString( String s ) throws IOException ,
                                                        ClassNotFoundException {
         byte [] data = Base64.getDecoder().decode( s );
         Object o;
@@ -392,7 +393,7 @@ public class DerbyConnection {
         return o;
    }
     
-    private static String objectToString(Serializable o) throws IOException {
+    public static String objectToString(Serializable o) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream( baos )) {
             oos.writeObject( o );
@@ -442,5 +443,15 @@ public class DerbyConnection {
             return true;
         }
         return false;
+    }
+    
+    public static String collectionToString(List<String> collection)
+    {
+        return String.join(COLLECTION_DELIMITER, collection);
+    }
+    
+    public static List<String> collectionFromString(String serialized)
+    {
+        return Arrays.asList(serialized.split(COLLECTION_DELIMITER));
     }
 }

@@ -5,9 +5,17 @@
  */
 package com.slackers.inc.database.entities;
 
+import com.slackers.inc.database.DerbyConnection;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -17,7 +25,7 @@ public class UsEmployee extends User{
 
     private static final String TABLE = "EMPLOYEES";
 
-    private List<LabelApplication> applications;
+    private Map<Long, LabelApplication> applications;
     private LabelApplication templateApplication;
     
     public UsEmployee(String username, String password, String email) {
@@ -37,20 +45,20 @@ public class UsEmployee extends User{
     
     private void init()
     {
-        applications = new LinkedList<>();
+        applications = new HashMap<>();
         templateApplication = new LabelApplication();
     }
 
-    public List<LabelApplication> getApplications() {
+    public Map<Long, LabelApplication> getApplications() {
         return applications;
     }
 
-    public boolean removeApplications(LabelApplication application) {
-        return this.applications.remove(application);
+    public void removeApplications(LabelApplication application) {
+        this.applications.remove(application.getApplicationId());
     }
     
-    public boolean addApplications(LabelApplication application) {
-        return this.applications.add(application);
+    public void addApplications(LabelApplication application) {
+        this.applications.put(application.getApplicationId(), application);
     }
 
     public LabelApplication getTemplateApplication() {
@@ -64,7 +72,7 @@ public class UsEmployee extends User{
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String, Class> pairs = super.getEntityNameTypePairs();
-        //pairs.put("applications", List<LabelApplication>); // need to modify to work
+        pairs.put("applications", String.class);
         pairs.put("templateApplication", LabelApplication.class);
         return pairs;
     }
@@ -73,7 +81,20 @@ public class UsEmployee extends User{
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
         if (values.containsKey("applications"))
-            this.applications = (List<LabelApplication>)values.get("applications");
+        {
+            try {
+                List<String> appStrings = DerbyConnection.collectionFromString((String)values.get("applications"));
+                for (String s : appStrings)
+                {
+                    LabelApplication temp = new LabelApplication();
+                    temp.setPrimaryKeyValue(DerbyConnection.objectFromString(s));
+                    DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
+                    this.applications.put(temp.getApplicationId(), temp);
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(UsEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         if (values.containsKey("templateApplication"))
             this.templateApplication = (LabelApplication)values.get("templateApplication");
     }
@@ -81,7 +102,16 @@ public class UsEmployee extends User{
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String, Object> values = super.getUpdatableEntityValues();
-        values.put("applications", this.applications);
+        List<String> appIds = new LinkedList<>();
+        for (Entry<Long, LabelApplication> e : this.applications.entrySet())
+        {
+            try {
+                appIds.add(DerbyConnection.objectToString((Serializable) e.getValue().getPrimaryKeyValue()));
+            } catch (IOException ex) {
+                Logger.getLogger(UsEmployee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        values.put("applications", DerbyConnection.collectionToString(appIds));
         values.put("templateApplication", this.templateApplication);
         return values;
     }
@@ -109,6 +139,5 @@ public class UsEmployee extends User{
         cols.add("applications varchar(max)");
         cols.add("templateApplication varchar(8192)");
         return cols;
-    }   
-    
+    }       
 }
