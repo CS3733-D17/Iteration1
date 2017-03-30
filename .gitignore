@@ -1,0 +1,9 @@
+/.idea/
+/out/
+/nbproject/
+/build.xml
+/manifest.mf
+/build/
+/dist/
+/test/
+/controlsfx-8.40.12.jar
