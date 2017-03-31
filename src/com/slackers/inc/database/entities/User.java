@@ -16,7 +16,9 @@ import java.util.Map;
  *
  * @author John Stegeman <j.stegeman@labyrinth-tech.com>
  */
-public abstract class User implements IEntity{
+public class User implements IEntity{
+    
+    private static final String TABLE = "USERS";
     
     private String username;
     private String password;
@@ -92,11 +94,14 @@ public abstract class User implements IEntity{
 
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
-        Map<String,Class> temp = new HashMap<>();
-        temp.put("username", String.class);
-        temp.put("password", String.class);
-        temp.put("email", String.class);
-        return temp;
+        Map<String,Class> pairs = new HashMap<>();
+        pairs.put("username", String.class);
+        pairs.put("password", String.class);
+        pairs.put("email", String.class);
+        pairs.put("applications", String.class);
+        pairs.put("workingApplications", String.class);
+        pairs.put("templateApplication", Serializable.class);
+        return pairs;
     }
 
     @Override
@@ -121,7 +126,15 @@ public abstract class User implements IEntity{
         cols.add("username varchar(256) PRIMARY KEY");
         cols.add("password varchar(256)");
         cols.add("email varchar(256)");
+        cols.add("applications varchar(max)");
+        cols.add("previousApplications varchar(max)");
+        cols.add("templateApplication varchar(8192)");
         return cols;
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE;
     }
     
 }

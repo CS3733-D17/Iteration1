@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class ColaUser extends User{
 
-    private static final String TABLE = "COLA_USERS";
-
     public ColaUser(String username, String password, String email) {
         super(username, password, email);
     }
@@ -27,9 +25,4 @@ public class ColaUser extends User{
     public ColaUser(String username) {
         super(username);
     }
-    
-    @Override
-    public String getTableName() {
-        return TABLE;
-    }    
 }

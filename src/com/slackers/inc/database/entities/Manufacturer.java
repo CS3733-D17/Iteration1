@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
  */
 public class Manufacturer extends User{
 
-    private static final String TABLE = "MANUFACTURERS";
-
     private List<LabelApplication> applications;
     private LabelApplication templateApplication;
     
@@ -71,14 +69,6 @@ public class Manufacturer extends User{
     }
 
     @Override
-    public Map<String, Class> getEntityNameTypePairs() {
-        Map<String, Class> pairs = super.getEntityNameTypePairs();
-        pairs.put("applications", String.class);
-        pairs.put("templateApplication", Serializable.class);
-        return pairs;
-    }
-
-    @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
         if (values.containsKey("applications"))
@@ -112,18 +102,5 @@ public class Manufacturer extends User{
         values.put("templateApplication", this.templateApplication.getPrimaryKeyValue());
         return values;
     }
-    
-    @Override
-    public String getTableName() {
-        return TABLE;
-    }
-
-    
-    @Override
-    public List<String> tableColumnCreationSettings() {
-        List<String> cols = super.tableColumnCreationSettings();
-        cols.add("applications varchar(max)");
-        cols.add("templateApplication varchar(8192)");
-        return cols;
-    }       
+         
 }

@@ -14,10 +14,8 @@ import java.util.Map;
  * @author John Stegeman <j.stegeman@labyrinth-tech.com>
  */
 public class UsEmployee extends User{
-
-    private static final String TABLE = "EMPLOYEES";
     
-    private List<LabelApplication> workingApplications;
+    private List<LabelApplication> applications;
     private List<LabelApplication> previousApplications;
 
     public UsEmployee(String username, String password, String email) {
@@ -37,24 +35,16 @@ public class UsEmployee extends User{
     
     private void init()
     {
-        this.workingApplications = new LinkedList<>();
+        this.applications = new LinkedList<>();
         this.previousApplications = new LinkedList<>();
-    }
-
-    @Override
-    public Map<String, Class> getEntityNameTypePairs() {
-        Map<String, Class> pairs = super.getEntityNameTypePairs();
-        pairs.put("workingApplications", String.class);
-        pairs.put("workingApplications", String.class);
-        return pairs;
     }
 
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (values.containsKey("workingApplications"))
+        if (values.containsKey("applications"))
         {
-            this.workingApplications.addAll(LabelApplication.applicationListFromString((String)values.get("workingApplications")));
+            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
         }
         if (values.containsKey("previousApplications"))
         {
@@ -65,7 +55,7 @@ public class UsEmployee extends User{
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String, Object> values = super.getUpdatableEntityValues();
-        values.put("workingApplications", LabelApplication.applicationListToString(this.workingApplications));
+        values.put("applications", LabelApplication.applicationListToString(this.applications));
         values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
     }
@@ -73,22 +63,8 @@ public class UsEmployee extends User{
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String, Object> values = super.getEntityValues();
-        values.put("workingApplications", LabelApplication.applicationListToString(this.workingApplications));
+        values.put("applications", LabelApplication.applicationListToString(this.applications));
         values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
-    }
-    
-    @Override
-    public String getTableName() {
-        return TABLE;
-    }
-
-    @Override
-    public List<String> tableColumnCreationSettings() {
-        List<String> cols = super.tableColumnCreationSettings();
-        cols.add("workingApplications varchar(max)");
-        cols.add("previousApplications varchar(max)");
-        return cols;
-    }
-    
+    }    
 }
