@@ -27,11 +27,11 @@
       </AnchorPane>
       <AnchorPane prefHeight="65.0" prefWidth="400.0">
          <children>
-            <ToggleButton fx:id="logInButton" layoutX="200.0" layoutY="35.0" mnemonicParsing="false" onAction="#logInToggle" prefWidth="120.0" styleClass="last" text="Log In">
+            <ToggleButton fx:id="logInToggleButton" layoutX="200.0" layoutY="35.0" mnemonicParsing="false" onAction="#logInToggle" prefWidth="120.0" styleClass="last" text="Log In">
                <toggleGroup>
                   <ToggleGroup fx:id="signType" />
                </toggleGroup></ToggleButton>
-            <ToggleButton fx:id="signUpButton" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#signUpToggle" prefWidth="120.0" selected="true" styleClass="first" text="SIgn Up" toggleGroup="$signType" />
+            <ToggleButton fx:id="signUpToggleButton" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#signUpToggle" prefWidth="120.0" selected="true" styleClass="first" text="SIgn Up" toggleGroup="$signType" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="signUpPane" prefHeight="350.0" prefWidth="400.0" visible="true">
@@ -80,7 +80,7 @@
                   <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Employee" toggleGroup="$userType" />
                </children>
             </HBox>
-             <Button layoutX="140.0" layoutY="260.0" mnemonicParsing="false" onAction="#getStartedClick" prefWidth="120.0" text="Get Started" />
+             <Button disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" fx:id="getStartedButton" onAction="#getStartedClick" prefWidth="120.0" text="Get Started" />
          </children>
       </AnchorPane>
        <AnchorPane fx:id="logInPane" prefHeight="350.0" prefWidth="400.0" visible="false">
@@ -107,7 +107,7 @@
                        <PasswordField fx:id="loginPasswordField" prefHeight="28.0" prefWidth="270.0" promptText="Password" styleClass="last" />
                    </children>
                </HBox>
-               <Button layoutX="140.0" layoutY="260.0" mnemonicParsing="false" onAction="#logInClick" prefWidth="120.0" text="Log In" />
+               <Button disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" fx:id="logInButton" onAction="#logInClick" prefWidth="120.0" text="Log In" />
            </children>
        </AnchorPane>
    </children>
