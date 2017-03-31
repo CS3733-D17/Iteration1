@@ -3,9 +3,14 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,39 +26,10 @@ public class ApplicationsController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the Application Controller");
 
-        /*for (Node node : accordionID.getPanes()) {
+        for (Node node : accordionID.getPanes()) {
             System.out.println("Id: " + node.getClass());
-            if (node instanceof TitledPane) {
-                TitledPane paneNode = (TitledPane) node;
-                System.out.println("This is printing out");
-
-                ImageView imageView = new ImageView(new Image(getClass().getResource("../Images/bottle.png").toExternalForm()));
-
-                paneNode.setGraphic(imageView);
-                paneNode.setContentDisplay(ContentDisplay.RIGHT);
-
-                paneNode.applyCss();
-                paneNode.layout();
-
-                System.out.println(paneNode.getStyleClass());
-
-                // title region
-               /* Node titleRegion=paneNode.lookup(".title");
-                // padding
-                Insets padding=((StackPane)titleRegion).getPadding();
-                // image width
-                double graphicWidth=imageView.getLayoutBounds().getWidth();
-                // arrow
-                double arrowWidth=titleRegion.lookup(".arrow-button").getLayoutBounds().getWidth();
-                // text
-                double labelWidth=titleRegion.lookup(".text").getLayoutBounds().getWidth();
-
-                double nodesWidth = graphicWidth+padding.getLeft()+padding.getRight()+arrowWidth+labelWidth;
-
-                paneNode.graphicTextGapProperty().bind(paneNode.widthProperty().subtract(nodesWidth));
-
-            }
-        }*/
+            
+        }
 
     }
 

@@ -36,7 +36,6 @@ public class LoginController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         // TODO Add More Fields That Are Necessary for Users
-        // TODO Add Extra Radio Button for US Employee
 
         try {
             userValidate = new AccountController();
@@ -63,7 +62,8 @@ public class LoginController implements Initializable{
 
     @FXML
     void getStartedClick(ActionEvent e) throws IOException{
-        System.out.println(firstNameField.getText() + lastNameField.getText() + emailField.getText() + passwordField.getText());
+        System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
+                + "\nEmail" + emailField.getText() + "\nPassword" + passwordField.getText());
 
         // TODO Form Validation (will probably have the button disable itself)
         // TODO User Creation in Database
