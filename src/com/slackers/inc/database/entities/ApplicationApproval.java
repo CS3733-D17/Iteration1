@@ -179,6 +179,13 @@ public class ApplicationApproval implements IEntity{
     public void setPrimaryKeyValue(Serializable value) {
         this.approvalId = (long) value;
     }
+
+    @Override
+    public ApplicationApproval deepCopy() {
+        ApplicationApproval app = new ApplicationApproval(this.agent, this.experationDate, this.application);
+        app.setEntityValues(this.getEntityValues());
+        return app;
+    }
     
     
     

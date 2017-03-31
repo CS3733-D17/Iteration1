@@ -29,17 +29,7 @@ public class LabelApplication implements IEntity{
 
     private static final String TABLE = "LABEL_APPLICATIONS";
 
-    public static enum BeverageSource
-    {
-        DOMESTIC,
-        IMPORTED;
-    }    
-    public static enum BeverageType
-    {
-        WINE,
-        BEER,
-        DISTILLED;
-    }
+
     public static enum ApplicationStatus
     {
         SUBMITTED_FOR_REVIEW,
@@ -53,11 +43,7 @@ public class LabelApplication implements IEntity{
     }
     
     private long applicationId;
-    private String representativeIdNumber;
-    private String plantNumber;
-    private BeverageSource productSource;
-    private BeverageType productType;
-    private String brandName;
+    
     private Address applicantAddress;
     private Address mailingAddress;
     private String phoneNumber;
@@ -80,16 +66,11 @@ public class LabelApplication implements IEntity{
         this.applicationApproval = null;
         this.applicationDate = new java.sql.Date(new java.util.Date().getTime());
         this.applicationId = applicationId;
-        this.brandName = null;
         this.comments = new LinkedList<>();
         this.emailAddress = null;
         this.label = null;
         this.mailingAddress = null;
-        this.phoneNumber = null;
-        this.plantNumber = null;
-        this.productSource = null;
-        this.productType = null;
-        this.representativeIdNumber = null;
+        this.phoneNumber = null;        
         this.reviewer = null;
         this.status = null;
         this.submitter = null;
@@ -108,12 +89,7 @@ public class LabelApplication implements IEntity{
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String,Object> values = new HashMap<>();
-        values.put("applicationId", this.applicationId);
-        values.put("representativeIdNumber", this.representativeIdNumber);
-        values.put("plantNumber", this.plantNumber);        
-        values.put("productSource", this.productSource);
-        values.put("productType", this.productType);
-        values.put("brandName", this.brandName);        
+        values.put("applicationId", this.applicationId);                
         values.put("applicantAddress", this.applicantAddress);
         values.put("mailingAddress", this.mailingAddress);
         values.put("phoneNumber", this.phoneNumber);        
@@ -123,7 +99,7 @@ public class LabelApplication implements IEntity{
         values.put("applicant", this.applicant.getPrimaryKeyValue());
         values.put("reviewer", this.reviewer.getPrimaryKeyValue());
         values.put("submitter", this.submitter.getPrimaryKeyValue());        
-        values.put("label", this.label);
+        values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
         values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
@@ -132,12 +108,7 @@ public class LabelApplication implements IEntity{
 
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
-        Map<String,Object> values = new HashMap<>();
-        values.put("representativeIdNumber", this.representativeIdNumber);
-        values.put("plantNumber", this.plantNumber);        
-        values.put("productSource", this.productSource);
-        values.put("productType", this.productType);
-        values.put("brandName", this.brandName);        
+        Map<String,Object> values = new HashMap<>();        
         values.put("applicantAddress", this.applicantAddress);
         values.put("mailingAddress", this.mailingAddress);
         values.put("phoneNumber", this.phoneNumber);        
@@ -147,7 +118,7 @@ public class LabelApplication implements IEntity{
         values.put("applicant", this.applicant.getPrimaryKeyValue());
         values.put("reviewer", this.reviewer.getPrimaryKeyValue());
         values.put("submitter", this.submitter.getPrimaryKeyValue());        
-        values.put("label", this.label);
+        values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
         values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
@@ -160,26 +131,7 @@ public class LabelApplication implements IEntity{
         {
             this.applicationId = (long) values.get("applicationId");
         }
-        if (values.containsKey("representativeIdNumber"))
-        {
-            this.representativeIdNumber = (String) values.get("representativeIdNumber");
-        }
-        if (values.containsKey("plantNumber"))
-        {
-            this.plantNumber = (String) values.get("plantNumber");
-        }
-        if (values.containsKey("productSource"))
-        {
-            this.productSource = (BeverageSource) values.get("productSource");
-        }
-        if (values.containsKey("productType"))
-        {
-            this.productType = (BeverageType) values.get("productType");
-        }
-        if (values.containsKey("brandName"))
-        {
-            this.brandName = (String) values.get("brandName");
-        }
+        
         if (values.containsKey("applicantAddress"))
         {
             this.applicantAddress = (Address) values.get("applicantAddress");
@@ -229,7 +181,12 @@ public class LabelApplication implements IEntity{
         }
         if (values.containsKey("label"))
         {
-            this.label = (Label) values.get("label");
+            this.label.setPrimaryKeyValue((Serializable)values.get("label"));
+            try {
+                DerbyConnection.getInstance().getEntity(this.label, this.label.getPrimaryKeyName());
+            } catch (SQLException ex) {
+                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (values.containsKey("comments"))
         {
@@ -254,11 +211,7 @@ public class LabelApplication implements IEntity{
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String,Class> pairs = new HashMap<>();
         pairs.put("applicationId", Long.class);
-        pairs.put("representativeIdNumber", String.class);
-        pairs.put("plantNumber", String.class);        
-        pairs.put("productSource", Serializable.class);
-        pairs.put("productType", Serializable.class);
-        pairs.put("brandName", String.class);        
+        
         pairs.put("applicantAddress", Serializable.class);
         pairs.put("mailingAddress", Serializable.class);
         pairs.put("phoneNumber", String.class);        
@@ -279,10 +232,6 @@ public class LabelApplication implements IEntity{
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
         cols.add("applicationId bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
-        cols.add("representativeIdNumber varchar(128)");
-        cols.add("plantNumber varchar(128)");
-        cols.add("productSource varchar(512)");
-        cols.add("productType varchar(512)");
         cols.add("applicantAddress varchar(2048)");
         cols.add("mailingAddress varchar(2048)");
         cols.add("phoneNumber varchar(64)");
@@ -321,46 +270,6 @@ public class LabelApplication implements IEntity{
 
     public void setApplicationId(long applicationId) {
         this.applicationId = applicationId;
-    }
-
-    public String getRepresentativeIdNumber() {
-        return representativeIdNumber;
-    }
-
-    public void setRepresentativeIdNumber(String representativeIdNumber) {
-        this.representativeIdNumber = representativeIdNumber;
-    }
-
-    public String getPlantNumber() {
-        return plantNumber;
-    }
-
-    public void setPlantNumber(String plantNumber) {
-        this.plantNumber = plantNumber;
-    }
-
-    public BeverageSource getProductSource() {
-        return productSource;
-    }
-
-    public void setProductSource(BeverageSource productSource) {
-        this.productSource = productSource;
-    }
-
-    public BeverageType getProductType() {
-        return productType;
-    }
-
-    public void setProductType(BeverageType productType) {
-        this.productType = productType;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
     }
 
     public Address getApplicantAddress() {
@@ -524,5 +433,13 @@ public class LabelApplication implements IEntity{
             }            
         }
         return allowedRevisions;
+    }
+    
+    
+    @Override
+    public LabelApplication deepCopy() {
+        LabelApplication application = new LabelApplication();
+        application.setEntityValues(this.getEntityValues());
+        return application;
     }
 }
