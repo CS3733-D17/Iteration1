@@ -319,6 +319,59 @@ public class DerbyConnection {
             entity.setEntityValues(valMap);
         }
     }
+    
+    public List<IEntity> getAllEntites(IEntity entity, String... searchColumns) throws SQLException
+    {
+        if (!checkForTable(entity)) // create table if non existant
+            return null;
+        
+        if (searchColumns.length<=0)
+            return null; // avoid table deletion
+        Set<String> cols = new HashSet<>(Arrays.asList(searchColumns));
+        StringBuilder conds = new StringBuilder();
+        List<Object> vals = new LinkedList<>();
+        boolean first = true;
+        for (Entry<String, Object> e : entity.getEntityValues().entrySet())
+        {
+            if (cols.contains(e.getKey()))
+            {
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    conds.append(" AND ");
+                }
+                conds.append(e.getKey());
+                conds.append("=(?)");
+                vals.add(e.getValue());
+            }
+        }
+        String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
+        CallableStatement call = con.prepareCall(stmt);
+        int i = 1;
+        for (Object o : vals)
+        {
+            DerbyConnection.setStatementValue(call, i, o);
+            i++;
+        }
+        ResultSet results = call.executeQuery();
+        
+        int c=0;
+        Map<String,Object> valMap = new HashMap<>();
+        while (results.next())
+        {
+            valMap.clear();
+            c++;
+            for (String s : entity.getEntityNameTypePairs().keySet())
+            {
+                DerbyConnection.getStatementValue(results, s, entity, valMap);
+            }
+            entity.setEntityValues(valMap);
+        }
+        return null;
+    }
 
     public boolean writeEntity(IEntity entity, String... searchColumns) throws SQLException
     {

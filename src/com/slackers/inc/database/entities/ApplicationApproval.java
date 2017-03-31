@@ -38,6 +38,10 @@ public class ApplicationApproval implements IEntity{
         this.application = application;
         this.approvalId = 0;
     }
+    
+    public ApplicationApproval(UsEmployee agent, Date experationDate, LabelApplication application) {
+        this(agent, new Date(new java.util.Date().getTime()), experationDate, application);
+    }
 
     public long getApprovalId() {
         return approvalId;
