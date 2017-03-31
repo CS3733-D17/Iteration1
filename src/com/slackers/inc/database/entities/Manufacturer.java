@@ -46,6 +46,7 @@ public class Manufacturer extends User{
     {
         applications = new LinkedList<>();
         templateApplication = new LabelApplication();
+        super.setUserType(UserType.MANUFACTURER);
     }
 
     public List<LabelApplication> getApplications() {

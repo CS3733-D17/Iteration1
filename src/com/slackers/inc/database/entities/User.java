@@ -20,14 +20,24 @@ public class User implements IEntity{
     
     private static final String TABLE = "USERS";
     
+    public static enum UserType
+    {
+        UNKNOWN,
+        MANUFACTURER,
+        US_EMPLOYEE,
+        COLA_USER;
+    }
+    
     private String username;
     private String password;
     private String email;
+    private UserType userType;
 
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.userType = UserType.UNKNOWN;
     }
     
     public User(String username, String password) {
@@ -38,6 +48,14 @@ public class User implements IEntity{
         this(username, "", "");
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -70,6 +88,7 @@ public class User implements IEntity{
         temp.put("username", this.username);
         temp.put("password", this.password);
         temp.put("email", this.email);
+        temp.put("userType", this.userType);
         return temp;
     }
 
@@ -79,6 +98,7 @@ public class User implements IEntity{
         temp.put("username", this.username);
         temp.put("password", this.password);
         temp.put("email", this.email);
+        temp.put("userType", this.userType);
         return temp;
     }
 
@@ -90,6 +110,8 @@ public class User implements IEntity{
             this.password = (String)values.get("password");
         if (values.containsKey("email"))
             this.email = (String)values.get("email");
+        if (values.containsKey("userType"))
+            this.userType = (UserType)values.get("userType");
     }
 
     @Override
@@ -101,6 +123,7 @@ public class User implements IEntity{
         pairs.put("applications", String.class);
         pairs.put("workingApplications", String.class);
         pairs.put("templateApplication", Serializable.class);
+        pairs.put("userType", Serializable.class);
         return pairs;
     }
 
@@ -129,6 +152,7 @@ public class User implements IEntity{
         cols.add("applications varchar(max)");
         cols.add("previousApplications varchar(max)");
         cols.add("templateApplication varchar(8192)");
+        cols.add("userType varchar(1024)");
         return cols;
     }
 

@@ -19,8 +19,8 @@ public class UsEmployee extends User{
     private List<LabelApplication> previousApplications;
 
     public UsEmployee(String username, String password, String email) {
-        super(username, password, email);init();
-        
+        super(username, password, email);
+        init();        
     }
 
     public UsEmployee(String username, String password) {
@@ -37,6 +37,7 @@ public class UsEmployee extends User{
     {
         this.applications = new LinkedList<>();
         this.previousApplications = new LinkedList<>();
+        super.setUserType(UserType.US_EMPLOYEE);
     }
 
     @Override

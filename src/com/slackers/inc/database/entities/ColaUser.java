@@ -16,13 +16,21 @@ public class ColaUser extends User{
 
     public ColaUser(String username, String password, String email) {
         super(username, password, email);
+        init();
     }
 
     public ColaUser(String username, String password) {
         super(username, password);
+        init();
     }
 
     public ColaUser(String username) {
         super(username);
+        init();
+    }
+    
+    private void init()
+    {
+        super.setUserType(User.UserType.COLA_USER);
     }
 }

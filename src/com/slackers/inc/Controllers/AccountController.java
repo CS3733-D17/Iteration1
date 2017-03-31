@@ -27,7 +27,7 @@ public class AccountController {
 
         // TODO Issue: Need a Regular User (Not an Employee or Manufacturer, but a Customer) but User class is Abstract
 
-        User user = new UsEmployee("", email, password);
+        User user = new User("", email, password);
         try {
             db.getEntity(user, "EmailAddress");
         } catch (SQLException e) {
