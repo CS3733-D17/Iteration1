@@ -411,6 +411,10 @@ public class DerbyConnection {
         {
             stmt.setLong(index, (Long)obj);
         }
+        else if (obj instanceof Double)
+        {
+            stmt.setDouble(index, (Double)obj);
+        }
         else if (obj instanceof Serializable)
         {
             try {
@@ -449,6 +453,10 @@ public class DerbyConnection {
         else if (target.isAssignableFrom(Boolean.class))
         {
             valueCollection.put(colTitle, result.getBoolean(colTitle));
+        }
+        else if (target.isAssignableFrom(Boolean.class))
+        {
+            valueCollection.put(colTitle, result.getDouble(colTitle));
         }
         else if (target.isAssignableFrom(Serializable.class))
         {

@@ -26,21 +26,18 @@ public class Manufacturer extends User{
 
     private List<LabelApplication> applications;
     private LabelApplication templateApplication;
+
+    public Manufacturer(String password, String email) {
+        super(password, email);
+        init();
+    }
+
+    public Manufacturer(String email) {
+        super(email);
+        init();
+    }
     
-    public Manufacturer(String username, String password, String email) {
-        super(username, password, email);
-        init();
-    }
-
-    public Manufacturer(String username, String password) {
-        super(username, password);
-        init();
-    }
-
-    public Manufacturer(String username) {
-        super(username);
-        init();
-    }    
+       
     
     private void init()
     {

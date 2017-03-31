@@ -24,4 +24,6 @@ public interface IEntity {
     public String getPrimaryKeyName();
     public Serializable getPrimaryKeyValue();
     public void setPrimaryKeyValue(Serializable value);
+    
+    public IEntity deepCopy();
 }

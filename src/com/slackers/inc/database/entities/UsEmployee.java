@@ -18,20 +18,15 @@ public class UsEmployee extends User{
     private List<LabelApplication> applications;
     private List<LabelApplication> previousApplications;
 
-    public UsEmployee(String username, String password, String email) {
-        super(username, password, email);
-        init();        
-    }
-
-    public UsEmployee(String username, String password) {
-        super(username, password);
+    public UsEmployee(String password, String email) {
+        super(password, email);
         init();
     }
 
-    public UsEmployee(String username) {
-        super(username);
+    public UsEmployee(String email) {
+        super(email);
         init();
-    }
+    }   
     
     private void init()
     {

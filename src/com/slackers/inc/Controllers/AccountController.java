@@ -29,14 +29,14 @@ public class AccountController {
     }
     
     public AccountController() throws SQLException {
-        this(new User(null, null, null));
+        this(new User(null, null));
     }
 
     // returns true if the credentials are valid, and false otherwise
     public boolean verifyCredentials(String email, String password) throws SQLException {
         
         this.user.setEmail(email);
-        this.user.setPassword(password);
+        this.user.setPassword(null);
         try {
             db.getEntity(user, "email");
         } catch (SQLException e) {
@@ -53,15 +53,15 @@ public class AccountController {
         {
             if (this.user.getUserType() == UserType.COLA_USER)
             {
-                return new ColaUser(this.user.getUsername(), this.user.getEmail(), this.user.getPassword());
+                return new ColaUser(this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.MANUFACTURER)
             {
-                return new Manufacturer(this.user.getUsername(), this.user.getEmail(), this.user.getPassword());
+                return new Manufacturer(this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.US_EMPLOYEE)
             {
-                return new UsEmployee(this.user.getUsername(), this.user.getEmail(), this.user.getPassword());
+                return new UsEmployee(this.user.getEmail(), this.user.getPassword());
             }
             else
             {
@@ -78,15 +78,15 @@ public class AccountController {
     {
         if (type == UserType.COLA_USER)
         {
-            this.user = new ColaUser(username, email, password);
+            this.user = new ColaUser(email, password);
         }
         else if (type == UserType.MANUFACTURER)
         {
-            this.user = new Manufacturer(username, email, password);
+            this.user = new Manufacturer(email, password);
         }
         else if (type == UserType.US_EMPLOYEE)
         {
-            this.user = new UsEmployee(username, email, password);
+            this.user = new UsEmployee(email, password);
         }
         else
         {

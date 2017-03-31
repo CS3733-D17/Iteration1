@@ -194,4 +194,11 @@ public class LabelComment implements IEntity{
         }
         return comments;
     }
+
+    @Override
+    public LabelComment deepCopy() {
+        LabelComment c = new LabelComment(this.commenter, this.comment);
+        c.setEntityValues(this.getEntityValues());
+        return c;
+    }
 }

@@ -28,24 +28,18 @@ public class User implements IEntity{
         COLA_USER;
     }
     
-    private String username;
     private String password;
     private String email;
     private UserType userType;
 
-    public User(String username, String password, String email) {
-        this.username = username;
+    public User(String password, String email) {
         this.password = password;
         this.email = email;
         this.userType = UserType.UNKNOWN;
     }
     
-    public User(String username, String password) {
-        this(username, password, "");
-    }
-    
-    public User(String username) {
-        this(username, "", "");
+    public User(String email) {
+        this(email, "");
     }
 
     public UserType getUserType() {
@@ -54,14 +48,6 @@ public class User implements IEntity{
 
     public void setUserType(UserType userType) {
         this.userType = userType;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -85,7 +71,6 @@ public class User implements IEntity{
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String,Object> temp = new HashMap<>();
-        temp.put("username", this.username);
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
@@ -95,17 +80,13 @@ public class User implements IEntity{
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> temp = new HashMap<>();
-        temp.put("username", this.username);
         temp.put("password", this.password);
-        temp.put("email", this.email);
         temp.put("userType", this.userType);
         return temp;
     }
 
     @Override
     public void setEntityValues(Map<String, Object> values) {
-        if (values.containsKey("username"))
-            this.username = (String)values.get("username");
         if (values.containsKey("password"))
             this.password = (String)values.get("password");
         if (values.containsKey("email"))
@@ -117,7 +98,6 @@ public class User implements IEntity{
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String,Class> pairs = new HashMap<>();
-        pairs.put("username", String.class);
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
@@ -129,26 +109,25 @@ public class User implements IEntity{
 
     @Override
     public String getPrimaryKeyName() {
-        return "username";
+        return "email";
     }
 
     @Override
     public Serializable getPrimaryKeyValue() {
-        return this.username;
+        return this.email;
     }
 
     @Override
     public void setPrimaryKeyValue(Serializable value) {
-        this.username = (String) value;
+        this.email = (String) value;
     }
 
     
     @Override
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
-        cols.add("username varchar(256) PRIMARY KEY");
         cols.add("password varchar(256)");
-        cols.add("email varchar(256)");
+        cols.add("email varchar(256) PRIMARY KEY");
         cols.add("applications varchar(max)");
         cols.add("previousApplications varchar(max)");
         cols.add("templateApplication varchar(8192)");
@@ -159,6 +138,13 @@ public class User implements IEntity{
     @Override
     public String getTableName() {
         return TABLE;
+    }
+    
+    @Override
+    public User deepCopy() {
+        User usr = new User("");
+        usr.setEntityValues(this.getEntityValues());
+        return usr;
     }
     
 }
