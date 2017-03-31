@@ -1,4 +1,4 @@
-package com.slackers.inc.sample;
+package com.slackers.inc.Boundary;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +14,9 @@ public class Main extends Application {
         String cssDoc = getClass().getResource("CSS/custom.css").toExternalForm();
         login.getStylesheets().add(cssDoc);
 
-        Stage stage = primaryStage;
-        stage.setTitle("Login Screen");
-        stage.setScene(new Scene(login));
-        stage.show();
+        primaryStage.setTitle("Login Screen");
+        primaryStage.setScene(new Scene(login));
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

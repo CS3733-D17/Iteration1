@@ -8,6 +8,7 @@ package com.slackers.inc.database.entities;
 import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.IEntity;
 import java.io.IOException;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -308,10 +309,12 @@ public class LabelApplication implements IEntity{
     }
 
     @Override
-    public void setPrimaryKeyValue(Serializable value) {
-        this.applicationId = (long)value;
+    public void setPrimaryKeyValue(Serializable value) {}
+
+    public void setPrimaryKeyValue(Object value) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public long getApplicationId() {
         return applicationId;
     }

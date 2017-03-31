@@ -1,4 +1,4 @@
-package com.slackers.inc.sample.Controllers;
+package com.slackers.inc.Boundary.BoundaryControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

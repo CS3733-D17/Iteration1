@@ -1,10 +1,10 @@
-package com.slackers.inc.sample;
+package com.slackers.inc.Boundary;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
 /**
- * Created by SrinuL on 3/25/17.
+ * @author Created by SrinuL on 3/25/17.
  */
 public class RadioToggleButton extends ToggleButton {
 
