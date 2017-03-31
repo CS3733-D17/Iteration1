@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -50,12 +49,14 @@ public class DerbyConnection {
     }
     
     private Connection con;
+    private Set<String> tables;
     
     private DerbyConnection() throws SQLException
     {
         Map<String,String> properties = new HashMap<>();
         properties.put("create", "true");
-        con = DriverManager.getConnection(makeConnectionString(properties));
+        this.con = DriverManager.getConnection(makeConnectionString(properties));
+        this.tables = new HashSet<>();
     }
     
     public boolean tableExists(String tableName) throws SQLException
@@ -76,9 +77,23 @@ public class DerbyConnection {
         return call.execute();
     }
     
+    private boolean checkForTable(IEntity entity) throws SQLException
+    {
+        if (this.tables.contains(entity.getTableName()))
+            return true;
+        if (this.tableExists(entity.getTableName()))
+        {
+            this.tables.add(entity.getTableName());
+            return true;
+        }
+        return this.createTable(entity.getTableName(), entity.tableColumnCreationSettings());
+    }
     
     public boolean createEntity(IEntity entity) throws SQLException
     {
+        if (!checkForTable(entity)) // create table if non existant
+            return false;
+        
         StringBuilder cols = new StringBuilder();
         StringBuilder vPlace = new StringBuilder();
         List<Object> vals = new LinkedList<>();
@@ -111,6 +126,9 @@ public class DerbyConnection {
     
     public boolean deleteEntity(IEntity entity, String... searchColumns) throws SQLException
     {
+        if (!checkForTable(entity)) // create table if non existant
+            return false;
+        
         if (searchColumns.length<=0)
             return false; // avoid table deletion
         Set<String> cols = new HashSet<>(Arrays.asList(searchColumns));
@@ -147,6 +165,9 @@ public class DerbyConnection {
     
     public boolean updateEntity(IEntity entity, String... searchColumns) throws SQLException
     {
+        if (!checkForTable(entity)) // create table if non existant
+            return false;
+        
         if (searchColumns.length<=0)
             return false; // avoid table deletion
         Set<String> cols = new HashSet<>(Arrays.asList(searchColumns));
@@ -203,6 +224,9 @@ public class DerbyConnection {
     
     public boolean entityExists(IEntity entity, String... searchColumns) throws SQLException
     {
+        if (!checkForTable(entity)) // create table if non existant
+            return false;
+        
         if (searchColumns.length<=0)
             return true; // avoid table deletion
         Set<String> cols = new HashSet<>(Arrays.asList(searchColumns));
@@ -244,6 +268,9 @@ public class DerbyConnection {
     
     public void getEntity(IEntity entity, String... searchColumns) throws SQLException
     {
+        if (!checkForTable(entity)) // create table if non existant
+            return;
+        
         if (searchColumns.length<=0)
             return; // avoid table deletion
         Set<String> cols = new HashSet<>(Arrays.asList(searchColumns));

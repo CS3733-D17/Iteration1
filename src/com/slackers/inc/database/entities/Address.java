@@ -5,11 +5,13 @@
  */
 package com.slackers.inc.database.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author John Stegeman <j.stegeman@labyrinth-tech.com>
  */
-public class Address {
+public class Address implements Serializable{
     private String line1;
     private String line2;
     private String city;

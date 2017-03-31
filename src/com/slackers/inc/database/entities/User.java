@@ -18,8 +18,6 @@ import java.util.Map;
  */
 public abstract class User implements IEntity{
     
-    protected static final String TABLE = "USERS";
-    
     private String username;
     private String password;
     private String email;
@@ -117,6 +115,13 @@ public abstract class User implements IEntity{
     }
 
     
-    
+    @Override
+    public List<String> tableColumnCreationSettings() {
+        List<String> cols = new LinkedList<>();
+        cols.add("username varchar(256) PRIMARY KEY");
+        cols.add("password varchar(256)");
+        cols.add("email varchar(256)");
+        return cols;
+    }
     
 }

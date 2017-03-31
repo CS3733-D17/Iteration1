@@ -5,17 +5,9 @@
  */
 package com.slackers.inc.database.entities;
 
-import com.slackers.inc.database.DerbyConnection;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -24,13 +16,13 @@ import java.util.stream.Collectors;
 public class UsEmployee extends User{
 
     private static final String TABLE = "EMPLOYEES";
-
-    private Map<Long, LabelApplication> applications;
-    private LabelApplication templateApplication;
     
+    private List<LabelApplication> workingApplications;
+    private List<LabelApplication> previousApplications;
+
     public UsEmployee(String username, String password, String email) {
-        super(username, password, email);
-        init();
+        super(username, password, email);init();
+        
     }
 
     public UsEmployee(String username, String password) {
@@ -41,86 +33,48 @@ public class UsEmployee extends User{
     public UsEmployee(String username) {
         super(username);
         init();
-    }    
+    }
     
     private void init()
     {
-        applications = new HashMap<>();
-        templateApplication = new LabelApplication();
-    }
-
-    public Map<Long, LabelApplication> getApplications() {
-        return applications;
-    }
-
-    public void removeApplications(LabelApplication application) {
-        this.applications.remove(application.getApplicationId());
-    }
-    
-    public void addApplications(LabelApplication application) {
-        this.applications.put(application.getApplicationId(), application);
-    }
-
-    public LabelApplication getTemplateApplication() {
-        return templateApplication;
-    }
-
-    public void setTemplateApplication(LabelApplication templateApplication) {
-        this.templateApplication = templateApplication;
+        this.workingApplications = new LinkedList<>();
+        this.previousApplications = new LinkedList<>();
     }
 
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String, Class> pairs = super.getEntityNameTypePairs();
-        pairs.put("applications", String.class);
-        pairs.put("templateApplication", LabelApplication.class);
+        pairs.put("workingApplications", String.class);
+        pairs.put("workingApplications", String.class);
         return pairs;
     }
 
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (values.containsKey("applications"))
+        if (values.containsKey("workingApplications"))
         {
-            try {
-                List<String> appStrings = DerbyConnection.collectionFromString((String)values.get("applications"));
-                for (String s : appStrings)
-                {
-                    LabelApplication temp = new LabelApplication();
-                    temp.setPrimaryKeyValue(DerbyConnection.objectFromString(s));
-                    DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
-                    this.applications.put(temp.getApplicationId(), temp);
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(UsEmployee.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.workingApplications.addAll(LabelApplication.applicationListFromString((String)values.get("workingApplications")));
         }
-        if (values.containsKey("templateApplication"))
-            this.templateApplication = (LabelApplication)values.get("templateApplication");
+        if (values.containsKey("previousApplications"))
+        {
+            this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
+        }
     }
 
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String, Object> values = super.getUpdatableEntityValues();
-        List<String> appIds = new LinkedList<>();
-        for (Entry<Long, LabelApplication> e : this.applications.entrySet())
-        {
-            try {
-                appIds.add(DerbyConnection.objectToString((Serializable) e.getValue().getPrimaryKeyValue()));
-            } catch (IOException ex) {
-                Logger.getLogger(UsEmployee.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        values.put("applications", DerbyConnection.collectionToString(appIds));
-        values.put("templateApplication", this.templateApplication);
+        values.put("workingApplications", LabelApplication.applicationListToString(this.workingApplications));
+        values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
     }
 
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String, Object> values = super.getEntityValues();
-        values.put("applications", this.applications);
-        values.put("templateApplication", this.templateApplication);
+        values.put("workingApplications", LabelApplication.applicationListToString(this.workingApplications));
+        values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
     }
     
@@ -129,15 +83,12 @@ public class UsEmployee extends User{
         return TABLE;
     }
 
-    
     @Override
     public List<String> tableColumnCreationSettings() {
-        List<String> cols = new LinkedList<>();
-        cols.add("username varchar(256) PRIMARY KEY");
-        cols.add("password varchar(256)");
-        cols.add("email varchar(256)");
-        cols.add("applications varchar(max)");
-        cols.add("templateApplication varchar(8192)");
+        List<String> cols = super.tableColumnCreationSettings();
+        cols.add("workingApplications varchar(max)");
+        cols.add("previousApplications varchar(max)");
         return cols;
-    }       
+    }
+    
 }
