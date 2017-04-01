@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.SettingsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.FormController">
     <children>
       <Label layoutX="55.0" layoutY="256.0" text="User Information" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -24,7 +24,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="firstName" layoutX="170.0" layoutY="96.0" prefHeight="37.0" prefWidth="180.0" AnchorPane.leftAnchor="170.0" AnchorPane.topAnchor="96.0">
+      <TextField fx:id="firstName" layoutX="171.0" layoutY="96.0" prefHeight="37.0" prefWidth="180.0" AnchorPane.leftAnchor="171.0" AnchorPane.topAnchor="96.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -105,5 +105,6 @@
             <Font size="16.0" />
          </font>
       </Button>
+      <Label fx:id="errorMessage" layoutX="158.0" layoutY="428.0" style="-fx-text-fill: RED;" text="Incorrect Password!" />
 </children>
 </AnchorPane>
