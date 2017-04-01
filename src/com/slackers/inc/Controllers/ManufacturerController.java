@@ -1,15 +1,23 @@
 package com.slackers.inc.Controllers;
 
+import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.Manufacturer;
+
+import java.sql.SQLException;
 
 public class ManufacturerController {
 
     Manufacturer manufacturer;
     LabelApplicationController formController;
 
-    public ManufacturerController(){
+    public ManufacturerController() throws SQLException {
         this.manufacturer = null;
-        this.formController = null;
+        this.formController = new LabelApplicationController();
+    }
+
+    public ManufacturerController(Manufacturer manufacturer) throws SQLException {
+        this.manufacturer = manufacturer;
+        this.formController = new LabelApplicationController();
     }
 
     public ManufacturerController(Manufacturer manufacturer, LabelApplicationController formController){
@@ -17,24 +25,41 @@ public class ManufacturerController {
         this.formController = formController;
     }
 
-    public boolean createApplication(){
-        return true;
+    public boolean createApplication() throws SQLException {
+        LabelApplication template = manufacturer.getTemplateApplication();
+        LabelApplication app = formController.getLabelApplication();
+        app.setApplicant(manufacturer);
+        if (template != null) {
+            app.setApplicantAddress(template.getApplicantAddress());
+            app.setEmailAddress(template.getEmailAddress());
+            app.setMailingAddress(template.getMailingAddress());
+            app.setLabel(template.getLabel());
+            app.setPhoneNumber(template.getPhoneNumber());
+            app.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
+
+        }
+        return formController.createApplication();
+
     }
 
-    public boolean submitApplication(){
-        return true;
+    public boolean submitApplication() throws SQLException {
+
+        return formController.submitApplication(manufacturer);
     }
 
-    public boolean editApplication(){
-        return true;
+    public boolean editApplication() throws SQLException {
+
+        return formController.editApplication();
     }
 
-    public boolean saveApplication(){
-        return true;
+    public boolean saveApplication() throws SQLException {
+
+        return formController.saveApplication();
     }
 
-    public boolean deleteApplication(){
-        return true;
+    public boolean deleteApplication() throws SQLException {
+
+        return formController.deleteApplication();
     }
 
     public LabelApplicationController getFormController(){

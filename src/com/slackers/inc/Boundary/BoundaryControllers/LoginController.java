@@ -1,6 +1,8 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.AccountController;
+import com.slackers.inc.database.entities.User;
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,9 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +25,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable{
 
+    private MainController mainController;
+
     @FXML private AnchorPane signUpPane;
     @FXML private AnchorPane logInPane;
 
@@ -28,19 +34,21 @@ public class LoginController implements Initializable{
     @FXML private TextField lastNameField;
     @FXML private TextField emailField;
     @FXML private TextField passwordField;
+    @FXML private Label signUpErrorLabel;
 
     @FXML private TextField loginEmailField;
     @FXML private TextField loginPasswordField;
+    @FXML private Label logInErrorLabel;
 
     @FXML private Button logInButton;
     @FXML private Button getStartedButton;
 
-    private AccountController userValidate;
+    private FadeTransition fadeOut = new FadeTransition(
+            Duration.millis(1000)
+    );
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // TODO Add More Fields That Are Necessary for Users
 
         BooleanBinding getStartedBinding = new BooleanBinding() {
             {
@@ -75,11 +83,12 @@ public class LoginController implements Initializable{
         getStartedButton.disableProperty().bind(getStartedBinding);
         logInButton.disableProperty().bind(logInBinding);
 
-        try {
-            userValidate = new AccountController();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        fadeOut.setNode(logInErrorLabel);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
+
     }
 
     @FXML
@@ -101,50 +110,49 @@ public class LoginController implements Initializable{
 
 
     @FXML
-    void getStartedClick(ActionEvent e) throws IOException{
+    void getStartedClick(ActionEvent event){
         System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
-                + "\nEmail" + emailField.getText() + "\nPassword" + passwordField.getText());
 
-        // TODO Form Validation (will probably have the button disable itself)
-        // TODO User Creation in Database
+                + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
+        try {
+            if(mainController.getAccountController().createAccount(firstNameField.getText() + lastNameField.getText(),
+                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER)){
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            } else {
+                System.out.println("Account Creation Failed. Try again later.");
+                signUpErrorLabel.setVisible(true);
+                fadeOut.playFromStart();
+            }
+        }catch (IllegalStateException exception){
+            System.out.println("Account Creation Failed. Try again later.");
+            signUpErrorLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }
 
-        Parent main = FXMLLoader.load(getClass().getResource("../FXML/outershell.fxml"));
-        main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
-
-        Stage stage = new Stage();
-        stage.setTitle("Main Stage");
-        stage.setScene(new Scene(main));
-        stage.show();
-        ((Node)(e.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
     void logInClick(ActionEvent event) throws IOException {
         System.out.println("Email: " + loginEmailField.getText() + "\nPassword: " + loginPasswordField.getText());
 
-        // TODO Form Validation (will probably have the button disable itself)
-
         try {
-            if(userValidate.verifyCredentials(loginEmailField.getText(), loginPasswordField.getText())) {
-                Parent main = FXMLLoader.load(getClass().getResource("../FXML/outershell.fxml"));
-                main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
-
-                Stage stage = new Stage();
-                stage.setTitle("Main Stage");
-                stage.setScene(new Scene(main));
-                stage.show();
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+            if(mainController.getAccountController().loginUser(loginEmailField.getText(), loginPasswordField.getText()) != null) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }else{
+                System.out.println("Incorrect Email or password");
+                logInErrorLabel.setVisible(true);
+                fadeOut.playFromStart();
             }
-
-            // TODO Incorrect Password Appears
-
         }catch (SQLException e) {
             System.out.println("Login Failed");
-
-            // TODO Incorrect Username Appears
-
+            logInErrorLabel.setVisible(true);
+            fadeOut.playFromStart();
         }
 
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController ;
     }
 
 }

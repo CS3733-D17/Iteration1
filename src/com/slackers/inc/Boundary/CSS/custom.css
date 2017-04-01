@@ -97,6 +97,7 @@
     -fx-background-color: rgb(56,56,56);
     -fx-pref-height: 60;
     -fx-min-width: 60;
+    -fx-font-family: "FontAwesome";
 }
 
 .sideicons{

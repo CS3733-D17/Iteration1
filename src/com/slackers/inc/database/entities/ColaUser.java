@@ -14,8 +14,8 @@ import java.util.List;
  */
 public class ColaUser extends User{
 
-    public ColaUser(String password, String email) {
-        super(password, email);
+    public ColaUser(String email, String password) {
+        super(email, password);
         init();
     }
 
@@ -29,8 +29,6 @@ public class ColaUser extends User{
         super();
     }
 
-    
-    
     private void init()
     {
         super.setUserType(User.UserType.COLA_USER);
