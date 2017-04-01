@@ -100,7 +100,7 @@ public class DerbyConnection {
     }
     
     public boolean createEntity(IEntity entity) throws SQLException {
-        //this.dropTable(entity.getTableName());
+
         if (!checkForTable(entity)) // create table if non existant
             return false;
         
@@ -124,14 +124,13 @@ public class DerbyConnection {
             vals.add(e.getValue());
         }
         String stmt = String.format("INSERT INTO %s (%s) VALUES (%s)", entity.getTableName(), cols.toString(), vPlace.toString());
-        System.out.println(stmt);
         CallableStatement call = con.prepareCall(stmt);
         int i = 1;
         for (Object o : vals)
         {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
-        }        
+        }
         return call.execute();
     }
     
@@ -314,7 +313,6 @@ public class DerbyConnection {
             i++;
         }
         ResultSet results = call.executeQuery();
-        
         int c=0;
         Map<String,Object> valMap = new HashMap<>();
         while (results.next())
@@ -441,7 +439,17 @@ public class DerbyConnection {
         Class target = entity.getEntityNameTypePairs().get(colTitle);
         if (target == null)
             return;
-        if (target.isAssignableFrom(Integer.class))
+        if (target.isAssignableFrom(Serializable.class))
+        {
+            try {
+                valueCollection.put(colTitle, objectFromString(result.getString(colTitle)));
+            } catch (IOException ex) {
+                Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (target.isAssignableFrom(Integer.class))
         {
             valueCollection.put(colTitle, result.getInt(colTitle));
         }
@@ -469,16 +477,7 @@ public class DerbyConnection {
         {
             valueCollection.put(colTitle, result.getDouble(colTitle));
         }
-        else if (target.isAssignableFrom(Serializable.class))
-        {
-            try {
-                valueCollection.put(colTitle, objectFromString(result.getString(colTitle)));
-            } catch (IOException ex) {
-                Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+
     }
     
     public static Object objectFromString( String s ) throws IOException ,

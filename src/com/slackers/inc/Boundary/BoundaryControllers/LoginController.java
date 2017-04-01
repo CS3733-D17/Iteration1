@@ -2,6 +2,7 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.AccountController;
 import com.slackers.inc.database.entities.User;
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,9 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,13 +34,18 @@ public class LoginController implements Initializable{
     @FXML private TextField lastNameField;
     @FXML private TextField emailField;
     @FXML private TextField passwordField;
+    @FXML private Label signUpErrorLabel;
 
     @FXML private TextField loginEmailField;
     @FXML private TextField loginPasswordField;
+    @FXML private Label logInErrorLabel;
 
     @FXML private Button logInButton;
     @FXML private Button getStartedButton;
 
+    private FadeTransition fadeOut = new FadeTransition(
+            Duration.millis(1000)
+    );
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,6 +83,12 @@ public class LoginController implements Initializable{
         getStartedButton.disableProperty().bind(getStartedBinding);
         logInButton.disableProperty().bind(logInBinding);
 
+        fadeOut.setNode(logInErrorLabel);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setCycleCount(1);
+        fadeOut.setAutoReverse(false);
+
     }
 
     @FXML
@@ -96,13 +110,18 @@ public class LoginController implements Initializable{
 
 
     @FXML
-    void getStartedClick(ActionEvent event) throws IOException{
+    void getStartedClick(ActionEvent event){
         System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
+
                 + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
-
-        mainController.getAccountController().createAccount(firstNameField.getText()+lastNameField.getText(),
-                emailField.getText(),passwordField.getText(), User.UserType.COLA_USER);
-
+        try {
+            mainController.getAccountController().createAccount(firstNameField.getText() + lastNameField.getText(),
+                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER);
+        }catch (IllegalStateException exception){
+            System.out.println("Account Creation Failed. Try again later.");
+            signUpErrorLabel.setVisible(true);
+            fadeOut.playFromStart();
+        }
 
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
@@ -116,15 +135,13 @@ public class LoginController implements Initializable{
                 ((Node)(event.getSource())).getScene().getWindow().hide();
             }else{
                 System.out.println("Incorrect Email or password");
+                logInErrorLabel.setVisible(true);
+                fadeOut.playFromStart();
             }
-
-            // TODO Incorrect Password Appears
-
         }catch (SQLException e) {
             System.out.println("Login Failed");
-
-            // TODO Incorrect Username Appears
-
+            logInErrorLabel.setVisible(true);
+            fadeOut.playFromStart();
         }
 
     }

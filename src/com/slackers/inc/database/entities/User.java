@@ -96,8 +96,8 @@ public class User implements IEntity{
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
-        pairs.put("workingApplications", String.class);
-        pairs.put("templateApplication", Serializable.class);
+        pairs.put("previousApplications", String.class);
+        pairs.put("templateApplication", Integer.class);
         pairs.put("userType", Serializable.class);
         return pairs;
     }
