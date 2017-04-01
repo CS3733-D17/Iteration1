@@ -80,7 +80,8 @@
                   <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Employee" toggleGroup="$userType" />
                </children>
             </HBox>
-             <Button disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" fx:id="getStartedButton" onAction="#getStartedClick" prefWidth="120.0" text="Get Started" />
+             <Button fx:id="getStartedButton" disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" onAction="#getStartedClick" prefWidth="120.0" text="Get Started" />
+            <Label fx:id="signUpErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="315.0" style="-fx-text-fill: -main-color;" text="Unable to Create Account. Please try again later." textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="315.0" />
          </children>
       </AnchorPane>
        <AnchorPane fx:id="logInPane" prefHeight="350.0" prefWidth="400.0" visible="false">
@@ -106,7 +107,8 @@
                        <PasswordField fx:id="loginPasswordField" prefHeight="28.0" prefWidth="270.0" promptText="Password" styleClass="last" />
                    </children>
                </HBox>
-               <Button disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" fx:id="logInButton" onAction="#logInClick" prefWidth="120.0" text="Log In" />
+               <Button fx:id="logInButton" disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" onAction="#logInClick" prefWidth="120.0" text="Log In" />
+            <Label fx:id="logInErrorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="51.0" layoutY="315.0" style="-fx-text-fill: -main-color;" text="Incorrect User or Password!" textAlignment="CENTER" visible="false" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="315.0" />
            </children>
        </AnchorPane>
    </children>
