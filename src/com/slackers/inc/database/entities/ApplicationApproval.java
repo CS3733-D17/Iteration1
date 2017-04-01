@@ -31,16 +31,16 @@ public class ApplicationApproval implements IEntity{
     private LabelApplication application;
     private long approvalId;
 
-    public ApplicationApproval(UsEmployee agent, Date approvalDate, Date experationDate, LabelApplication application) {
+    public ApplicationApproval(UsEmployee agent, Date approvalDate, Date experationDate) {
         this.agent = agent;
         this.approvalDate = approvalDate;
         this.experationDate = experationDate;
-        this.application = application;
+        this.application = null;
         this.approvalId = 0;
     }
     
-    public ApplicationApproval(UsEmployee agent, Date experationDate, LabelApplication application) {
-        this(agent, new Date(new java.util.Date().getTime()), experationDate, application);
+    public ApplicationApproval(UsEmployee agent, Date experationDate) {
+        this(agent, new Date(new java.util.Date().getTime()), experationDate);
     }
 
     public long getApprovalId() {
@@ -93,8 +93,10 @@ public class ApplicationApproval implements IEntity{
         Map<String, Object> values = new HashMap<>();
         values.put("approvalDate", this.approvalDate);
         values.put("experationDate", this.experationDate);
-        values.put("agent", this.agent.getPrimaryKeyValue());
-        values.put("application", this.application.getPrimaryKeyValue());
+        if (this.agent!=null)
+            values.put("agent", this.agent.getPrimaryKeyValue());
+        if (this.application!=null)
+            values.put("application", this.application.getPrimaryKeyValue());
         values.put("approvalId", this.approvalId);
         return values;
     }
@@ -104,8 +106,10 @@ public class ApplicationApproval implements IEntity{
         Map<String, Object> values = new HashMap<>();
         values.put("approvalDate", this.approvalDate);
         values.put("experationDate", this.experationDate);
-        values.put("agent", this.agent.getPrimaryKeyValue());
-        values.put("application", this.application.getPrimaryKeyValue());
+        if (this.agent!=null)
+            values.put("agent", this.agent.getPrimaryKeyValue());
+        if (this.application!=null)
+            values.put("application", this.application.getPrimaryKeyValue());
         return values;
     }
 
@@ -149,7 +153,7 @@ public class ApplicationApproval implements IEntity{
         pairs.put("approvalDate", Date.class);
         pairs.put("experationDate", Date.class);
         pairs.put("agent", Serializable.class);
-        pairs.put("application", Serializable.class);
+        pairs.put("application", Long.class);
         pairs.put("approvalId", Long.class);
         return pairs;
     }
@@ -182,7 +186,7 @@ public class ApplicationApproval implements IEntity{
 
     @Override
     public ApplicationApproval deepCopy() {
-        ApplicationApproval app = new ApplicationApproval(this.agent, this.experationDate, this.application);
+        ApplicationApproval app = new ApplicationApproval(this.agent, this.experationDate);
         app.setEntityValues(this.getEntityValues());
         return app;
     }

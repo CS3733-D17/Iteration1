@@ -23,9 +23,23 @@ public class ColaUser extends User{
         super(email);
         init();
     }
+    
+    public ColaUser()
+    {
+        super();
+    }
 
     private void init()
     {
         super.setUserType(User.UserType.COLA_USER);
     }
+
+    @Override
+    public ColaUser deepCopy() {
+        ColaUser u = new ColaUser(this.getEmail());
+        u.setEntityValues(this.getEntityValues());
+        return u;
+    }
+    
+    
 }

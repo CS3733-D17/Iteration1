@@ -19,7 +19,7 @@ public class UsEmployee extends User{
     private List<LabelApplication> previousApplications;
 
     public UsEmployee(String email, String password) {
-        super(password, email);
+        super(email, password);
         init();
     }
 
@@ -27,6 +27,11 @@ public class UsEmployee extends User{
         super(email);
         init();
     }   
+    
+    public UsEmployee()
+    {
+        super();
+    }
     
     private void init()
     {
@@ -62,5 +67,14 @@ public class UsEmployee extends User{
         values.put("applications", LabelApplication.applicationListToString(this.applications));
         values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
-    }    
+    }   
+
+    @Override
+    public UsEmployee deepCopy() {
+        UsEmployee e = new UsEmployee(this.getEmail());
+        e.setEntityValues(this.getEntityValues());
+        return e;
+    }
+    
+    
 }

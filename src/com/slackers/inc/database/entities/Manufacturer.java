@@ -28,7 +28,7 @@ public class Manufacturer extends User{
     private LabelApplication templateApplication;
 
     public Manufacturer(String email, String password) {
-        super(password, email);
+        super(email, password);
         init();
     }
 
@@ -37,7 +37,10 @@ public class Manufacturer extends User{
         init();
     }
     
-       
+    public Manufacturer()
+    {
+        super();
+    }
     
     private void init()
     {
@@ -89,7 +92,8 @@ public class Manufacturer extends User{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String, Object> values = super.getUpdatableEntityValues();
         values.put("applications", LabelApplication.applicationListToString(this.applications));
-        values.put("templateApplication", this.templateApplication.getPrimaryKeyValue());
+        if (this.templateApplication!=null)
+            values.put("templateApplication", this.templateApplication.getPrimaryKeyValue());
         return values;
     }
 
@@ -97,8 +101,18 @@ public class Manufacturer extends User{
     public Map<String, Object> getEntityValues() {
         Map<String, Object> values = super.getEntityValues();
         values.put("applications", LabelApplication.applicationListToString(this.applications));
-        values.put("templateApplication", this.templateApplication.getPrimaryKeyValue());
+        if (this.templateApplication!=null)
+            values.put("templateApplication", this.templateApplication.getPrimaryKeyValue());
         return values;
     }
-         
+
+    @Override
+    public Manufacturer deepCopy() {
+        Manufacturer m = new Manufacturer(this.getEmail());
+        m.setEntityValues(this.getEntityValues());
+        return m;
+    }
+       
+    
+    
 }

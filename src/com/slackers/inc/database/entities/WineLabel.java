@@ -5,6 +5,8 @@
  */
 package com.slackers.inc.database.entities;
 
+import java.util.Map;
+
 /**
  *
  * @author John Stegeman <j.stegeman@labyrinth-tech.com>
@@ -34,6 +36,50 @@ public class WineLabel extends Label{
 
     public void setPhLevel(double phLevel) {
         this.phLevel = phLevel;
+    }
+
+    @Override
+    public WineLabel deepCopy() {
+        WineLabel w = new WineLabel();
+        w.setEntityValues(this.getEntityValues());
+        return w;
+    }
+
+    @Override
+    public Map<String, Class> getEntityNameTypePairs() {
+        Map<String,Class> pairs = super.getEntityNameTypePairs();
+        pairs.put("phLevel", Double.class);
+        pairs.put("vintage", Double.class);
+        return pairs;
+    }
+
+    @Override
+    public void setEntityValues(Map<String, Object> values) {
+        super.setEntityValues(values);
+        if (values.containsKey("phLevel"))
+        {
+            this.phLevel = (double) values.get("phLevel");
+        }
+        if (values.containsKey("vintage"))
+        {
+            this.vintage = (int) values.get("vintage");
+        }
+    }
+
+    @Override
+    public Map<String, Object> getUpdatableEntityValues() {
+        Map<String,Object> values = super.getUpdatableEntityValues();
+        values.put("phLevel", this.phLevel);
+        values.put("vintage", this.vintage);
+        return values;
+    }
+
+    @Override
+    public Map<String, Object> getEntityValues() {
+        Map<String,Object> values = super.getEntityValues();
+        values.put("phLevel", this.phLevel);
+        values.put("vintage", this.vintage);
+        return values;
     }
     
     
