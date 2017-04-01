@@ -98,7 +98,6 @@
                </HBox>
                <HBox layoutX="50.0" layoutY="100.0" prefHeight="30.0" prefWidth="300.0">
                    <children>
-
                        <Label styleClass="first, logobox">
                            <graphic>
                                <Glyph fontFamily="FontAwesome" icon="GEAR" layoutX="45.0" layoutY="100.0" prefHeight="30.0" prefWidth="30.0" styleClass="logo" />

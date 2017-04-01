@@ -70,12 +70,12 @@
          </font>
       </Label>
       <Separator layoutX="341.0" layoutY="510.0" prefWidth="200.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="535.0" />
-      <Label layoutX="55.0" layoutY="571.0" text="Brand Name:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="570.0">
+      <Label layoutX="64.0" layoutY="572.0" text="Brand Name:" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="572.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="212.0" layoutY="565.0" prefHeight="34.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
+      <TextField layoutX="230.0" layoutY="565.0" prefHeight="37.0" prefWidth="730.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -107,12 +107,12 @@
               </FXCollections>
           </items>
       </ComboBox>
-      <Label layoutX="75.0" layoutY="591.0" text="Alcohol Content:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="690.0">
+      <Label layoutX="48.0" layoutY="691.0" text="Alcohol Content:" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="691.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="222.0" layoutY="575.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="210.0" AnchorPane.topAnchor="688.0">
+      <TextField layoutX="230.0" layoutY="687.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="687.0">
          <font>
             <Font size="16.0" />
          </font>

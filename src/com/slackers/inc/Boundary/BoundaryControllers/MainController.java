@@ -36,6 +36,7 @@ public class MainController implements Initializable{
             SearchController searchController = searchLoader.getController();
             searchController.setMainController(this);
 
+
             mainContainer.getChildren().setAll(applications);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,6 +58,7 @@ public class MainController implements Initializable{
         mainContainer.getChildren().setAll(settings);
     }
 
+    @FXML
     public void  resultsClick(){
         mainContainer.getChildren().setAll(results);
     }
