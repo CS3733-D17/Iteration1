@@ -79,9 +79,16 @@ public class DerbyConnection {
         System.out.println("Will it eventually work? Yes");
         return call.execute();
     }
-    
-    private boolean checkForTable(IEntity entity) throws SQLException
-    {
+
+    public boolean dropTable(String tableName) throws SQLException{
+        String stmt = String.format("DROP TABLE %s", tableName);
+        System.out.println(stmt);
+        CallableStatement call = con.prepareCall(stmt);
+        System.out.println("Will deleting work eventually work? Yes");
+        return call.execute();
+    }
+
+    private boolean checkForTable(IEntity entity) throws SQLException {
         if (this.tables.contains(entity.getTableName()))
             return true;
         if (this.tableExists(entity.getTableName()))
@@ -92,8 +99,8 @@ public class DerbyConnection {
         return this.createTable(entity.getTableName(), entity.tableColumnCreationSettings());
     }
     
-    public boolean createEntity(IEntity entity) throws SQLException
-    {
+    public boolean createEntity(IEntity entity) throws SQLException {
+        //this.dropTable(entity.getTableName());
         if (!checkForTable(entity)) // create table if non existant
             return false;
         
@@ -522,6 +529,7 @@ public class DerbyConnection {
         }
         
         String base = DB_PROTOCOL_BASE + DB_RELATIVE_LOCATION + ";" + propString.toString();
+        System.out.println(base);
         return base;
     }
     
