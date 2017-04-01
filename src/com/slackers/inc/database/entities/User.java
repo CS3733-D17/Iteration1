@@ -7,10 +7,7 @@ package com.slackers.inc.database.entities;
 
 import com.slackers.inc.database.IEntity;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -32,7 +29,7 @@ public class User implements IEntity{
     private String email;
     private UserType userType;
 
-    public User(String password, String email) {
+    public User(String email, String password) {
         this.password = password;
         this.email = email;
         this.userType = UserType.UNKNOWN;
@@ -65,8 +62,6 @@ public class User implements IEntity{
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
 
     @Override
     public Map<String, Object> getEntityValues() {
@@ -128,8 +123,8 @@ public class User implements IEntity{
         List<String> cols = new LinkedList<>();
         cols.add("password varchar(256)");
         cols.add("email varchar(256) PRIMARY KEY");
-        cols.add("applications varchar(max)");
-        cols.add("previousApplications varchar(max)");
+        cols.add("applications varchar(32672)");
+        cols.add("previousApplications varchar(32672)");
         cols.add("templateApplication varchar(8192)");
         cols.add("userType varchar(1024)");
         return cols;

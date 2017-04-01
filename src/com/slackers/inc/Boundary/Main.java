@@ -11,12 +11,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent login = FXMLLoader.load(getClass().getResource("FXML/loginregisterform.fxml"));
+
+        Parent login = FXMLLoader.load(getClass().getResource("FXML/outershell.fxml"));
         String cssDoc = getClass().getResource("CSS/custom.css").toExternalForm();
         login.getStylesheets().add(cssDoc);
 
         primaryStage.setTitle("Login Screen");
-        primaryStage.getIcons().add(new Image("com/slackers/inc/Boundary/icon.png"));
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
     }

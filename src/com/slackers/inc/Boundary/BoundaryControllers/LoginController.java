@@ -1,6 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.AccountController;
+import com.slackers.inc.database.entities.User;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,8 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable{
 
+    private MainController mainController;
+
     @FXML private AnchorPane signUpPane;
     @FXML private AnchorPane logInPane;
 
@@ -35,12 +38,9 @@ public class LoginController implements Initializable{
     @FXML private Button logInButton;
     @FXML private Button getStartedButton;
 
-    private AccountController userValidate;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // TODO Add More Fields That Are Necessary for Users
 
         BooleanBinding getStartedBinding = new BooleanBinding() {
             {
@@ -75,11 +75,6 @@ public class LoginController implements Initializable{
         getStartedButton.disableProperty().bind(getStartedBinding);
         logInButton.disableProperty().bind(logInBinding);
 
-        try {
-            userValidate = new AccountController();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @FXML
@@ -101,39 +96,26 @@ public class LoginController implements Initializable{
 
 
     @FXML
-    void getStartedClick(ActionEvent e) throws IOException{
+    void getStartedClick(ActionEvent event) throws IOException{
         System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
-                + "\nEmail" + emailField.getText() + "\nPassword" + passwordField.getText());
+                + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
 
-        // TODO Form Validation (will probably have the button disable itself)
-        // TODO User Creation in Database
+        mainController.getAccountController().createAccount(firstNameField.getText()+lastNameField.getText(),
+                emailField.getText(),passwordField.getText(), User.UserType.COLA_USER);
 
-        Parent main = FXMLLoader.load(getClass().getResource("../FXML/outershell.fxml"));
-        main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
 
-        Stage stage = new Stage();
-        stage.setTitle("Main Stage");
-        stage.setScene(new Scene(main));
-        stage.show();
-        ((Node)(e.getSource())).getScene().getWindow().hide();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
     void logInClick(ActionEvent event) throws IOException {
         System.out.println("Email: " + loginEmailField.getText() + "\nPassword: " + loginPasswordField.getText());
 
-        // TODO Form Validation (will probably have the button disable itself)
-
         try {
-            if(userValidate.verifyCredentials(loginEmailField.getText(), loginPasswordField.getText())) {
-                Parent main = FXMLLoader.load(getClass().getResource("../FXML/outershell.fxml"));
-                main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
-
-                Stage stage = new Stage();
-                stage.setTitle("Main Stage");
-                stage.setScene(new Scene(main));
-                stage.show();
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+            if(mainController.getAccountController().loginUser(loginEmailField.getText(), loginPasswordField.getText()) != null) {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }else{
+                System.out.println("Incorrect Email or password");
             }
 
             // TODO Incorrect Password Appears
@@ -145,6 +127,10 @@ public class LoginController implements Initializable{
 
         }
 
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController ;
     }
 
 }
