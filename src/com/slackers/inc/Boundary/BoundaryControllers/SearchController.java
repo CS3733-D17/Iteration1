@@ -2,11 +2,20 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,7 +35,16 @@ public class SearchController implements Initializable {
     @FXML private ListView currentFilter;
 
     @FXML
-    private void getResultsClick(){
+    private void getResultsClick(ActionEvent e)throws IOException{
+
+        Parent main = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
+        main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
+
+        Stage stage = new Stage();
+        stage.setTitle("Main Stage");
+        stage.setScene(new Scene(main));
+        stage.show();
+
 
     }
 
