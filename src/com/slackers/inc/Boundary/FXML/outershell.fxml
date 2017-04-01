@@ -12,9 +12,9 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.MainController">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="60.0">
+      <AnchorPane prefHeight="200.0" prefWidth="60.0" style="-fx-background-color: rgb(56,56,56);">
          <children>
-            <VBox prefWidth="60.0" style="-fx-background-color: rgb(56,56,56);" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox prefWidth="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="sidebarbutton">
                      <graphic>
@@ -38,9 +38,9 @@
                   </Button>
                </children>
             </VBox>
-            <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="sidebarbutton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Button mnemonicParsing="false" onAction="#logoutClick" prefHeight="60.0" prefWidth="60.0" styleClass="sidebarbutton" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <graphic>
-                  <Glyph fontFamily="FontAwesome" icon="SIGNOUT" prefHeight="60.0" prefWidth="60.0" styleClass="sideicons" />
+                  <Glyph fontFamily="FontAwesome" icon="USER" prefHeight="60.0" prefWidth="60.0" styleClass="sideicons" />
                </graphic>
             </Button>
          </children>

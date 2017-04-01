@@ -74,8 +74,10 @@ public class SettingsController implements Initializable {
             errorMessage.setVisible(true);
             fadeOut.playFromStart();
         }
-
-
-
     }
+
+    public void setMainController(MainController mainController) {
+        this.main = mainController ;
+    }
+
 }

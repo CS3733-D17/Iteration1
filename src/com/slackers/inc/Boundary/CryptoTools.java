@@ -64,6 +64,7 @@ public class CryptoTools {
     }
 
     private static byte[] hexStringToByteArray(String s) {
+        System.out.println(s);
         byte[] b = new byte[s.length() / 2];
         for (int i = 0; i < b.length; i++){
             int index = i * 2;
@@ -73,7 +74,7 @@ public class CryptoTools {
         return b;
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         String clearPwd= "my password is hello world";
 
         Preferences p1 = Preferences.userNodeForPackage(CryptoTools.class);
@@ -88,5 +89,5 @@ public class CryptoTools {
         encryptedPwd = p2.get("pwd", "Hello");
         System.out.println(encryptedPwd);
         System.out.println(CryptoTools.decrypt(encryptedPwd, p2));
-    }
+    }*/
 }

@@ -115,15 +115,20 @@ public class LoginController implements Initializable{
 
                 + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
         try {
-            mainController.getAccountController().createAccount(firstNameField.getText() + lastNameField.getText(),
-                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER);
+            if(mainController.getAccountController().createAccount(firstNameField.getText() + lastNameField.getText(),
+                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER)){
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            } else {
+                System.out.println("Account Creation Failed. Try again later.");
+                signUpErrorLabel.setVisible(true);
+                fadeOut.playFromStart();
+            }
         }catch (IllegalStateException exception){
             System.out.println("Account Creation Failed. Try again later.");
             signUpErrorLabel.setVisible(true);
             fadeOut.playFromStart();
         }
 
-        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
