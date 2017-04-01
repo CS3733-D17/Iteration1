@@ -27,8 +27,8 @@ public class Manufacturer extends User{
     private List<LabelApplication> applications;
     private LabelApplication templateApplication;
 
-    public Manufacturer(String email, String password) {
-        super(email, password);
+    public Manufacturer(String firstName, String lastName, String email, String password) {
+        super(firstName, lastName, email, password);
         init();
     }
 
@@ -112,7 +112,7 @@ public class Manufacturer extends User{
         m.setEntityValues(this.getEntityValues());
         return m;
     }
-       
-    
-    
+
+
+
 }

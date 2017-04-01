@@ -119,6 +119,9 @@ public class MainController implements Initializable{
 
     }
 
+    // TODO Make sure that preferences are completly deleted except for the key
+    // TODO Figure out why it fails on Jason's computer
+
     private void loadPages() throws IOException{
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));
@@ -177,7 +180,7 @@ public class MainController implements Initializable{
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Shit");
+            System.out.println("Shit"); // TODO Change this
             System.exit(0);
         }
 

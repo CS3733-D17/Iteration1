@@ -113,16 +113,17 @@ public class LoginController implements Initializable{
 
                 + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
         try {
-            if(mainController.getAccountController().createAccount(firstNameField.getText() + lastNameField.getText(),
-                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER)){
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            } else {
-                System.out.println("Account Creation Failed. Try again later.");
-                signUpErrorLabel.setVisible(true);
-                fadeOut.playFromStart();
-            }
+            mainController.getAccountController().createAccount(firstNameField.getText(), lastNameField.getText(),
+                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER);
+            ((Node)(event.getSource())).getScene().getWindow().hide();
+
+            // TODO Fix RadioButton so it puts the right UserType
+
+            // TODO Form validation for right information
+            // TODO Form validation for SQL Injection (do in another iteration)
+
         }catch (IllegalStateException exception){
-            System.out.println("Account Creation Failed. Try again later.");
+            System.out.println("Account Creation Failed. Crashes.");
             signUpErrorLabel.setVisible(true);
             fadeOut.playFromStart();
         }
@@ -148,6 +149,8 @@ public class LoginController implements Initializable{
         }
 
     }
+
+    // TODO Figure out why clsing doesn't work exactly
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController ;

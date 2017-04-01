@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
  */
 public class SettingsController implements Initializable {
 
+    // TODO Display information specific to each type of user
+    // TODO Remove Phone Number from the general area
 
     @FXML
     private TextField firstName;
@@ -60,8 +62,11 @@ public class SettingsController implements Initializable {
     void UpdatePersonal(ActionEvent event) {
         main.getUser().setEmail(email.getText());
         //main.getUser().setPhone(phone.getText());
-        //main.getUser().setFirstName(firstName.getText());
-        //main.getUser().setLastName(lastName.getText());
+
+        // TODO Connect to ManufacturerController and Add that Information
+
+        main.getUser().setFirstName(firstName.getText());
+        main.getUser().setLastName(lastName.getText());
     }
 
     @FXML
