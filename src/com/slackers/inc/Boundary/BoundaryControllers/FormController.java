@@ -20,6 +20,11 @@ public class FormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //TODO auto fill sections with usre info
+
+        // TODO send form information to the db
+
         /*sourceComboBox.setValue("Domestic");
         sourceComboBox.setItems(sourceList);
 

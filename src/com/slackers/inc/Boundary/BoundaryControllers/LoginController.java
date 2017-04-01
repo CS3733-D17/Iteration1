@@ -107,8 +107,6 @@ public class LoginController implements Initializable{
         logInPane.setManaged(true);
     }
 
-
-
     @FXML
     void getStartedClick(ActionEvent event){
         System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()

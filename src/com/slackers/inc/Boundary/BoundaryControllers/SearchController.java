@@ -40,6 +40,8 @@ public class SearchController implements Initializable {
         Parent main = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
         main.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
 
+        //TODO actually search shit by keyword, alcohol content or type
+
         Stage stage = new Stage();
         stage.setTitle("Main Stage");
         stage.setScene(new Scene(main));

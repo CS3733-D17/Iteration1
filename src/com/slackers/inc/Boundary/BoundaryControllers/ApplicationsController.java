@@ -52,5 +52,6 @@ public class ApplicationsController implements Initializable{
 
     }
 
+    //TODO make the accordian template and fill with form information
 
 }

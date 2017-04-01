@@ -46,6 +46,8 @@ public class MainController implements Initializable{
         checkLogin();
     }
 
+    //TODO fix signup so that it creates the user
+    //TODO hide the application button for search users
     private void checkLogin(){
 
         System.out.println("Account Controller created. Now checking Preferences");
