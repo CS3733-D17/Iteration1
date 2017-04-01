@@ -27,7 +27,7 @@ public class Manufacturer extends User{
     private List<LabelApplication> applications;
     private LabelApplication templateApplication;
 
-    public Manufacturer(String password, String email) {
+    public Manufacturer(String email, String password) {
         super(password, email);
         init();
     }

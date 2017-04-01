@@ -94,6 +94,7 @@ public class AccountController {
         {
            throw new IllegalStateException("User type is unknown!"); 
         }
+
         try {
             return db.createEntity(this.user);
         } catch (SQLException ex) {
