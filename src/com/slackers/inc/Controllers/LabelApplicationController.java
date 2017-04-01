@@ -74,7 +74,12 @@ public class LabelApplicationController {
     {
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
-    
+
+    public boolean deleteApplication() throws SQLException
+    {
+        return db.deleteEntity(this.application, this.application.getPrimaryKeyName());
+    }
+
     public boolean createApplication() throws SQLException
     {
         db.createEntity(this.application);
