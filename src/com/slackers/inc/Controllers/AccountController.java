@@ -53,20 +53,22 @@ public class AccountController {
         {
             if (this.user.getUserType() == UserType.COLA_USER)
             {
-                return new ColaUser(this.user.getEmail(), this.user.getPassword());
+                this.user = new ColaUser(this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.MANUFACTURER)
             {
-                return new Manufacturer(this.user.getEmail(), this.user.getPassword());
+                this.user = new Manufacturer(this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.US_EMPLOYEE)
             {
-                return new UsEmployee(this.user.getEmail(), this.user.getPassword());
+                this.user = new UsEmployee(this.user.getEmail(), this.user.getPassword());
             }
             else
             {
                throw new IllegalStateException("User type is unknown!"); 
             }
+            db.getEntity(this.user, this.user.getPrimaryKeyName());
+            return this.user;
         }
         else
         {
