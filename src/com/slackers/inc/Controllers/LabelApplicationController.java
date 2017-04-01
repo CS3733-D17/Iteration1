@@ -101,7 +101,7 @@ public class LabelApplicationController {
     
     public boolean approveApplication(UsEmployee submitter, Date experationDate) throws SQLException
     {
-        ApplicationApproval approval = new ApplicationApproval(submitter, experationDate, this.application);
+        ApplicationApproval approval = new ApplicationApproval(submitter, experationDate);
         this.application.setStatus(LabelApplication.ApplicationStatus.APPROVED);
         this.application.setApplicationApproval(approval);
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());

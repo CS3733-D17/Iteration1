@@ -213,6 +213,8 @@ public class Label implements IEntity{
         cols.add("productSource varchar(512)");
         cols.add("productType varchar(512)");
         cols.add("brandName varchar(512)");
+        cols.add("phLevel float");
+        cols.add("vintage int");
         return cols;
     }
 

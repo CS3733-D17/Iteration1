@@ -30,18 +30,41 @@ public class User implements IEntity{
     
     private String password;
     private String email;
+    private String firstName;
+    private String lastName;
     private UserType userType;
 
-    public User(String password, String email) {
+    public User(String email, String password) {
         this.password = password;
         this.email = email;
+        this.firstName = "unknown";
+        this.lastName = "unknown";
         this.userType = UserType.UNKNOWN;
     }
     
     public User(String email) {
         this(email, "");
     }
+    public User() {
+        this("junk", "junk");
+    }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
     public UserType getUserType() {
         return userType;
     }
@@ -64,9 +87,7 @@ public class User implements IEntity{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-    
-    
+    }    
 
     @Override
     public Map<String, Object> getEntityValues() {
@@ -74,6 +95,8 @@ public class User implements IEntity{
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
+        temp.put("firstName", this.firstName);
+        temp.put("lastName", this.lastName);
         return temp;
     }
 
@@ -81,7 +104,10 @@ public class User implements IEntity{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> temp = new HashMap<>();
         temp.put("password", this.password);
+        temp.put("email", this.email);
         temp.put("userType", this.userType);
+        temp.put("lastName", this.lastName);
+        temp.put("firstName", this.firstName);
         return temp;
     }
 
@@ -93,6 +119,10 @@ public class User implements IEntity{
             this.email = (String)values.get("email");
         if (values.containsKey("userType"))
             this.userType = (UserType)values.get("userType");
+        if (values.containsKey("firstName"))
+            this.firstName = (String)values.get("firstName");
+        if (values.containsKey("lastName"))
+            this.lastName = (String)values.get("lastName");
     }
 
     @Override
@@ -101,8 +131,10 @@ public class User implements IEntity{
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
-        pairs.put("workingApplications", String.class);
-        pairs.put("templateApplication", Serializable.class);
+        pairs.put("firstName", String.class);
+        pairs.put("lastName", String.class);
+        pairs.put("previousApplications", String.class);
+        pairs.put("templateApplication", Long.class);
         pairs.put("userType", Serializable.class);
         return pairs;
     }
@@ -128,10 +160,12 @@ public class User implements IEntity{
         List<String> cols = new LinkedList<>();
         cols.add("password varchar(256)");
         cols.add("email varchar(256) PRIMARY KEY");
-        cols.add("applications varchar(max)");
-        cols.add("previousApplications varchar(max)");
+        cols.add("firstName varchar(64)");
+        cols.add("lastName varchar(64)");
+        cols.add("applications long varchar");
+        cols.add("previousApplications long varchar");
         cols.add("templateApplication varchar(8192)");
-        cols.add("userType varchar(1024)");
+        cols.add("userType varchar(512)");
         return cols;
     }
 
@@ -146,5 +180,12 @@ public class User implements IEntity{
         usr.setEntityValues(this.getEntityValues());
         return usr;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "password=" + password + ", email=" + email + ", userType=" + userType + '}';
+    }
+    
+    
     
 }

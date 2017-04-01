@@ -76,6 +76,12 @@ public class DerbyConnection {
         CallableStatement call = con.prepareCall(stmt);
         return call.execute();
     }
+    public boolean delteTable(String tableName) throws SQLException
+    {        
+        String stmt = String.format("DROP TABLE IF EXISTS %s", tableName);
+        CallableStatement call = con.prepareCall(stmt);
+        return call.execute();
+    }
     
     private boolean checkForTable(IEntity entity) throws SQLException
     {
@@ -96,32 +102,49 @@ public class DerbyConnection {
         
         StringBuilder cols = new StringBuilder();
         StringBuilder vPlace = new StringBuilder();
+        Set<String> updatable = entity.getUpdatableEntityValues().keySet();
         List<Object> vals = new LinkedList<>();
         boolean first = true;
-        for (Entry<String, Object> e : entity.getUpdatableEntityValues().entrySet())
+        for (Entry<String, Object> e : entity.getEntityValues().entrySet())
         {
-            if (first)
+            if (updatable.contains(e.getKey()))
             {
-                first = false;
+                if (first)
+                {
+                    first = false;
+                }
+                else
+                {
+                    cols.append(",");
+                    vPlace.append(",");
+                }
+                cols.append(e.getKey());
+                vPlace.append('?');
+                vals.add(e.getValue());
             }
-            else
-            {
-                cols.append(",");
-                vPlace.append(",");
-            }
-            cols.append(e.getKey());
-            vPlace.append('?');
-            vals.add(e.getValue());
         }
-        String stmt = String.format("INSERT INTO %s (%s) VALUES (%s)", entity.getTableName(), cols.toString(), vPlace.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        String stmt = String.format("INSERT INTO %s (%s) VALUES (%s)", entity.getTableName(), cols.toString(), vPlace.toString());        
+        PreparedStatement call = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
         int i = 1;
         for (Object o : vals)
         {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
         }        
-        return call.execute();
+        boolean res = call.execute();
+        ResultSet results = call.getGeneratedKeys();
+        int c=0;
+        while (results.next())
+        {
+            c++;
+            if (c>1) // only get first
+                return res;
+            Class keyClass = entity.getEntityNameTypePairs().get(entity.getPrimaryKeyName());
+            if (keyClass!=null && Long.class.isAssignableFrom(keyClass))
+                entity.setPrimaryKeyValue(results.getLong(1));
+        }
+        con.commit();
+        return res;
     }
     
     public boolean deleteEntity(IEntity entity, String... searchColumns) throws SQLException
@@ -153,14 +176,16 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("DELETE * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
         {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
-        }        
-        return call.execute();
+        }   
+        boolean res = call.execute();
+        con.commit();
+        return res;
     }
     
     public boolean updateEntity(IEntity entity, String... searchColumns) throws SQLException
@@ -176,9 +201,10 @@ public class DerbyConnection {
         StringBuilder vPlace = new StringBuilder();
         List<Object> setvals = new LinkedList<>();
         List<Object> condvals = new LinkedList<>();
+        Set<String> updatable = entity.getUpdatableEntityValues().keySet();
         boolean first = true;
         boolean firstSet = true;
-        for (Entry<String, Object> e : entity.getUpdatableEntityValues().entrySet())
+        for (Entry<String, Object> e : entity.getEntityValues().entrySet())
         {
             if (cols.contains(e.getKey()))
             {
@@ -194,20 +220,23 @@ public class DerbyConnection {
                 conds.append("=(?)");
                 condvals.add(e.getValue());
             }
-            if (firstSet)
+            if (updatable.contains(e.getKey()))
             {
-                firstSet=false;
+                if (firstSet)
+                {
+                    firstSet=false;
+                }
+                else
+                {
+                    vPlace.append(',');
+                }
+                vPlace.append(e.getKey());
+                vPlace.append("=(?)");
+                setvals.add(e.getValue());
             }
-            else
-            {
-                vPlace.append(',');
-            }
-            vPlace.append(e.getKey());
-            vPlace.append("=(?)");
-            setvals.add(e.getValue());
         }
         String stmt = String.format("UPDATE %s SET %s WHERE %s", entity.getTableName(), vPlace.toString(), conds.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : setvals)
         {
@@ -219,7 +248,9 @@ public class DerbyConnection {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
         }        
-        return call.execute();
+        boolean res = call.execute();
+        con.commit();
+        return res;
     }
     
     public boolean entityExists(IEntity entity, String... searchColumns) throws SQLException
@@ -251,7 +282,7 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
         {
@@ -279,6 +310,7 @@ public class DerbyConnection {
         boolean first = true;
         for (Entry<String, Object> e : entity.getEntityValues().entrySet())
         {
+            
             if (cols.contains(e.getKey()))
             {
                 if (first)
@@ -295,7 +327,8 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        System.out.println(stmt);
+        PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
         {
@@ -349,7 +382,7 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        CallableStatement call = con.prepareCall(stmt);
+        PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
         {
@@ -360,6 +393,7 @@ public class DerbyConnection {
         
         int c=0;
         Map<String,Object> valMap = new HashMap<>();
+        List<IEntity> entites = new LinkedList<>();
         while (results.next())
         {
             valMap.clear();
@@ -369,8 +403,9 @@ public class DerbyConnection {
                 DerbyConnection.getStatementValue(results, s, entity, valMap);
             }
             entity.setEntityValues(valMap);
+            entites.add(entity.deepCopy());
         }
-        return null;
+        return entites;
     }
 
     public boolean writeEntity(IEntity entity, String... searchColumns) throws SQLException
@@ -381,8 +416,9 @@ public class DerbyConnection {
             return this.createEntity(entity);
     }
     
-    private static void setStatementValue(CallableStatement stmt, int index, Object obj) throws SQLException
+    private static void setStatementValue(PreparedStatement stmt, int index, Object obj) throws SQLException
     {
+        
         if (obj == null)
         {
             stmt.setNull(index, Types.NULL);
@@ -428,37 +464,38 @@ public class DerbyConnection {
     private static void getStatementValue(ResultSet result, String colTitle, IEntity entity, Map<String,Object> valueCollection) throws SQLException
     {
         Class target = entity.getEntityNameTypePairs().get(colTitle);
+        
         if (target == null)
             return;
-        if (target.isAssignableFrom(Integer.class))
+        if (Integer.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getInt(colTitle));
         }
-        else if (target.isAssignableFrom(Short.class))
+        else if (Short.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getShort(colTitle));
         }
-        else if (target.isAssignableFrom(String.class))
+        else if (String.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getString(colTitle));
         }
-        else if (target.isAssignableFrom(Date.class))
+        else if (Date.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getDate(colTitle));
         }
-        else if (target.isAssignableFrom(Long.class))
+        else if (Long.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getLong(colTitle));
         }
-        else if (target.isAssignableFrom(Boolean.class))
+        else if (Integer.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getBoolean(colTitle));
         }
-        else if (target.isAssignableFrom(Boolean.class))
+        else if (Double.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getDouble(colTitle));
         }
-        else if (target.isAssignableFrom(Serializable.class))
+        else if (Serializable.class.isAssignableFrom(target))
         {
             try {
                 valueCollection.put(colTitle, objectFromString(result.getString(colTitle)));
@@ -472,6 +509,8 @@ public class DerbyConnection {
     
     public static Object objectFromString( String s ) throws IOException ,
                                                        ClassNotFoundException {
+        if (s==null)
+            return null;
         byte [] data = Base64.getDecoder().decode( s );
         Object o;
         try (ObjectInputStream ois = new ObjectInputStream( 
@@ -482,6 +521,8 @@ public class DerbyConnection {
    }
     
     public static String objectToString(Serializable o) throws IOException {
+        if (o==null)
+            return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream( baos )) {
             oos.writeObject( o );
@@ -523,6 +564,11 @@ public class DerbyConnection {
     
     public boolean shutdownDb()
     {
+        try {
+            this.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Map<String,String> properties = new HashMap<>();
             properties.put("shutdown", "true");

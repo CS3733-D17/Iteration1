@@ -9,6 +9,7 @@ import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.IEntity;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,7 +72,8 @@ public class LabelComment implements IEntity{
         Map<String, Object> values = new HashMap<>();
         values.put("commentId", this.commentId);
         values.put("comment", this.comment);
-        values.put("commenter", this.commenter.getPrimaryKeyValue());
+        if (this.commenter!=null)
+            values.put("commenter", this.commenter.getPrimaryKeyValue());
         return values;
     }
 
@@ -79,7 +81,8 @@ public class LabelComment implements IEntity{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String, Object> values = new HashMap<>();
         values.put("comment", this.comment);
-        values.put("commenter", this.commenter.getPrimaryKeyValue());
+        if (this.commenter!=null)
+            values.put("commenter", this.commenter.getPrimaryKeyValue());
         return values;
     }
 
@@ -109,7 +112,7 @@ public class LabelComment implements IEntity{
         Map<String, Class> pairs = new HashMap<>();
         pairs.put("commentId", Long.class);
         pairs.put("comment", String.class);
-        pairs.put("commenter", Serializable.class);
+        pairs.put("commenter", String.class);
         return pairs;
     }
 
@@ -117,7 +120,7 @@ public class LabelComment implements IEntity{
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
         cols.add("commentId bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
-        cols.add("comment varchar(4096)");
+        cols.add("comment long varchar");
         cols.add("commenter varchar(512)");
         return cols;
     }
@@ -165,13 +168,21 @@ public class LabelComment implements IEntity{
 
     public static String commentListToString(List<LabelComment> comments)
     {
+        if (comments==null)
+            return null;
         List<String> cString = new LinkedList<>();
         for (LabelComment e : comments)
         {
             try {
+                if (e.getCommentId()==0)
+                {
+                    DerbyConnection.getInstance().createEntity(e);
+                }
                 cString.add(DerbyConnection.objectToString((Serializable) e.getPrimaryKeyValue()));
             } catch (IOException ex) {
                 Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(LabelComment.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return DerbyConnection.collectionToString(cString);
@@ -179,10 +190,12 @@ public class LabelComment implements IEntity{
     
     public static List<LabelComment> commentListFromString(String commentListString)
     {
+        if (commentListString==null)
+            return null;
         List<LabelComment> comments = new LinkedList<>();
         List<String> cStrings = DerbyConnection.collectionFromString(commentListString);
         for (String s : cStrings)
-        {            
+        {          
             try {
                 LabelComment temp = new LabelComment(null,null);
                 temp.setPrimaryKeyValue((Serializable) DerbyConnection.objectFromString(s));

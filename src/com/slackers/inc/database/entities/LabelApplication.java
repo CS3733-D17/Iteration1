@@ -35,7 +35,8 @@ public class LabelApplication implements IEntity{
         SUBMITTED_FOR_REVIEW,
         REJECTED,
         APPROVED,
-        SENT_FOR_CORRECTIONS;
+        SENT_FOR_CORRECTIONS,
+        UNKNOWN;
     }
     public static enum RevisionType
     {
@@ -61,19 +62,19 @@ public class LabelApplication implements IEntity{
     public LabelApplication(long applicationId)
     {
         this.allowedRevisions = new HashSet<>();
-        this.applicant = null;
-        this.applicantAddress = null;
+        this.applicant = new Manufacturer();
+        this.applicantAddress = new Address();
         this.applicationApproval = null;
         this.applicationDate = new java.sql.Date(new java.util.Date().getTime());
         this.applicationId = applicationId;
         this.comments = new LinkedList<>();
-        this.emailAddress = null;
-        this.label = null;
-        this.mailingAddress = null;
-        this.phoneNumber = null;        
-        this.reviewer = null;
-        this.status = null;
-        this.submitter = null;
+        this.emailAddress = "";
+        this.label = new Label();
+        this.mailingAddress = new Address();
+        this.phoneNumber = "";        
+        this.reviewer = new UsEmployee();
+        this.status = ApplicationStatus.UNKNOWN;
+        this.submitter = new UsEmployee();
     }
     
     public LabelApplication()
@@ -89,19 +90,24 @@ public class LabelApplication implements IEntity{
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String,Object> values = new HashMap<>();
-        values.put("applicationId", this.applicationId);                
+        values.put("applicationId", this.applicationId);
         values.put("applicantAddress", this.applicantAddress);
         values.put("mailingAddress", this.mailingAddress);
         values.put("phoneNumber", this.phoneNumber);        
         values.put("emailAddress", this.emailAddress);
         values.put("applicationDate", this.applicationDate);
-        values.put("status", this.status);        
-        values.put("applicant", this.applicant.getPrimaryKeyValue());
-        values.put("reviewer", this.reviewer.getPrimaryKeyValue());
-        values.put("submitter", this.submitter.getPrimaryKeyValue());        
-        values.put("label", this.label.getPrimaryKeyValue());
+        values.put("status", this.status); 
+        if (this.applicant!=null)
+            values.put("applicant", this.applicant.getPrimaryKeyValue());
+        if (this.reviewer!=null)
+            values.put("reviewer", this.reviewer.getPrimaryKeyValue());
+        if (this.submitter!=null)
+            values.put("submitter", this.submitter.getPrimaryKeyValue());  
+        if (this.label!=null)
+            values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
-        values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
+        if (this.applicationApproval!=null)
+            values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
         return values;
     }
@@ -115,12 +121,17 @@ public class LabelApplication implements IEntity{
         values.put("emailAddress", this.emailAddress);
         values.put("applicationDate", this.applicationDate);
         values.put("status", this.status);        
-        values.put("applicant", this.applicant.getPrimaryKeyValue());
-        values.put("reviewer", this.reviewer.getPrimaryKeyValue());
-        values.put("submitter", this.submitter.getPrimaryKeyValue());        
-        values.put("label", this.label.getPrimaryKeyValue());
+        if (this.applicant!=null)
+            values.put("applicant", this.applicant.getPrimaryKeyValue());
+        if (this.reviewer!=null)
+            values.put("reviewer", this.reviewer.getPrimaryKeyValue());
+        if (this.submitter!=null)
+            values.put("submitter", this.submitter.getPrimaryKeyValue());  
+        if (this.label!=null)
+            values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
-        values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
+        if (this.applicationApproval!=null)
+            values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());          
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
         return values;
     }
@@ -130,8 +141,7 @@ public class LabelApplication implements IEntity{
         if (values.containsKey("applicationId"))
         {
             this.applicationId = (long) values.get("applicationId");
-        }
-        
+        }        
         if (values.containsKey("applicantAddress"))
         {
             this.applicantAddress = (Address) values.get("applicantAddress");
@@ -210,20 +220,19 @@ public class LabelApplication implements IEntity{
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String,Class> pairs = new HashMap<>();
-        pairs.put("applicationId", Long.class);
-        
+        pairs.put("applicationId", Long.class);        
         pairs.put("applicantAddress", Serializable.class);
         pairs.put("mailingAddress", Serializable.class);
         pairs.put("phoneNumber", String.class);        
         pairs.put("emailAddress", String.class);
         pairs.put("applicationDate", Date.class);
         pairs.put("status", Serializable.class);        
-        pairs.put("applicant", Serializable.class);
-        pairs.put("reviewer", Serializable.class);
-        pairs.put("submitter", Serializable.class);        
-        pairs.put("label", Serializable.class);
+        pairs.put("applicant", String.class);
+        pairs.put("reviewer", String.class);
+        pairs.put("submitter", String.class);        
+        pairs.put("label", Long.class);
         pairs.put("comments", String.class);
-        pairs.put("applicationApproval", Serializable.class);        
+        pairs.put("applicationApproval", Long.class);        
         pairs.put("allowedRevisions", String.class);
         return pairs;
     }
@@ -240,10 +249,11 @@ public class LabelApplication implements IEntity{
         cols.add("status varchar(256)");
         cols.add("applicant varchar(256)");
         cols.add("reviewer varchar(256)");
+        cols.add("submitter varchar(256)");
         cols.add("label varchar(4096)");
-        cols.add("comments varchar(max)");
+        cols.add("comments long varchar");
         cols.add("applicationApproval varchar(128)");
-        cols.add("allowedRevisions varchar(max)");
+        cols.add("allowedRevisions long varchar");
         return cols;
     }
 
@@ -366,6 +376,7 @@ public class LabelApplication implements IEntity{
 
     public void setApplicationApproval(ApplicationApproval applicationApproval) {
         this.applicationApproval = applicationApproval;
+        this.applicationApproval.setApplication(this);
     }
 
     public Set<RevisionType> getAllowedRevisions() {
@@ -379,12 +390,18 @@ public class LabelApplication implements IEntity{
     
     public static String applicationListToString(List<LabelApplication> applications)
     {
-        List<String> appIds = new LinkedList<>();
+        if (applications==null)
+            return null;
+        List<String> appIds = new LinkedList<>();        
         for (LabelApplication e : applications)
         {
             try {
+                if (e.getApplicationId()==0)
+                    DerbyConnection.getInstance().createEntity(e);
                 appIds.add(DerbyConnection.objectToString((Serializable) e.getPrimaryKeyValue()));
             } catch (IOException ex) {
+                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -393,6 +410,8 @@ public class LabelApplication implements IEntity{
     
     public static List<LabelApplication> applicationListFromString(String appListString)
     {
+        if (appListString==null)
+            return null;
         List<LabelApplication> applications = new LinkedList<>();
         List<String> appStrings = DerbyConnection.collectionFromString(appListString);
         for (String s : appStrings)
