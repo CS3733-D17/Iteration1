@@ -27,6 +27,7 @@ public class MainController implements Initializable{
     @FXML private AnchorPane search;
     @FXML private AnchorPane applications;
     @FXML private AnchorPane form;
+    @FXML private AnchorPane settings;
 
 
     @Override
@@ -76,6 +77,7 @@ public class MainController implements Initializable{
             results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
             applications = FXMLLoader.load(getClass().getResource("../FXML/applications.fxml"));
             form =  FXMLLoader.load(getClass().getResource("../FXML/form.fxml"));
+            settings = FXMLLoader.load(getClass().getResource("../FXML/settings.fxml"));
 
             FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
             search = searchLoader.load();
@@ -100,7 +102,7 @@ public class MainController implements Initializable{
 
     @FXML
     private void settingsClick(){
-        mainContainer.getChildren().setAll(form);
+        mainContainer.getChildren().setAll(settings);
     }
 
     public void resultsClick(){
