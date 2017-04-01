@@ -31,7 +31,6 @@ public class MainController implements Initializable{
 
     SearchController searchController;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the main controller. Starting up program ...");
