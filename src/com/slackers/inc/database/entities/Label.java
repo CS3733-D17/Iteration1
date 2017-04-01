@@ -33,7 +33,7 @@ public class Label implements IEntity{
     }
     
     private long labelId;
-    private double alchoholContent;
+    private double alcoholContent;
     private boolean isAccepted;
     
     private String representativeIdNumber;
@@ -44,7 +44,7 @@ public class Label implements IEntity{
     
     public Label()
     {
-        this.alchoholContent = -1;
+        this.alcoholContent = -1;
         this.labelId = 0;
         this.isAccepted = false;
         this.plantNumber = null;
@@ -55,11 +55,11 @@ public class Label implements IEntity{
     }
 
     public double getAlchoholContent() {
-        return alchoholContent;
+        return alcoholContent;
     }
 
     public void setAlchoholContent(double alchoholContent) {
-        this.alchoholContent = alchoholContent;
+        this.alcoholContent = alchoholContent;
     }
 
     public long getLabelId() {
@@ -128,7 +128,7 @@ public class Label implements IEntity{
         Map<String,Object> values = new HashMap<>();  
         values.put("labelId", this.labelId);
         values.put("isAccepted", this.isAccepted);
-        values.put("alchoholContent", this.alchoholContent);
+        values.put("alchoholContent", this.alcoholContent);
         values.put("representativeIdNumber", this.representativeIdNumber);
         values.put("plantNumber", this.plantNumber);        
         values.put("productSource", this.productSource);
@@ -141,7 +141,7 @@ public class Label implements IEntity{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> values = new HashMap<>();  
         values.put("isAccepted", this.isAccepted);
-        values.put("alchoholContent", this.alchoholContent);
+        values.put("alchoholContent", this.alcoholContent);
         values.put("representativeIdNumber", this.representativeIdNumber);
         values.put("plantNumber", this.plantNumber);        
         values.put("productSource", this.productSource);
@@ -163,7 +163,7 @@ public class Label implements IEntity{
         }
         if (values.containsKey("alchoholContent"))
         {
-            this.alchoholContent = (double) values.get("alchoholContent");
+            this.alcoholContent = (double) values.get("alchoholContent");
         }
         
         if (values.containsKey("representativeIdNumber"))

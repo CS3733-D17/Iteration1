@@ -14,4 +14,6 @@ public class COLASearchController {
         this.colaUser = user;
     }
 
+    public void search(){}
+
 }

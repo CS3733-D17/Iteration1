@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -121,6 +120,7 @@ public class MainController implements Initializable{
 
     // TODO Make sure that preferences are completly deleted except for the key
     // TODO Figure out why it fails on Jason's computer
+    // TODO Change outershell so it only shows possible options
 
     private void loadPages() throws IOException{
 
