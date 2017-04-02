@@ -38,8 +38,6 @@ public class User implements IEntity{
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.firstName = "unknown";
-        this.lastName = "unknown";
         this.userType = UserType.UNKNOWN;
         this.lazyLoad = false;
     }
@@ -121,6 +119,7 @@ public class User implements IEntity{
         temp.put("userType", this.userType.name());
         temp.put("lastName", this.lastName);
         temp.put("firstName", this.firstName);
+        temp.put("userType", this.userType);
         return temp;
     }
 
@@ -150,8 +149,6 @@ public class User implements IEntity{
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
-        pairs.put("firstName", String.class);
-        pairs.put("lastName", String.class);
         pairs.put("previousApplications", String.class);
         pairs.put("templateApplication", Long.class);
         pairs.put("userType", String.class);
@@ -202,7 +199,7 @@ public class User implements IEntity{
 
     @Override
     public String toString() {
-        return "User{" + "password=" + password + ", email=" + email + ", userType=" + userType + '}';
+        return "User{" + "firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + ", email=" + email + ", userType=" + userType + '}';
     }
     
     
