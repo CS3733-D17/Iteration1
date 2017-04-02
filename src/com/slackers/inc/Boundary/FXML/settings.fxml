@@ -58,23 +58,6 @@
                   </HBox>
                   <HBox layoutX="40.0" layoutY="126.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="126.0">
                      <children>
-                      <Label alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="120.0" text="Phone Number:">
-                          <font>
-                              <Font size="16.0" />
-                          </font>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                      </Label>
-                      <TextField fx:id="phone" prefWidth="200.0">
-                          <font>
-                              <Font size="16.0" />
-                          </font>
-                      </TextField>
-                     </children>
-                  </HBox>
-                  <HBox layoutX="383.0" layoutY="120.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="126.0">
-                     <children>
                       <Label alignment="CENTER_RIGHT" prefHeight="32.0" prefWidth="120.0" text="Email Address:">
                           <font>
                               <Font size="16.0" />
@@ -90,7 +73,7 @@
                       </TextField>
                      </children>
                   </HBox>
-                  <HBox layoutX="557.0" layoutY="180.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="190.0">
+                  <HBox layoutX="557.0" layoutY="180.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="150.0">
                      <children>
                         <Button defaultButton="true" mnemonicParsing="false" onAction="#UpdatePersonal" text="Update">
                            <font>

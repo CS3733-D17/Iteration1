@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -29,45 +30,25 @@ public class MainController implements Initializable{
     @FXML private AnchorPane results;
     @FXML private AnchorPane search;
     @FXML private AnchorPane applications;
-    @FXML private AnchorPane form;
     @FXML private AnchorPane settings;
+
+    @FXML private Button applicationButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the main controller. Starting up program ...");
 
+        // Create the Account Controller
         try {
             userController = new AccountController();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        checkLogin();
-    }
-
-    //TODO fix signup so that it creates the user
-    //TODO hide the application button for search users
-    private void checkLogin(){
-
-        System.out.println("Account Controller created. Now checking Preferences");
-
+        // Check program preferences for a user to log in
         programPref = Preferences.userNodeForPackage(MainController.class);
         if(programPref.get("email", "").equals("")){
-            try{
-                loadLogin();
-            }catch (IOException exception){
-                exception.printStackTrace();
-                System.out.println("Unable to load login page.");
-            }
-
-            programPref.put("email", userController.getUser().getEmail());
-            try {
-                programPref.put("password", CryptoTools.encrypt(userController.getUser().getPassword(), programPref));
-            } catch (GeneralSecurityException | IOException e) {
-                e.printStackTrace();
-                System.out.println("Could not save username and password for reiterations");
-            }
-
+            loadLogin();
         }else{
             String password = "";
             try {
@@ -77,12 +58,15 @@ public class MainController implements Initializable{
             }
 
             try {
-                userController.loginUser(programPref.get("email", null), password);
+                if(userController.loginUser(programPref.get("email", null), password) == null){
+                    programPref.put("email", "");
+                    loadLogin();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
+                programPref.put("email", "");
+                loadLogin();
             }
-
-            System.out.println("OK it is persisiting information now");
         }
 
         user = userController.getUser();
@@ -94,54 +78,68 @@ public class MainController implements Initializable{
         }
     }
 
-    private void loadLogin() throws IOException{
-        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../FXML/loginregisterform.fxml"));
-        Parent login = loginLoader.load();
-        String cssDoc = getClass().getResource("../CSS/custom.css").toExternalForm();
-        login.getStylesheets().add(cssDoc);
+    //TODO fix signup so that it creates the user
+    //TODO hide the application button for search users
 
-        LoginController loginController = loginLoader.getController();
-        loginController.setMainController(this);
+    private void loadLogin(){
+        try {
+            FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../FXML/loginregisterform.fxml"));
+            Parent login = loginLoader.load();
+            String cssDoc = getClass().getResource("../CSS/custom.css").toExternalForm();
+            login.getStylesheets().add(cssDoc);
 
-        Stage stage = new Stage();
-        stage.setTitle("Login or Signup");
-        stage.setScene(new Scene(login));
-        stage.showAndWait();
 
-        if(userController.getUser().getEmail() == null){
+            LoginController loginController = loginLoader.getController();
+            loginController.setMainController(this);
+
+            Stage stage = new Stage();
+            stage.setTitle("Login or Signup");
+            stage.setScene(new Scene(login));
+            stage.showAndWait();
+
+        }catch(IOException exception){
+            exception.printStackTrace();
+            System.out.println("Can load login page");
+        }
+
+        if (userController.getUser().getEmail() == null) {
             Platform.exit();
             System.exit(1);
         }
 
-        System.out.println("The email is " + userController.getUser().getEmail() +
-                "\nThe password is: " + userController.getUser().getPassword());
+        programPref.put("email", userController.getUser().getEmail());
+        try {
+            programPref.put("password", CryptoTools.encrypt(userController.getUser().getPassword(), programPref));
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Could not save username and password for reiterations");
+        }
 
     }
 
     // TODO Make sure that preferences are completly deleted except for the key
     // TODO Figure out why it fails on Jason's computer
-    // TODO Change outershell so it only shows possible options
+    // TODO Change outer shell so it only shows possible options
 
     private void loadPages() throws IOException{
+
+        FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
+        search = searchLoader.load();
+        SearchController searchController = searchLoader.getController();
+        searchController.setMainController(this);
+        results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));
         settings = settingsLoader.load();
         SettingsController settingsController = settingsLoader.getController();
         settingsController.setMainController(this);
 
-        FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
-        search = searchLoader.load();
-        SearchController searchController = searchLoader.getController();
-        searchController.setMainController(this);
-
         if(user.getUserType() != User.UserType.COLA_USER){
-            results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
             applications = FXMLLoader.load(getClass().getResource("../FXML/applications.fxml"));
-            form =  FXMLLoader.load(getClass().getResource("../FXML/form.fxml"));
-
             mainContainer.getChildren().setAll(applications);
 
         }else {
+            applicationButton.setVisible(false);
             mainContainer.getChildren().setAll(search);
         }
     }
@@ -180,7 +178,7 @@ public class MainController implements Initializable{
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Shit"); // TODO Change this
+            System.out.println("Logout Failed");
             System.exit(0);
         }
 
