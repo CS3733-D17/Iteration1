@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class ColaUser extends User{
 
+    public static final ColaUser NULL_COLA_USER = new ColaUser("unknown","unknown","unknown","unknown");
+    
     public ColaUser(String firstName, String lastName, String email, String password) {
         super(firstName, lastName, email, password);
         init();

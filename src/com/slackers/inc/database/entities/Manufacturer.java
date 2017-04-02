@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  */
 public class Manufacturer extends User{
 
+    public static final Manufacturer NULL_MANUFACTURER = new Manufacturer("unknown","unknown","unknown","unknown");
+    
     private List<LabelApplication> applications;
     private LabelApplication templateApplication;
 
@@ -46,8 +48,7 @@ public class Manufacturer extends User{
     private void init()
     {
         applications = new LinkedList<>();
-        if (!this.shouldLazyLoad())
-            templateApplication = new LabelApplication();
+        templateApplication = new LabelApplication();
         super.setUserType(UserType.MANUFACTURER);
     }
 
@@ -74,22 +75,19 @@ public class Manufacturer extends User{
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (!this.shouldLazyLoad())
+        if (values.containsKey("applications"))
         {
-            if (values.containsKey("applications"))
-            {
-                this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
-            }
-            if (values.containsKey("templateApplication"))
-            {       
-                this.templateApplication.setPrimaryKeyValue((Serializable) values.get("templateApplication"));
-                try {                
-                    DerbyConnection.getInstance().getEntity(this.templateApplication, this.templateApplication.getPrimaryKeyName());
-                } catch (Exception ex) {
-                    Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
-                }            
-            }
-        }            
+            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
+        }
+        if (values.containsKey("templateApplication"))
+        {       
+            this.templateApplication.setPrimaryKeyValue((Serializable) values.get("templateApplication"));
+            try {                
+                DerbyConnection.getInstance().getEntity(this.templateApplication, this.templateApplication.getPrimaryKeyName());
+            } catch (Exception ex) {
+                Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+        }          
     }
 
     @Override

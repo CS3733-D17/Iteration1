@@ -50,7 +50,7 @@ public class LabelApplicationController {
         this.application.setSubmitter(this.application.getReviewer());
         this.application.setReviewer(employee);
         this.application.getComments().add(comment);       
-        this.application.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
+        this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
     
@@ -115,6 +115,8 @@ public class LabelApplicationController {
         ApplicationApproval approval = new ApplicationApproval(submitter, experationDate);
         this.application.setStatus(LabelApplication.ApplicationStatus.APPROVED);
         this.application.setApplicationApproval(approval);
+        submitter.getApplications().remove(this.application);
+        this.db.writeEntity(submitter, submitter.getPrimaryKeyName());
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
     
@@ -142,11 +144,11 @@ public class LabelApplicationController {
                 employees.sort(new Comparator<UsEmployee>(){
                     @Override
                     public int compare(UsEmployee o1, UsEmployee o2) {
-                        return o2.getApplications().size() - o1.getApplications().size();
+                        return o1.getApplications().size() - o2.getApplications().size();
                     }
                 });
-                employees.forEach((e)->{System.out.println(e);}); 
                 UsEmployee reviewer = employees.get(0);
+                reviewer.getApplications().add(this.application);
                 this.application.setReviewer(reviewer);
                 this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
                 this.db.writeEntity(reviewer, reviewer.getPrimaryKeyName());

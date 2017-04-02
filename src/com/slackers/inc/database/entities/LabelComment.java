@@ -26,8 +26,6 @@ public class LabelComment implements IEntity{
     
     private static final String TABLE = "LABEL_COMMENTS";
 
-    
-    
     private long commentId;
     private String comment;
     private User commenter;
@@ -38,6 +36,11 @@ public class LabelComment implements IEntity{
         this.commentId = 0;
     }
 
+    public LabelComment()
+    {
+        this(User.NULL_USER, "");
+    }
+    
     public long getCommentId() {
         return commentId;
     }
@@ -178,9 +181,7 @@ public class LabelComment implements IEntity{
                 {
                     DerbyConnection.getInstance().createEntity(e);
                 }
-                cString.add(DerbyConnection.objectToString((Serializable) e.getPrimaryKeyValue()));
-            } catch (IOException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+                cString.add(Long.toString(e.getCommentId()));
             } catch (SQLException ex) {
                 Logger.getLogger(LabelComment.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -197,11 +198,13 @@ public class LabelComment implements IEntity{
         for (String s : cStrings)
         {          
             try {
-                LabelComment temp = new LabelComment(new User(),null);
-                temp.setPrimaryKeyValue((Serializable) DerbyConnection.objectFromString(s));
-                System.out.println(temp);
-                DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
-                comments.add(temp);
+                if (s!=null && !s.equals(""))
+                {
+                    LabelComment temp = new LabelComment(new User(),null);
+                    temp.setCommentId(Long.parseLong(s));
+                    DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
+                    comments.add(temp);
+                }
             } catch (Exception ex) {
                 Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
             }            
