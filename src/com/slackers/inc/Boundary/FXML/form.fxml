@@ -19,7 +19,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="330.0" layoutY="40.0" prefWidth="120.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="108.0">
+      <TextField fx:id="repID" layoutX="330.0" layoutY="40.0" prefWidth="120.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="108.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -29,7 +29,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="340.0" layoutY="50.0" prefWidth="120.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="108.0">
+      <TextField fx:id="PBBNumber" layoutX="340.0" layoutY="50.0" prefWidth="120.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="108.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextArea layoutX="76.0" layoutY="172.0" prefHeight="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0">
+      <TextArea fx:id="nameAddress" layoutX="76.0" layoutY="172.0" prefHeight="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -49,7 +49,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="247.0" layoutY="354.0" prefWidth="180.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="418.0">
+      <TextField fx:id="phone" layoutX="247.0" layoutY="354.0" prefWidth="180.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="418.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -59,7 +59,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="257.0" layoutY="364.0" prefWidth="220.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="418.0">
+      <TextField fx:id="email" layoutX="257.0" layoutY="364.0" prefWidth="220.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="418.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -75,7 +75,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="230.0" layoutY="565.0" prefHeight="37.0" prefWidth="730.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
+      <TextField fx:id="brand" layoutX="230.0" layoutY="565.0" prefHeight="37.0" prefWidth="730.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -85,38 +85,23 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox layoutX="270.0" layoutY="630.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="630.0">
-          <items>
-             <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Domestic" />
-                  <String fx:value="International" />
-            </FXCollections>
-          </items>
-      </ComboBox>
       <Label layoutX="75.0" layoutY="591.0" text="Type of Product:" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="630.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ComboBox layoutX="280.0" layoutY="640.0" prefWidth="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="630.0">
-          <items>
-              <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Beer" />
-                  <String fx:value="Wine" />
-                  <String fx:value="Liquor" />
-              </FXCollections>
-          </items>
-      </ComboBox>
       <Label layoutX="48.0" layoutY="691.0" text="Alcohol Content:" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="691.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="230.0" layoutY="687.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="687.0">
+      <TextField fx:id="alcoholContent" layoutX="230.0" layoutY="687.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="687.0">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <Button layoutX="842.0" layoutY="747.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Button layoutX="842.0" layoutY="747.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
+      <ChoiceBox fx:id="type" layoutX="765.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
    </children>
 </AnchorPane>

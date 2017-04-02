@@ -47,7 +47,6 @@ public class SearchController implements Initializable {
         stage.setScene(new Scene(main));
         stage.show();
 
-
     }
 
 
