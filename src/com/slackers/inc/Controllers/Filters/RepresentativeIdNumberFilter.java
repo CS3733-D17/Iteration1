@@ -18,5 +18,10 @@ public class RepresentativeIdNumberFilter implements Filter {
         return label;
     }
 
+    @Override
+    public String getColumn() {
+        return "representativeIdNumber";
+    }
+
 
 }

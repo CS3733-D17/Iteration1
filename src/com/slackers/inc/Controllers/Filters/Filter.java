@@ -8,5 +8,5 @@ import com.slackers.inc.database.entities.Label;
  */
 public interface Filter {
     Label preApply(Label aFilter);
-
+    String getColumn();
 }

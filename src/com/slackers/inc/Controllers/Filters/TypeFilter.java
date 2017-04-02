@@ -22,4 +22,9 @@ public class TypeFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "productType";
+    }
+
 }

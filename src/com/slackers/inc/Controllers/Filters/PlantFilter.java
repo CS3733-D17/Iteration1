@@ -20,4 +20,9 @@ public class PlantFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "plantNumber";
+    }
+
 }

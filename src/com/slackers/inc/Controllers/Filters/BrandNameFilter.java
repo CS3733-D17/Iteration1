@@ -18,5 +18,10 @@ public class BrandNameFilter implements Filter {
         return label;
     }
 
+    @Override
+    public String getColumn() {
+        return "brandName";
+    }
+
 }
 

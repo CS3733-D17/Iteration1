@@ -20,4 +20,9 @@ public class AcceptedFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "isAccepted";
+    }
+
 }

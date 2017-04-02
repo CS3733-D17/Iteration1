@@ -20,4 +20,9 @@ public class IDFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "labelId";
+    }
+
 }

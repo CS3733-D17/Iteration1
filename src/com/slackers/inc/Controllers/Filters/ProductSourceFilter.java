@@ -17,4 +17,9 @@ public class ProductSourceFilter  implements Filter {
         label.setProductSource(source);
         return label;
     }
+
+    @Override
+    public String getColumn() {
+        return "productSource";
+    }
 }

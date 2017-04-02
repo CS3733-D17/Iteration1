@@ -18,4 +18,9 @@ public class VintageFilter implements Filter {
         return label;
     }
 
+    @Override
+    public String getColumn() {
+        return "vintage";
+    }
+
 }

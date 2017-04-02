@@ -20,4 +20,9 @@ public class PHFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "phLevel";
+    }
+
 }

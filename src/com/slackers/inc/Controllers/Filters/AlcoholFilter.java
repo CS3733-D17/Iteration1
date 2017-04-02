@@ -20,4 +20,9 @@ public class AlcoholFilter implements Filter {
         return aFilter;
     }
 
+    @Override
+    public String getColumn() {
+        return "alcoholContent";
+    }
+
 }
