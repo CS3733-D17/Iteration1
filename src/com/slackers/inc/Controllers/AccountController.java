@@ -16,10 +16,6 @@ import java.util.logging.Logger;
  */
 public class AccountController {
 
-    /* TODO Decide to Either Rename it To LoginController and Rename the Boundary Controller (in com.slackers.inc.Boundary.BoundaryControllers)
-     * TODO Can Also Just Keep Like This
-     */
-
     private DerbyConnection db;
     private User user;
 
@@ -29,7 +25,7 @@ public class AccountController {
     }
     
     public AccountController() throws SQLException {
-        this(new User(null, null));
+        this(new User(null, null, null, null));
     }
 
     // returns true if the credentials are valid, and false otherwise
@@ -53,15 +49,15 @@ public class AccountController {
         {
             if (this.user.getUserType() == UserType.COLA_USER)
             {
-                this.user = new ColaUser(this.user.getEmail(), this.user.getPassword());
+                this.user = new ColaUser(this.user.getFirstName(), this.user.getLastName(), this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.MANUFACTURER)
             {
-                this.user = new Manufacturer(this.user.getEmail(), this.user.getPassword());
+                this.user = new Manufacturer(this.user.getFirstName(), this.user.getLastName(), this.user.getEmail(), this.user.getPassword());
             }
             else if (this.user.getUserType() == UserType.US_EMPLOYEE)
             {
-                this.user = new UsEmployee(this.user.getEmail(), this.user.getPassword());
+                this.user = new UsEmployee(this.user.getFirstName(), this.user.getLastName(), this.user.getEmail(), this.user.getPassword());
             }
             else
             {
@@ -76,19 +72,19 @@ public class AccountController {
         }
     }
     
-    public boolean createAccount(String username, String email, String password, UserType type) throws IllegalStateException
+    public boolean createAccount(String firstName, String lastName, String email, String password, UserType type) throws IllegalStateException
     {
         if (type == UserType.COLA_USER)
         {
-            this.user = new ColaUser(email, password);
+            this.user = new ColaUser(firstName, lastName, email, password);
         }
         else if (type == UserType.MANUFACTURER)
         {
-            this.user = new Manufacturer(email, password);
+            this.user = new Manufacturer(firstName, lastName, email, password);
         }
         else if (type == UserType.US_EMPLOYEE)
         {
-            this.user = new UsEmployee(email, password);
+            this.user = new UsEmployee(firstName, lastName, email, password);
         }
         else
         {
@@ -124,6 +120,14 @@ public class AccountController {
     public User getUser()
     {
         return this.user;
+    }
+
+    public void deleteTable(){
+        try {
+            db.deleteTable(this.user.getTableName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
 

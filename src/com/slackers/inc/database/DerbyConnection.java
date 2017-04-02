@@ -76,13 +76,13 @@ public class DerbyConnection {
         CallableStatement call = con.prepareCall(stmt);
         return call.execute();
     }
-    public boolean delteTable(String tableName) throws SQLException
-    {        
+    public boolean deleteTable(String tableName) throws SQLException
+    {
         String stmt = String.format("DROP TABLE IF EXISTS %s", tableName);
         CallableStatement call = con.prepareCall(stmt);
         return call.execute();
     }
-    
+
     private boolean checkForTable(IEntity entity) throws SQLException
     {
         if (this.tables.contains(entity.getTableName()))
@@ -123,14 +123,14 @@ public class DerbyConnection {
                 vals.add(e.getValue());
             }
         }
-        String stmt = String.format("INSERT INTO %s (%s) VALUES (%s)", entity.getTableName(), cols.toString(), vPlace.toString());        
+        String stmt = String.format("INSERT INTO %s (%s) VALUES (%s)", entity.getTableName(), cols.toString(), vPlace.toString());
         PreparedStatement call = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
         int i = 1;
         for (Object o : vals)
         {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
-        }        
+        }
         boolean res = call.execute();
         ResultSet results = call.getGeneratedKeys();
         int c=0;
@@ -182,7 +182,7 @@ public class DerbyConnection {
         {
             DerbyConnection.setStatementValue(call, i, o);
             i++;
-        }   
+        }
         boolean res = call.execute();
         con.commit();
         return res;
@@ -310,7 +310,6 @@ public class DerbyConnection {
         boolean first = true;
         for (Entry<String, Object> e : entity.getEntityValues().entrySet())
         {
-            
             if (cols.contains(e.getKey()))
             {
                 if (first)
@@ -327,7 +326,6 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        System.out.println(stmt);
         PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
@@ -336,7 +334,6 @@ public class DerbyConnection {
             i++;
         }
         ResultSet results = call.executeQuery();
-        
         int c=0;
         Map<String,Object> valMap = new HashMap<>();
         while (results.next())
@@ -418,7 +415,6 @@ public class DerbyConnection {
     
     private static void setStatementValue(PreparedStatement stmt, int index, Object obj) throws SQLException
     {
-        
         if (obj == null)
         {
             stmt.setNull(index, Types.NULL);
@@ -464,7 +460,6 @@ public class DerbyConnection {
     private static void getStatementValue(ResultSet result, String colTitle, IEntity entity, Map<String,Object> valueCollection) throws SQLException
     {
         Class target = entity.getEntityNameTypePairs().get(colTitle);
-        
         if (target == null)
             return;
         if (Integer.class.isAssignableFrom(target))
@@ -487,7 +482,7 @@ public class DerbyConnection {
         {
             valueCollection.put(colTitle, result.getLong(colTitle));
         }
-        else if (Integer.class.isAssignableFrom(target))
+        else if (Boolean.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getBoolean(colTitle));
         }

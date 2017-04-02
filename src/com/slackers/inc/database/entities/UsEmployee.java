@@ -18,8 +18,8 @@ public class UsEmployee extends User{
     private List<LabelApplication> applications;
     private List<LabelApplication> previousApplications;
 
-    public UsEmployee(String email, String password) {
-        super(email, password);
+    public UsEmployee(String firstName, String lastName, String email, String password) {
+        super(firstName, lastName, email, password);
         init();
     }
 
@@ -32,7 +32,7 @@ public class UsEmployee extends User{
     {
         super();
     }
-    
+
     private void init()
     {
         this.applications = new LinkedList<>();
@@ -67,7 +67,7 @@ public class UsEmployee extends User{
         values.put("applications", LabelApplication.applicationListToString(this.applications));
         values.put("previousApplications", LabelApplication.applicationListToString(this.previousApplications));
         return values;
-    }   
+    }
 
     @Override
     public UsEmployee deepCopy() {
@@ -75,6 +75,6 @@ public class UsEmployee extends User{
         e.setEntityValues(this.getEntityValues());
         return e;
     }
-    
-    
+
+
 }

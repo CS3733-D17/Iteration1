@@ -27,11 +27,15 @@ public class User implements IEntity{
     
     private String password;
     private String email;
+    private UserType userType;
     private String firstName;
     private String lastName;
-    private UserType userType;
 
-    public User(String email, String password) {
+
+
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.firstName = "unknown";
@@ -40,10 +44,11 @@ public class User implements IEntity{
     }
     
     public User(String email) {
-        this(email, "");
+        this("", "", email, "");
     }
+
     public User() {
-        this("junk", "junk");
+        this("", "", "", "");
     }
 
     public String getFirstName() {
@@ -89,6 +94,8 @@ public class User implements IEntity{
     @Override
     public Map<String, Object> getEntityValues() {
         Map<String,Object> temp = new HashMap<>();
+        temp.put("firstName", this.firstName);
+        temp.put("lastName", this.lastName);
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
@@ -100,6 +107,8 @@ public class User implements IEntity{
     @Override
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> temp = new HashMap<>();
+        temp.put("firstName", this.firstName);
+        temp.put("lastName", this.lastName);
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
@@ -110,6 +119,10 @@ public class User implements IEntity{
 
     @Override
     public void setEntityValues(Map<String, Object> values) {
+        if (values.containsKey("firstName"))
+            this.firstName = (String)values.get("firstName");
+        if (values.containsKey("lastName"))
+            this.lastName = (String)values.get("lastName");
         if (values.containsKey("password"))
             this.password = (String)values.get("password");
         if (values.containsKey("email"))
@@ -125,6 +138,8 @@ public class User implements IEntity{
     @Override
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String,Class> pairs = new HashMap<>();
+        pairs.put("firstName", String.class);
+        pairs.put("lastName", String.class);
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
@@ -155,10 +170,10 @@ public class User implements IEntity{
     @Override
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
+        cols.add("firstName varchar(256)");
+        cols.add("lastName varchar(256)");
         cols.add("password varchar(256)");
         cols.add("email varchar(256) PRIMARY KEY");
-        cols.add("firstName varchar(64)");
-        cols.add("lastName varchar(64)");
         cols.add("applications long varchar");
         cols.add("previousApplications long varchar");
         cols.add("templateApplication varchar(8192)");

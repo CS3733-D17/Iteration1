@@ -20,6 +20,7 @@ public class WineLabel extends Label{
         super();
         this.vintage = 0;
         this.phLevel = 0;
+        super.setProductType(BeverageType.WINE);
     }
 
     public int getVintage() {

@@ -1,7 +1,6 @@
 ----------------------------------------------------------------
-<<<<<<< Updated upstream
-Sat Apr 01 18:25:42 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-2b9f-c1f8-000006d24d18 
+Sat Apr 01 20:51:16 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-2c25-0933-000006d07ef8 
 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
 Loaded from file:/C:/Users/Public/Documents/NetBeansProjects/Iteration_1/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -10,24 +9,12 @@ user.dir=C:\Users\Public\Documents\NetBeansProjects\Iteration_1
 os.name=Windows 7
 os.arch=amd64
 os.version=6.1
-=======
-Sat Apr 01 18:18:48 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-2b99-740b-00000d38d518 
-on database directory C:\Users\Jason\Desktop\Iteration1\database\DB with class loader sun.misc.Launcher$AppClassLoader@135fbaa4 
-Loaded from file:/C:/Users/Jason/Desktop/Iteration1/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_121-b13
-user.dir=C:\Users\Jason\Desktop\Iteration1
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
->>>>>>> Stashed changes
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Sat Apr 01 18:25:43 EDT 2017:
-Shutting down instance a816c00e-015b-2b9f-c1f8-000006d24d18 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
-Sat Apr 01 18:25:43 EDT 2017 Thread[main,5,main] Cleanup action starting
+Sat Apr 01 20:51:17 EDT 2017:
+Shutting down instance a816c00e-015b-2c25-0933-000006d07ef8 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
+Sat Apr 01 20:51:17 EDT 2017 Thread[main,5,main] Cleanup action starting
 java.sql.SQLException: Database 'database/DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
@@ -42,8 +29,8 @@ java.sql.SQLException: Database 'database/DB' not found.
 	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
 	at java.sql.DriverManager.getConnection(DriverManager.java:664)
 	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:575)
-	at com.slackers.inc.database.entities.LabelApplicationTest.tearDown(LabelApplicationTest.java:64)
+	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:570)
+	at com.slackers.inc.database.entities.CommentTest.tearDown(CommentTest.java:67)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -88,8 +75,8 @@ ERROR XJ004: Database 'database/DB' not found.
 	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
 	at java.sql.DriverManager.getConnection(DriverManager.java:664)
 	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:575)
-	at com.slackers.inc.database.entities.LabelApplicationTest.tearDown(LabelApplicationTest.java:64)
+	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:570)
+	at com.slackers.inc.database.entities.CommentTest.tearDown(CommentTest.java:67)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)

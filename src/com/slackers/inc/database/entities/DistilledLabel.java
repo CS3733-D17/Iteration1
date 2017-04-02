@@ -13,5 +13,6 @@ public class DistilledLabel extends Label{
 
     public DistilledLabel() {
         super();
+        super.setProductType(Label.BeverageType.DISTILLED);
     }    
 }

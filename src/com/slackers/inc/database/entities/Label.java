@@ -23,17 +23,19 @@ public class Label implements IEntity{
     public static enum BeverageSource
     {
         DOMESTIC,
-        IMPORTED;
+        IMPORTED,
+        UNKNOWN;
     }    
     public static enum BeverageType
     {
         WINE,
         BEER,
-        DISTILLED;
+        DISTILLED,
+        UNKNOWN;
     }
     
     private long labelId;
-    private double alchoholContent;
+    private double alcoholContent;
     private boolean isAccepted;
     
     private String representativeIdNumber;
@@ -44,22 +46,22 @@ public class Label implements IEntity{
     
     public Label()
     {
-        this.alchoholContent = -1;
+        this.alcoholContent = -1;
         this.labelId = 0;
         this.isAccepted = false;
-        this.plantNumber = null;
-        this.productSource = null;
-        this.productType = null;
-        this.representativeIdNumber = null;
-        this.brandName = null;
+        this.plantNumber = "";
+        this.productSource = BeverageSource.UNKNOWN;
+        this.productType = BeverageType.UNKNOWN;
+        this.representativeIdNumber = "";
+        this.brandName = "";
     }
 
     public double getAlchoholContent() {
-        return alchoholContent;
+        return alcoholContent;
     }
 
     public void setAlchoholContent(double alchoholContent) {
-        this.alchoholContent = alchoholContent;
+        this.alcoholContent = alchoholContent;
     }
 
     public long getLabelId() {
@@ -128,11 +130,11 @@ public class Label implements IEntity{
         Map<String,Object> values = new HashMap<>();  
         values.put("labelId", this.labelId);
         values.put("isAccepted", this.isAccepted);
-        values.put("alchoholContent", this.alchoholContent);
+        values.put("alchoholContent", this.alcoholContent);
         values.put("representativeIdNumber", this.representativeIdNumber);
         values.put("plantNumber", this.plantNumber);        
-        values.put("productSource", this.productSource);
-        values.put("productType", this.productType);
+        values.put("productSource", this.productSource.name());
+        values.put("productType", this.productType.name());
         values.put("brandName", this.brandName);
         return values;
     }
@@ -141,11 +143,11 @@ public class Label implements IEntity{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> values = new HashMap<>();  
         values.put("isAccepted", this.isAccepted);
-        values.put("alchoholContent", this.alchoholContent);
+        values.put("alchoholContent", this.alcoholContent);
         values.put("representativeIdNumber", this.representativeIdNumber);
         values.put("plantNumber", this.plantNumber);        
-        values.put("productSource", this.productSource);
-        values.put("productType", this.productType);
+        values.put("productSource", this.productSource.name());
+        values.put("productType", this.productType.name());
         values.put("brandName", this.brandName);
         return values;
     }
@@ -163,9 +165,8 @@ public class Label implements IEntity{
         }
         if (values.containsKey("alchoholContent"))
         {
-            this.alchoholContent = (double) values.get("alchoholContent");
-        }
-        
+            this.alcoholContent = (double) values.get("alchoholContent");
+        }        
         if (values.containsKey("representativeIdNumber"))
         {
             this.representativeIdNumber = (String) values.get("representativeIdNumber");
@@ -176,11 +177,11 @@ public class Label implements IEntity{
         }
         if (values.containsKey("productSource"))
         {
-            this.productSource = (BeverageSource) values.get("productSource");
+            this.productSource = BeverageSource.valueOf((String)values.get("productSource"));
         }
         if (values.containsKey("productType"))
         {
-            this.productType = (BeverageType) values.get("productType");
+            this.productType = BeverageType.valueOf((String)values.get("productType"));
         }
         if (values.containsKey("brandName"))
         {
@@ -196,8 +197,8 @@ public class Label implements IEntity{
         pairs.put("alchoholContent", Double.class);
         pairs.put("representativeIdNumber", String.class);
         pairs.put("plantNumber", String.class);        
-        pairs.put("productSource", Serializable.class);
-        pairs.put("productType", Serializable.class);
+        pairs.put("productSource", String.class);
+        pairs.put("productType", String.class);
         pairs.put("brandName", String.class);        
         return pairs;
     }
@@ -210,9 +211,9 @@ public class Label implements IEntity{
         cols.add("alchoholContent float");        
         cols.add("representativeIdNumber varchar(128)");
         cols.add("plantNumber varchar(128)");
-        cols.add("productSource varchar(512)");
-        cols.add("productType varchar(512)");
-        cols.add("brandName varchar(512)");
+        cols.add("productSource varchar(64)");
+        cols.add("productType varchar(64)");
+        cols.add("brandName varchar(128)");
         cols.add("phLevel float");
         cols.add("vintage int");
         return cols;
@@ -239,4 +240,10 @@ public class Label implements IEntity{
         label.setEntityValues(this.getEntityValues());
         return label;
     }
+
+    @Override
+    public String toString() {
+        return "Label{" + "labelId=" + labelId + ", alcoholContent=" + alcoholContent + ", isAccepted=" + isAccepted + ", representativeIdNumber=" + representativeIdNumber + ", plantNumber=" + plantNumber + ", productSource=" + productSource + ", productType=" + productType + ", brandName=" + brandName + '}';
+    }
+    
 }
