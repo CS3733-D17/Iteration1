@@ -13,5 +13,6 @@ public class BeerLabel extends Label{
 
     public BeerLabel() {
         super();
+        super.setProductType(Label.BeverageType.BEER);
     }    
 }

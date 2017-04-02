@@ -174,8 +174,6 @@ public class User implements IEntity{
         cols.add("lastName varchar(256)");
         cols.add("password varchar(256)");
         cols.add("email varchar(256) PRIMARY KEY");
-        cols.add("firstName varchar(64)");
-        cols.add("lastName varchar(64)");
         cols.add("applications long varchar");
         cols.add("previousApplications long varchar");
         cols.add("templateApplication varchar(8192)");
