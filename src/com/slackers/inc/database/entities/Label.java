@@ -43,6 +43,8 @@ public class Label implements IEntity{
     private BeverageSource productSource;
     private BeverageType productType;
     private String brandName;
+    private double phLevel;
+    private int vintage;
     
     public Label()
     {
@@ -54,6 +56,18 @@ public class Label implements IEntity{
         this.productType = BeverageType.UNKNOWN;
         this.representativeIdNumber = "";
         this.brandName = "";
+    }
+
+    public double getPhLevel() { return phLevel;}
+
+    public void setPhLevel(double value) { phLevel = value; }
+
+    public void setVintage(int vintage) {
+        this.vintage = vintage;
+    }
+
+    public int getVintage() {
+        return vintage;
     }
 
     public double getAlchoholContent() {
@@ -149,6 +163,8 @@ public class Label implements IEntity{
         values.put("productSource", this.productSource.name());
         values.put("productType", this.productType.name());
         values.put("brandName", this.brandName);
+        values.put("phLevel", phLevel);
+        values.put("vintage", vintage);
         return values;
     }
 
@@ -187,6 +203,12 @@ public class Label implements IEntity{
         {
             this.brandName = (String) values.get("brandName");
         }
+        if(values.containsKey("vintage")){
+            vintage = (int) values.get("vintage");
+        }
+        if(values.containsKey("phLevel")){
+            phLevel = (double) values.get("phLevel");
+        }
     }
 
     @Override
@@ -199,7 +221,9 @@ public class Label implements IEntity{
         pairs.put("plantNumber", String.class);        
         pairs.put("productSource", String.class);
         pairs.put("productType", String.class);
-        pairs.put("brandName", String.class);        
+        pairs.put("brandName", String.class);
+        pairs.put("vintage", Integer.class);
+        pairs.put("phLevel", Double.class);
         return pairs;
     }
 
