@@ -1,9 +1,7 @@
-package com.slackers.inc.Controllers;
+package com.slackers.inc.Controllers.Filters;
 
 
 import com.slackers.inc.database.entities.Label;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by jestrada on 4/2/17.
