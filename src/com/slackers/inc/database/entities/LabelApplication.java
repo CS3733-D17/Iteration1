@@ -33,6 +33,7 @@ public class LabelApplication implements IEntity{
     public static enum ApplicationStatus
     {
         SUBMITTED_FOR_REVIEW,
+        UNDER_REVIEW,
         REJECTED,
         APPROVED,
         SENT_FOR_CORRECTIONS,
@@ -281,11 +282,10 @@ public class LabelApplication implements IEntity{
     }
 
     @Override
-    public void setPrimaryKeyValue(Serializable value) {}
-
-    public void setPrimaryKeyValue(Object value) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setPrimaryKeyValue(Serializable value) {
+        this.applicationId = (long) value;
     }
+
 
     public long getApplicationId() {
         return applicationId;
@@ -348,6 +348,8 @@ public class LabelApplication implements IEntity{
     }
 
     public void setApplicant(Manufacturer applicant) {
+        if (!applicant.getApplications().contains(this))
+            applicant.addApplications(this);
         this.applicant = applicant;
     }
 
@@ -356,6 +358,8 @@ public class LabelApplication implements IEntity{
     }
 
     public void setReviewer(UsEmployee reviewer) {
+        if (!reviewer.getApplications().contains(this))
+            reviewer.getApplications().add(this);
         this.reviewer = reviewer;
     }
 
@@ -364,6 +368,14 @@ public class LabelApplication implements IEntity{
     }
 
     public void setSubmitter(UsEmployee submitter) {
+        if (!submitter.getPreviousApplications().contains(this))
+        {
+            submitter.getPreviousApplications().add(this);
+        }
+        if (submitter.getApplications().contains(this))
+        {
+            submitter.getApplications().remove(this);
+        }
         this.submitter = submitter;
     }
 
@@ -411,9 +423,7 @@ public class LabelApplication implements IEntity{
             try {
                 if (e.getApplicationId()==0)
                     DerbyConnection.getInstance().createEntity(e);
-                appIds.add(DerbyConnection.objectToString((Serializable) e.getPrimaryKeyValue()));
-            } catch (IOException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+                appIds.add(Long.toString(e.getApplicationId()));
             } catch (SQLException ex) {
                 Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -429,14 +439,17 @@ public class LabelApplication implements IEntity{
         List<String> appStrings = DerbyConnection.collectionFromString(appListString);
         for (String s : appStrings)
         {            
-            try {
-                LabelApplication temp = new LabelApplication();
-                temp.setPrimaryKeyValue((Serializable) DerbyConnection.objectFromString(s));
-                DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
-                applications.add(temp);
-            } catch (Exception ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+            if (s!=null && !s.equals(""))
+            {
+                try {
+                    LabelApplication temp = new LabelApplication();
+                    temp.setApplicationId(Long.parseLong(s));
+                    DerbyConnection.getInstance().getEntity(temp, "applicationId");
+                    applications.add(temp);
+                } catch (Exception ex) {
+                    Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+                }  
+            }
         }
         return applications;
     }

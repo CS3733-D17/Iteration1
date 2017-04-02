@@ -31,7 +31,7 @@ public class User implements IEntity{
     private String firstName;
     private String lastName;
 
-
+    private boolean lazyLoad;
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -41,6 +41,7 @@ public class User implements IEntity{
         this.firstName = "unknown";
         this.lastName = "unknown";
         this.userType = UserType.UNKNOWN;
+        this.lazyLoad = false;
     }
     
     public User(String email) {
@@ -49,8 +50,14 @@ public class User implements IEntity{
 
     public User() {
         this("", "", "", "");
+        this.lazyLoad = true;
     }
 
+    protected boolean shouldLazyLoad()
+    {
+        return this.lazyLoad;
+    }
+    
     public String getFirstName() {
         return firstName;
     }
@@ -98,7 +105,7 @@ public class User implements IEntity{
         temp.put("lastName", this.lastName);
         temp.put("password", this.password);
         temp.put("email", this.email);
-        temp.put("userType", this.userType);
+        temp.put("userType", this.userType.name());
         temp.put("firstName", this.firstName);
         temp.put("lastName", this.lastName);
         return temp;
@@ -111,7 +118,7 @@ public class User implements IEntity{
         temp.put("lastName", this.lastName);
         temp.put("password", this.password);
         temp.put("email", this.email);
-        temp.put("userType", this.userType);
+        temp.put("userType", this.userType.name());
         temp.put("lastName", this.lastName);
         temp.put("firstName", this.firstName);
         return temp;
@@ -128,7 +135,7 @@ public class User implements IEntity{
         if (values.containsKey("email"))
             this.email = (String)values.get("email");
         if (values.containsKey("userType"))
-            this.userType = (UserType)values.get("userType");
+            this.userType = UserType.valueOf((String)values.get("userType"));
         if (values.containsKey("firstName"))
             this.firstName = (String)values.get("firstName");
         if (values.containsKey("lastName"))
@@ -147,7 +154,7 @@ public class User implements IEntity{
         pairs.put("lastName", String.class);
         pairs.put("previousApplications", String.class);
         pairs.put("templateApplication", Long.class);
-        pairs.put("userType", Serializable.class);
+        pairs.put("userType", String.class);
         return pairs;
     }
 

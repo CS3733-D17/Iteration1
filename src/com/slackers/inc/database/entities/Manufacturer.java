@@ -40,12 +40,14 @@ public class Manufacturer extends User{
     public Manufacturer()
     {
         super();
+        init();
     }
     
     private void init()
     {
         applications = new LinkedList<>();
-        templateApplication = new LabelApplication();
+        if (!this.shouldLazyLoad())
+            templateApplication = new LabelApplication();
         super.setUserType(UserType.MANUFACTURER);
     }
 
@@ -72,20 +74,22 @@ public class Manufacturer extends User{
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (values.containsKey("applications"))
+        if (!this.shouldLazyLoad())
         {
-            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
-        }
-        if (values.containsKey("templateApplication"))
-        {       
-            this.templateApplication.setPrimaryKeyValue((Serializable) values.get("templateApplication"));
-            try {                
-                DerbyConnection.getInstance().getEntity(this.templateApplication, this.templateApplication.getPrimaryKeyName());
-            } catch (Exception ex) {
-                Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
-            }            
-        }
-            
+            if (values.containsKey("applications"))
+            {
+                this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
+            }
+            if (values.containsKey("templateApplication"))
+            {       
+                this.templateApplication.setPrimaryKeyValue((Serializable) values.get("templateApplication"));
+                try {                
+                    DerbyConnection.getInstance().getEntity(this.templateApplication, this.templateApplication.getPrimaryKeyName());
+                } catch (Exception ex) {
+                    Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
+                }            
+            }
+        }            
     }
 
     @Override

@@ -30,7 +30,6 @@ public class ApplicationApproval implements IEntity{
     private Date experationDate;
     private LabelApplication application;
     private long approvalId;
-    private boolean isApproved;
 
     public ApplicationApproval(UsEmployee agent, Date approvalDate, Date experationDate) {
         this.agent = agent;
@@ -43,7 +42,7 @@ public class ApplicationApproval implements IEntity{
     public ApplicationApproval(UsEmployee agent, Date experationDate) {
         this(agent, new Date(new java.util.Date().getTime()), experationDate);
     }
-
+    
     public long getApprovalId() {
         return approvalId;
     }

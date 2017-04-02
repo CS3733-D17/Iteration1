@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sat Apr 01 20:51:16 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-2c25-0933-000006d07ef8 
+Sun Apr 02 14:55:06 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-3005-4f01-000006d08298 
 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
 Loaded from file:/C:/Users/Public/Documents/NetBeansProjects/Iteration_1/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,9 +12,9 @@ os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Sat Apr 01 20:51:17 EDT 2017:
-Shutting down instance a816c00e-015b-2c25-0933-000006d07ef8 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
-Sat Apr 01 20:51:17 EDT 2017 Thread[main,5,main] Cleanup action starting
+Sun Apr 02 14:55:07 EDT 2017:
+Shutting down instance a816c00e-015b-3005-4f01-000006d08298 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
+Sun Apr 02 14:55:07 EDT 2017 Thread[main,5,main] Cleanup action starting
 java.sql.SQLException: Database 'database/DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
@@ -29,8 +29,8 @@ java.sql.SQLException: Database 'database/DB' not found.
 	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
 	at java.sql.DriverManager.getConnection(DriverManager.java:664)
 	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:570)
-	at com.slackers.inc.database.entities.CommentTest.tearDown(CommentTest.java:67)
+	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:625)
+	at com.slackers.inc.database.Controllers.LabelApplicationControllerTest.tearDown(LabelApplicationControllerTest.java:53)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -75,8 +75,8 @@ ERROR XJ004: Database 'database/DB' not found.
 	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
 	at java.sql.DriverManager.getConnection(DriverManager.java:664)
 	at java.sql.DriverManager.getConnection(DriverManager.java:270)
-	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:570)
-	at com.slackers.inc.database.entities.CommentTest.tearDown(CommentTest.java:67)
+	at com.slackers.inc.database.DerbyConnection.shutdownDb(DerbyConnection.java:625)
+	at com.slackers.inc.database.Controllers.LabelApplicationControllerTest.tearDown(LabelApplicationControllerTest.java:53)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
