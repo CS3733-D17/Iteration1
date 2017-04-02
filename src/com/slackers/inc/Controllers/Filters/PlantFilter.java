@@ -1,4 +1,4 @@
-package com.slackers.inc.Controllers;
+package com.slackers.inc.Controllers.Filters;
 
 
 import com.slackers.inc.database.entities.Label;
@@ -18,6 +18,11 @@ public class PlantFilter implements Filter {
     public Label preApply(Label aFilter) {
         aFilter.setPlantNumber(value);
         return aFilter;
+    }
+
+    @Override
+    public String getColumn() {
+        return "plantNumber";
     }
 
 }

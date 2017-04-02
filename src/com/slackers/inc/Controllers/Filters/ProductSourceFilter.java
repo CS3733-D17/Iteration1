@@ -1,4 +1,4 @@
-package com.slackers.inc.Controllers;
+package com.slackers.inc.Controllers.Filters;
 
 import com.slackers.inc.database.entities.Label;
 
@@ -16,5 +16,10 @@ public class ProductSourceFilter  implements Filter {
     public Label preApply(Label label) {
         label.setProductSource(source);
         return label;
+    }
+
+    @Override
+    public String getColumn() {
+        return "productSource";
     }
 }

@@ -1,4 +1,4 @@
-package com.slackers.inc.Controllers;
+package com.slackers.inc.Controllers.Filters;
 
 import com.slackers.inc.database.entities.Label;
 
@@ -16,6 +16,11 @@ public class VintageFilter implements Filter {
     public Label preApply(Label label){
         label.setVintage(vintage);
         return label;
+    }
+
+    @Override
+    public String getColumn() {
+        return "vintage";
     }
 
 }
