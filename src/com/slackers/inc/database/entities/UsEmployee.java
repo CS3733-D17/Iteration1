@@ -31,6 +31,7 @@ public class UsEmployee extends User{
     public UsEmployee()
     {
         super();
+        init();
     }
 
     private void init()
@@ -43,13 +44,16 @@ public class UsEmployee extends User{
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (values.containsKey("applications"))
+        if (!this.shouldLazyLoad())
         {
-            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
-        }
-        if (values.containsKey("previousApplications"))
-        {
-            this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
+            if (values.containsKey("applications"))
+            {
+                this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
+            }
+            if (values.containsKey("previousApplications"))
+            {
+                this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
+            }
         }
     }
 
@@ -76,5 +80,24 @@ public class UsEmployee extends User{
         return e;
     }
 
+    public List<LabelApplication> getApplications() {
+        return applications;
+    }
 
+    public void setApplications(List<LabelApplication> applications) {
+        this.applications = applications;
+    }
+
+    public List<LabelApplication> getPreviousApplications() {
+        return previousApplications;
+    }
+
+    public void setPreviousApplications(List<LabelApplication> previousApplications) {
+        this.previousApplications = previousApplications;
+    }
+
+    @Override
+    public String toString() {
+        return "UsEmployee{" + super.toString()+"applications=" + applications.size() + '}';
+    }
 }

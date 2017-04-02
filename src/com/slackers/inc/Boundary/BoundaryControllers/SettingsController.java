@@ -19,30 +19,16 @@ import java.util.ResourceBundle;
 public class SettingsController implements Initializable {
 
     // TODO Display information specific to each type of user
-    // TODO Remove Phone Number from the general area
 
-    @FXML
-    private TextField firstName;
+    @FXML private TextField firstName;
+    @FXML private TextField lastName;
+    @FXML private TextField email;
 
-    @FXML
-    private TextField lastName;
+    @FXML private TextField oldPassword;
+    @FXML private TextField newPassword;
+    @FXML private Label errorMessage;
 
-    @FXML
-    private TextField phone;
-
-    @FXML
-    private TextField oldPassword;
-
-    @FXML
-    private TextField newPassword;
-
-    @FXML
-    private TextField email;
-
-    @FXML
-    private Label errorMessage;
-
-    public MainController main;
+    private MainController main;
 
     private FadeTransition fadeOut = new FadeTransition(
             Duration.millis(1000)
@@ -50,6 +36,12 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        String name = main.getUser().getFirstName();
+
+        firstName.setText(main.getUser().getFirstName());
+        lastName.setText(main.getUser().getLastName());
+        email.setText(main.getUser().getEmail());
+
         fadeOut.setNode(errorMessage);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
@@ -59,18 +51,14 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    void UpdatePersonal(ActionEvent event) {
+    void UpdatePersonal() {
         main.getUser().setEmail(email.getText());
-        //main.getUser().setPhone(phone.getText());
-
-        // TODO Connect to ManufacturerController and Add that Information
-
         main.getUser().setFirstName(firstName.getText());
         main.getUser().setLastName(lastName.getText());
     }
 
     @FXML
-    void UpdatePassword(ActionEvent event) {
+    void UpdatePassword() {
         if(main.getUser().getPassword().equals(oldPassword.getText())){
             main.getUser().setPassword(newPassword.getText());
         }
@@ -80,6 +68,9 @@ public class SettingsController implements Initializable {
             fadeOut.playFromStart();
         }
     }
+
+    // TODO Connect to ManufacturerController and Add that Information
+
 
     public void setMainController(MainController mainController) {
         this.main = mainController ;

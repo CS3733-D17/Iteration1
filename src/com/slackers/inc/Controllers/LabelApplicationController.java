@@ -6,15 +6,21 @@
 package com.slackers.inc.Controllers;
 
 import com.slackers.inc.database.DerbyConnection;
+import com.slackers.inc.database.IEntity;
 import com.slackers.inc.database.entities.ApplicationApproval;
 import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.LabelApplication.RevisionType;
 import com.slackers.inc.database.entities.LabelComment;
 import com.slackers.inc.database.entities.Manufacturer;
 import com.slackers.inc.database.entities.UsEmployee;
+import com.slackers.inc.database.entities.User;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -126,7 +132,31 @@ public class LabelApplicationController {
     
     public boolean autoSelectReviewer()
     {
-        
+        UsEmployee target = new UsEmployee();
+        target.setUserType(User.UserType.US_EMPLOYEE);
+        try {
+            List<UsEmployee> employees = DerbyConnection.getInstance().getAllEntites_Typed(target,"userType");
+            if (!employees.isEmpty())
+            {
+                
+                employees.sort(new Comparator<UsEmployee>(){
+                    @Override
+                    public int compare(UsEmployee o1, UsEmployee o2) {
+                        return o2.getApplications().size() - o1.getApplications().size();
+                    }
+                });
+                employees.forEach((e)->{System.out.println(e);}); 
+                UsEmployee reviewer = employees.get(0);
+                this.application.setReviewer(reviewer);
+                this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
+                this.db.writeEntity(reviewer, reviewer.getPrimaryKeyName());
+                this.saveApplication();
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplicationController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
         
         return false;
     }

@@ -11,9 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -34,6 +32,7 @@ public class LoginController implements Initializable{
     @FXML private TextField lastNameField;
     @FXML private TextField emailField;
     @FXML private TextField passwordField;
+    @FXML private ToggleGroup userType;
     @FXML private Label signUpErrorLabel;
 
     @FXML private TextField loginEmailField;
@@ -84,6 +83,7 @@ public class LoginController implements Initializable{
         logInButton.disableProperty().bind(logInBinding);
 
         fadeOut.setNode(logInErrorLabel);
+        fadeOut.setNode(signUpErrorLabel);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
@@ -109,15 +109,35 @@ public class LoginController implements Initializable{
 
     @FXML
     void getStartedClick(ActionEvent event){
-        System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
 
-                + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText());
+        User.UserType type;
+
+        if(userType.getSelectedToggle() != null){
+            switch (((RadioButton)userType.getSelectedToggle()).getText()){
+                case "Customer":
+                    type = User.UserType.COLA_USER;
+                    break;
+                case "Manufacturer":
+                    type = User.UserType.MANUFACTURER;
+                    break;
+                case "Employee":
+                    type = User.UserType.US_EMPLOYEE;
+                    break;
+                default:
+                    type = User.UserType.COLA_USER;
+            }
+        } else {
+            type = User.UserType.COLA_USER;
+        }
+
+        System.out.println("Name: " + firstNameField.getText() + " " + lastNameField.getText()
+                + "\nEmail: " + emailField.getText() + "\nPassword: " + passwordField.getText()
+                + "\nType: " + type);
+
         try {
             mainController.getAccountController().createAccount(firstNameField.getText(), lastNameField.getText(),
-                    emailField.getText(), passwordField.getText(), User.UserType.COLA_USER);
+                    emailField.getText(), passwordField.getText(), type);
             ((Node)(event.getSource())).getScene().getWindow().hide();
-
-            // TODO Fix RadioButton so it puts the right UserType
 
             // TODO Form validation for right information
             // TODO Form validation for SQL Injection (do in another iteration)
@@ -150,7 +170,7 @@ public class LoginController implements Initializable{
 
     }
 
-    // TODO Figure out why clsing doesn't work exactly
+    // TODO Figure out why closing doesn't work exactly all the time
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController ;
