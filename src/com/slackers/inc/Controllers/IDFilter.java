@@ -15,7 +15,7 @@ public class IDFilter implements Filter {
     }
 
     @Override
-    public Label preapply(Label aFilter) {
+    public Label preApply(Label aFilter) {
         aFilter.setLabelId(id);
         return aFilter;
     }

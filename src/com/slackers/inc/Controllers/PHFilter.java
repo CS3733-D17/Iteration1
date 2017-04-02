@@ -15,7 +15,7 @@ public class PHFilter implements Filter {
     }
 
     @Override
-    public Label preapply(Label aFilter) {
+    public Label preApply(Label aFilter) {
         aFilter.setPhLevel(id);
         return aFilter;
     }

@@ -19,7 +19,7 @@ public class TypeFilter implements Filter {
     }
 
     @Override
-    public Label preapply(Label aFilter) {
+    public Label preApply(Label aFilter) {
         aFilter.setProductType(value);
         return aFilter;
     }
