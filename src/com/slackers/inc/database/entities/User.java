@@ -15,6 +15,8 @@ import java.util.*;
  */
 public class User implements IEntity{
     
+    public static final User NULL_USER = new User("unknown","unknown","unknown","unknown");
+    
     private static final String TABLE = "USERS";
     
     public static enum UserType
@@ -31,15 +33,12 @@ public class User implements IEntity{
     private String firstName;
     private String lastName;
 
-    private boolean lazyLoad;
-
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.userType = UserType.UNKNOWN;
-        this.lazyLoad = false;
     }
     
     public User(String email) {
@@ -48,12 +47,6 @@ public class User implements IEntity{
 
     public User() {
         this("", "", "", "");
-        this.lazyLoad = true;
-    }
-
-    protected boolean shouldLazyLoad()
-    {
-        return this.lazyLoad;
     }
     
     public String getFirstName() {

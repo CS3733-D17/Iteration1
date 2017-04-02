@@ -52,9 +52,9 @@ public class LabelApplication implements IEntity{
     private String emailAddress;
     private Date applicationDate;
     private ApplicationStatus status;
-    private Manufacturer applicant;
-    private UsEmployee reviewer;
-    private UsEmployee submitter;
+    private String applicant;
+    private String reviewer;
+    private String submitter;
     private Label label;
     private List<LabelComment> comments;
     private ApplicationApproval applicationApproval;
@@ -63,7 +63,7 @@ public class LabelApplication implements IEntity{
     public LabelApplication(long applicationId)
     {
         this.allowedRevisions = new HashSet<>();
-        this.applicant = new Manufacturer();
+        this.applicant = "";
         this.applicantAddress = new Address();
         this.applicationApproval = null;
         this.applicationDate = new java.sql.Date(new java.util.Date().getTime());
@@ -73,9 +73,9 @@ public class LabelApplication implements IEntity{
         this.label = new Label();
         this.mailingAddress = new Address();
         this.phoneNumber = "";        
-        this.reviewer = new UsEmployee();
+        this.reviewer = "";
         this.status = ApplicationStatus.UNKNOWN;
-        this.submitter = new UsEmployee();
+        this.submitter = "";
     }
     
     public LabelApplication()
@@ -99,11 +99,11 @@ public class LabelApplication implements IEntity{
         values.put("applicationDate", this.applicationDate);
         values.put("status", this.status); 
         if (this.applicant!=null)
-            values.put("applicant", this.applicant.getPrimaryKeyValue());
+            values.put("applicant", this.applicant);
         if (this.reviewer!=null)
-            values.put("reviewer", this.reviewer.getPrimaryKeyValue());
+            values.put("reviewer", this.reviewer);
         if (this.submitter!=null)
-            values.put("submitter", this.submitter.getPrimaryKeyValue());  
+            values.put("submitter", this.submitter);  
         if (this.label!=null)
             values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
@@ -123,11 +123,11 @@ public class LabelApplication implements IEntity{
         values.put("applicationDate", this.applicationDate);
         values.put("status", this.status);        
         if (this.applicant!=null)
-            values.put("applicant", this.applicant.getPrimaryKeyValue());
+            values.put("applicant", this.applicant);
         if (this.reviewer!=null)
-            values.put("reviewer", this.reviewer.getPrimaryKeyValue());
+            values.put("reviewer", this.reviewer);
         if (this.submitter!=null)
-            values.put("submitter", this.submitter.getPrimaryKeyValue());  
+            values.put("submitter", this.submitter);  
         if (this.label!=null)
             values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
@@ -165,30 +165,15 @@ public class LabelApplication implements IEntity{
         }
         if (values.containsKey("applicant"))
         {
-            this.applicant.setPrimaryKeyValue((Serializable)values.get("applicant"));
-            try {
-                DerbyConnection.getInstance().getEntity(this.applicant, this.applicant.getPrimaryKeyName());
-            } catch (SQLException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.applicant = (String)values.get("applicant");
         }
         if (values.containsKey("reviewer"))
         {
-            this.reviewer.setPrimaryKeyValue((Serializable)values.get("reviewer"));
-            try {
-                DerbyConnection.getInstance().getEntity(this.reviewer, this.reviewer.getPrimaryKeyName());
-            } catch (SQLException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.reviewer = (String)values.get("reviewer");
         }
         if (values.containsKey("submitter"))
         {
-            this.submitter.setPrimaryKeyValue((Serializable)values.get("submitter"));
-            try {
-                DerbyConnection.getInstance().getEntity(this.submitter, this.submitter.getPrimaryKeyName());
-            } catch (SQLException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.submitter = (String)values.get("submitter");
         }
         if (values.containsKey("label"))
         {
@@ -344,39 +329,48 @@ public class LabelApplication implements IEntity{
     }
 
     public Manufacturer getApplicant() {
-        return applicant;
+        Manufacturer m = new Manufacturer();
+        m.setPrimaryKeyValue(this.applicant);
+        try {
+            DerbyConnection.getInstance().getEntity(m, m.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return m;
     }
 
     public void setApplicant(Manufacturer applicant) {
-        if (!applicant.getApplications().contains(this))
-            applicant.addApplications(this);
-        this.applicant = applicant;
+        this.applicant = (String)applicant.getPrimaryKeyValue();
     }
 
     public UsEmployee getReviewer() {
-        return reviewer;
+        UsEmployee e = new UsEmployee();
+        e.setPrimaryKeyValue(this.reviewer);
+        try {
+            DerbyConnection.getInstance().getEntity(e, e.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return e;
     }
 
     public void setReviewer(UsEmployee reviewer) {
-        if (!reviewer.getApplications().contains(this))
-            reviewer.getApplications().add(this);
-        this.reviewer = reviewer;
+        this.reviewer = (String)reviewer.getPrimaryKeyValue();
     }
 
     public UsEmployee getSubmitter() {
-        return submitter;
+        UsEmployee e = new UsEmployee();
+        e.setPrimaryKeyValue(this.submitter);
+        try {
+            DerbyConnection.getInstance().getEntity(e, e.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return e;
     }
 
     public void setSubmitter(UsEmployee submitter) {
-        if (!submitter.getPreviousApplications().contains(this))
-        {
-            submitter.getPreviousApplications().add(this);
-        }
-        if (submitter.getApplications().contains(this))
-        {
-            submitter.getApplications().remove(this);
-        }
-        this.submitter = submitter;
+        this.submitter = (String)submitter.getPrimaryKeyValue();
     }
 
     public Label getLabel() {

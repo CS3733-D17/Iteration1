@@ -45,6 +45,7 @@ public class Label implements IEntity{
     private String brandName;
     private double phLevel;
     private int vintage;
+    private ApplicationApproval approval;
     
     public Label()
     {
@@ -56,8 +57,17 @@ public class Label implements IEntity{
         this.productType = BeverageType.UNKNOWN;
         this.representativeIdNumber = "";
         this.brandName = "";
+        this.approval = new ApplicationApproval();
     }
 
+    public ApplicationApproval getApproval() {
+        return approval;
+    }
+
+    public void setApproval(ApplicationApproval approval) {
+        this.approval = approval;
+    }    
+    
     public double getPhLevel() { return phLevel;}
 
     public void setPhLevel(double value) { phLevel = value; }
@@ -70,11 +80,11 @@ public class Label implements IEntity{
         return vintage;
     }
 
-    public double getAlchoholContent() {
+    public double getAlcoholContent() {
         return alcoholContent;
     }
 
-    public void setAlchoholContent(double alchoholContent) {
+    public void setAlcoholContent(double alchoholContent) {
         this.alcoholContent = alchoholContent;
     }
 
@@ -209,6 +219,10 @@ public class Label implements IEntity{
         if(values.containsKey("phLevel")){
             phLevel = (double) values.get("phLevel");
         }
+        if(values.containsKey("approval")){
+            values.put("approval", this.approval.getPrimaryKeyValue());  
+        }
+        
     }
 
     @Override

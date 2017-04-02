@@ -28,19 +28,23 @@ public class ApplicationApproval implements IEntity{
     private UsEmployee agent;
     private Date approvalDate;
     private Date experationDate;
-    private LabelApplication application;
+    private long applicationId;
     private long approvalId;
 
     public ApplicationApproval(UsEmployee agent, Date approvalDate, Date experationDate) {
         this.agent = agent;
         this.approvalDate = approvalDate;
         this.experationDate = experationDate;
-        this.application = null;
+        this.applicationId = 0;
         this.approvalId = 0;
     }
     
     public ApplicationApproval(UsEmployee agent, Date experationDate) {
         this(agent, new Date(new java.util.Date().getTime()), experationDate);
+    }
+    
+    public ApplicationApproval() {
+        this(UsEmployee.NULL_EMPLOYEE, new Date(new java.util.Date().getTime()));
     }
     
     public long getApprovalId() {
@@ -52,11 +56,17 @@ public class ApplicationApproval implements IEntity{
     }
     
     public LabelApplication getApplication() {
-        return application;
+        LabelApplication l = new LabelApplication(this.applicationId);
+        try {
+            DerbyConnection.getInstance().getEntity(l, l.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(ApplicationApproval.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return l;
     }
 
-    public void setApplication(LabelApplication applicationId) {
-        this.application = applicationId;
+    public void setApplication(LabelApplication application) {
+        this.applicationId = (Long)application.getPrimaryKeyValue();
     }   
     
     public UsEmployee getAgent() {
@@ -95,8 +105,7 @@ public class ApplicationApproval implements IEntity{
         values.put("experationDate", this.experationDate);
         if (this.agent!=null)
             values.put("agent", this.agent.getPrimaryKeyValue());
-        if (this.application!=null)
-            values.put("application", this.application.getPrimaryKeyValue());
+        values.put("application", this.applicationId);
         values.put("approvalId", this.approvalId);
         return values;
     }
@@ -108,8 +117,7 @@ public class ApplicationApproval implements IEntity{
         values.put("experationDate", this.experationDate);
         if (this.agent!=null)
             values.put("agent", this.agent.getPrimaryKeyValue());
-        if (this.application!=null)
-            values.put("application", this.application.getPrimaryKeyValue());
+        values.put("application", this.applicationId);
         return values;
     }
 
@@ -138,12 +146,7 @@ public class ApplicationApproval implements IEntity{
         }
         if (values.containsKey("application"))
         {
-            this.application.setPrimaryKeyValue((Serializable)values.get("application"));
-            try {
-                DerbyConnection.getInstance().getEntity(this.application, this.application.getPrimaryKeyName());
-            } catch (SQLException ex) {
-                Logger.getLogger(ApplicationApproval.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.applicationId = (Long)values.get("application");
         }
     }
 
@@ -164,7 +167,7 @@ public class ApplicationApproval implements IEntity{
         cols.add("approvalId bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
         cols.add("approvalDate Date");
         cols.add("experationDate Date");
-        cols.add("application varchar(512)");
+        cols.add("application bigint");
         cols.add("agent varchar(512)");
         return cols;
     }

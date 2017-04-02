@@ -16,7 +16,7 @@ public class AlcoholFilter implements Filter {
 
     @Override
     public Label preApply(Label aFilter) {
-        aFilter.setAlchoholContent(percent);
+        aFilter.setAlcoholContent(percent);
         return aFilter;
     }
 

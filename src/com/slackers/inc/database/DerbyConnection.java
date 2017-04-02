@@ -450,12 +450,17 @@ public class DerbyConnection {
         {
             valMap.clear();
             c++;
-            for (String s : entity.getEntityNameTypePairs().keySet())
-            {
-                DerbyConnection.getStatementValue(results, s, entity, valMap);
+            try {
+                T ent = (T) entity.getClass().newInstance();
+                for (String s : entity.getEntityNameTypePairs().keySet())
+                {
+                    DerbyConnection.getStatementValue(results, s, entity, valMap);
+                }
+                ent.setEntityValues(valMap);
+                entites.add(ent);
+            } catch (Exception ex) {
+                Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, null, ex);
             }
-            entity.setEntityValues(valMap);
-            entites.add((T)entity.deepCopy());
         }
         return entites;
     }

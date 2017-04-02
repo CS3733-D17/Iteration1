@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class UsEmployee extends User{
     
+    public static final UsEmployee NULL_EMPLOYEE = new UsEmployee("unknown","unknown","unknown","unknown");
+    
     private List<LabelApplication> applications;
     private List<LabelApplication> previousApplications;
 
@@ -44,16 +46,13 @@ public class UsEmployee extends User{
     @Override
     public void setEntityValues(Map<String, Object> values) {
         super.setEntityValues(values);
-        if (!this.shouldLazyLoad())
+        if (values.containsKey("applications"))
         {
-            if (values.containsKey("applications"))
-            {
-                this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
-            }
-            if (values.containsKey("previousApplications"))
-            {
-                this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
-            }
+            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
+        }
+        if (values.containsKey("previousApplications"))
+        {
+            this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
         }
     }
 
