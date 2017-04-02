@@ -43,6 +43,7 @@ public class Label implements IEntity{
     private BeverageSource productSource;
     private BeverageType productType;
     private String brandName;
+    private double phLevel;
     
     public Label()
     {
@@ -56,6 +57,8 @@ public class Label implements IEntity{
         this.brandName = "";
     }
 
+    public double getPhLevel() { return phLevel;}
+    public void setPhLevel(double value) { phLevel = value; }
     public double getAlchoholContent() {
         return alcoholContent;
     }
