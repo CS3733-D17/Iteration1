@@ -48,7 +48,11 @@ public class MainController implements Initializable{
         // Check program preferences for a user to log in
         programPref = Preferences.userNodeForPackage(MainController.class);
         if(programPref.get("email", "").equals("")){
-            loadLogin();
+            try {
+                loadLogin();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else{
             String password = "";
             try {
@@ -60,12 +64,20 @@ public class MainController implements Initializable{
             try {
                 if(userController.loginUser(programPref.get("email", null), password) == null){
                     programPref.put("email", "");
-                    loadLogin();
+                    try {
+                        loadLogin();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
                 programPref.put("email", "");
-                loadLogin();
+                try {
+                    loadLogin();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
 
@@ -81,13 +93,11 @@ public class MainController implements Initializable{
     //TODO fix signup so that it creates the user
     //TODO hide the application button for search users
 
-    private void loadLogin(){
-        try {
+    private void loadLogin() throws IOException{
             FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../FXML/loginregisterform.fxml"));
             Parent login = loginLoader.load();
             String cssDoc = getClass().getResource("../CSS/custom.css").toExternalForm();
             login.getStylesheets().add(cssDoc);
-
 
             LoginController loginController = loginLoader.getController();
             loginController.setMainController(this);
@@ -97,10 +107,6 @@ public class MainController implements Initializable{
             stage.setScene(new Scene(login));
             stage.showAndWait();
 
-        }catch(IOException exception){
-            exception.printStackTrace();
-            System.out.println("Can load login page");
-        }
 
         if (userController.getUser().getEmail() == null) {
             Platform.exit();
