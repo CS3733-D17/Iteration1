@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -30,9 +31,24 @@ public class ApplicationsController implements Initializable{
     @FXML TitledPane title1;
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
+
+    final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
+    final Image[] images = new Image[imageNames.length];
+    final ImageView[] pics = new ImageView[imageNames.length];
+    final TitledPane[] tps = new TitledPane[imageNames.length];
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the Application Controller");
+
+        for (int i = 0; i < imageNames.length; i++) {
+            //images[i] = new Image(getClass().getResourceAsStream(imageNames[i] + ".jpg"));
+            pics[i] = new ImageView(images[i]);
+            tps[i] = new TitledPane(imageNames[i],pics[i]);
+        }
+        accordionID.getPanes().addAll(tps);
+        accordionID.setExpandedPane(tps[0]);
 
 
         //width.bind(accordionID.widthProperty());

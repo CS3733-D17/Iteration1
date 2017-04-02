@@ -1,46 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.ResultsController">
    <children>
-      <ScrollBar layoutX="577.0" layoutY="100.0" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Accordion layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <panes>
-          <TitledPane animated="false" contentDisplay="RIGHT" graphicTextGap="320.0" prefHeight="338.0" prefWidth="554.0" text="Long Island Ice Tea">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="25.0" layoutY="28.0" text="Information" />
-                        <Hyperlink layoutX="25.0" layoutY="241.0" text="More Information" />
-                        <Label layoutX="29.0" layoutY="70.0" text="Type" />
-                        <Label layoutX="28.0" layoutY="110.0" text="Alcohol Content" />
-                        <Label layoutX="28.0" layoutY="164.0" text="Brand Name" />
-                     </children>
-                  </AnchorPane>
-               </content>
-               <graphic>
-                  <Button contentDisplay="RIGHT" mnemonicParsing="false" text="Search Similar" />
-               </graphic>
-            </TitledPane>
-          <TitledPane animated="false" contentDisplay="RIGHT" graphicTextGap="375.0" text="Manhattan">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
-               </content>
-               <graphic>
-                  <Button mnemonicParsing="false" text="Serach Similar" />
-               </graphic>
-            </TitledPane>
-            <TitledPane animated="false" contentDisplay="RIGHT" graphicTextGap="370.0" text="Screwdriver">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-               <graphic>
-                  <Button mnemonicParsing="false" text="Search Similar" />
-               </graphic>
-            </TitledPane>
-        </panes>
-      </Accordion>
+      <Accordion fx:id="accordion" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

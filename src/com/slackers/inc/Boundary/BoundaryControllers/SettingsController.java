@@ -63,7 +63,7 @@ public class SettingsController implements Initializable {
             main.getUser().setPassword(newPassword.getText());
         }
         else{
-            System.out.println("Incorrect Email or password");
+            System.out.println("Incorrect password");
             errorMessage.setVisible(true);
             fadeOut.playFromStart();
         }
