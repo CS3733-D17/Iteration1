@@ -395,6 +395,12 @@ public class LabelApplication implements IEntity{
 
     public void setApplicationApproval(ApplicationApproval applicationApproval) {
         this.applicationApproval = applicationApproval;
+        this.label.setApproval(this.applicationApproval);
+        try {
+            DerbyConnection.getInstance().writeEntity(this.label, this.label.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.applicationApproval.setApplication(this);
     }
 

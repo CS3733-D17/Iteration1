@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Apr 02 16:24:19 EDT 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-3056-fdc3-000006d06480 
+Sun Apr 02 16:31:23 EDT 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-015b-305d-76fd-000006d07ee8 
 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
 Loaded from file:/C:/Users/Public/Documents/NetBeansProjects/Iteration_1/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -12,9 +12,9 @@ os.version=6.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Sun Apr 02 16:24:21 EDT 2017:
-Shutting down instance a816c00e-015b-3056-fdc3-000006d06480 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
-Sun Apr 02 16:24:21 EDT 2017 Thread[main,5,main] Cleanup action starting
+Sun Apr 02 16:31:25 EDT 2017:
+Shutting down instance a816c00e-015b-305d-76fd-000006d07ee8 on database directory C:\Users\Public\Documents\NetBeansProjects\Iteration_1\database\DB with class loader sun.misc.Launcher$AppClassLoader@4b67cf4d 
+Sun Apr 02 16:31:25 EDT 2017 Thread[main,5,main] Cleanup action starting
 java.sql.SQLException: Database 'database/DB' not found.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)

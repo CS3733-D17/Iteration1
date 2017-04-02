@@ -115,6 +115,8 @@ public class LabelApplicationController {
         ApplicationApproval approval = new ApplicationApproval(submitter, experationDate);
         this.application.setStatus(LabelApplication.ApplicationStatus.APPROVED);
         this.application.setApplicationApproval(approval);
+        submitter.getApplications().remove(this.application);
+        this.db.writeEntity(submitter, submitter.getPrimaryKeyName());
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
     
@@ -145,7 +147,6 @@ public class LabelApplicationController {
                         return o1.getApplications().size() - o2.getApplications().size();
                     }
                 });
-                employees.forEach((e)->{System.out.println(e);}); 
                 UsEmployee reviewer = employees.get(0);
                 reviewer.getApplications().add(this.application);
                 this.application.setReviewer(reviewer);
