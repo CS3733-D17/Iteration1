@@ -31,6 +31,8 @@ public class User implements IEntity{
     private String firstName;
     private String lastName;
 
+
+
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -156,8 +158,8 @@ public class User implements IEntity{
     @Override
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
-        cols.add("firstName varchar(64)");
-        cols.add("lastName varchar(64)");
+        cols.add("firstName varchar(256)");
+        cols.add("lastName varchar(256)");
         cols.add("password varchar(256)");
         cols.add("email varchar(256) PRIMARY KEY");
         cols.add("applications long varchar");

@@ -73,16 +73,13 @@ public class DerbyConnection {
     public boolean createTable(String tableName, List<String> columns) throws SQLException
     {        
         String stmt = String.format("CREATE TABLE %s (%s)", tableName, String.join(", ", columns));
-        System.out.println(stmt);
         CallableStatement call = con.prepareCall(stmt);
-        System.out.println("Will it eventually work? Yes");
         return call.execute();
     }
     public boolean deleteTable(String tableName) throws SQLException
     {
         String stmt = String.format("DROP TABLE IF EXISTS %s", tableName);
         CallableStatement call = con.prepareCall(stmt);
-        System.out.println("Will deleting work eventually work? Yes");
         return call.execute();
     }
 
@@ -329,7 +326,6 @@ public class DerbyConnection {
             }
         }
         String stmt = String.format("SELECT * FROM %s WHERE %s", entity.getTableName(), conds.toString());
-        System.out.println(stmt);
         PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
@@ -464,7 +460,6 @@ public class DerbyConnection {
     private static void getStatementValue(ResultSet result, String colTitle, IEntity entity, Map<String,Object> valueCollection) throws SQLException
     {
         Class target = entity.getEntityNameTypePairs().get(colTitle);
-
         if (target == null)
             return;
         if (Integer.class.isAssignableFrom(target))
@@ -487,7 +482,7 @@ public class DerbyConnection {
         {
             valueCollection.put(colTitle, result.getLong(colTitle));
         }
-        else if (Integer.class.isAssignableFrom(target))
+        else if (Boolean.class.isAssignableFrom(target))
         {
             valueCollection.put(colTitle, result.getBoolean(colTitle));
         }

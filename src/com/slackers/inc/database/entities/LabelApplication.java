@@ -204,11 +204,24 @@ public class LabelApplication implements IEntity{
         }
         if (values.containsKey("applicationApproval"))
         {
-            this.applicationApproval.setPrimaryKeyValue((Serializable)values.get("applicationApproval"));
-            try {
-                DerbyConnection.getInstance().getEntity(this.applicationApproval, this.applicationApproval.getPrimaryKeyName());
-            } catch (SQLException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+            if (this.applicationApproval != null && (Long)values.get("applicationApproval")!=0)
+            {                
+                this.applicationApproval.setPrimaryKeyValue((Serializable)values.get("applicationApproval"));
+                try {
+                    DerbyConnection.getInstance().getEntity(this.applicationApproval, this.applicationApproval.getPrimaryKeyName());
+                } catch (SQLException ex) {
+                    Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else if (this.applicationApproval == null)
+            {
+                this.applicationApproval = new ApplicationApproval(new UsEmployee(), new Date(new java.util.Date().getTime()));
+                this.applicationApproval.setPrimaryKeyValue((Serializable)values.get("applicationApproval"));
+                try {
+                    DerbyConnection.getInstance().getEntity(this.applicationApproval, this.applicationApproval.getPrimaryKeyName());
+                } catch (SQLException ex) {
+                    Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         if (values.containsKey("allowedRevisions"))
@@ -432,11 +445,7 @@ public class LabelApplication implements IEntity{
         List<String> revs = new LinkedList<>();
         for (RevisionType e : allowedRevisions)
         {
-            try {
-                revs.add(DerbyConnection.objectToString(e));
-            } catch (IOException ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            revs.add(e.name());
         }
         return DerbyConnection.collectionToString(revs);
     }
@@ -444,16 +453,12 @@ public class LabelApplication implements IEntity{
         Set<RevisionType> allowedRevisions = new HashSet<>();
         List<String> revStrings = DerbyConnection.collectionFromString(revString);
         for (String s : revStrings)
-        {            
-            try {
-                allowedRevisions.add((RevisionType)DerbyConnection.objectFromString(s));
-            } catch (Exception ex) {
-                Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
-            }            
+        {
+            if (s!=null && !s.equals(""))
+                allowedRevisions.add(RevisionType.valueOf(s));            
         }
         return allowedRevisions;
-    }
-    
+    }   
     
     @Override
     public LabelApplication deepCopy() {

@@ -197,8 +197,9 @@ public class LabelComment implements IEntity{
         for (String s : cStrings)
         {          
             try {
-                LabelComment temp = new LabelComment(null,null);
+                LabelComment temp = new LabelComment(new User(),null);
                 temp.setPrimaryKeyValue((Serializable) DerbyConnection.objectFromString(s));
+                System.out.println(temp);
                 DerbyConnection.getInstance().getEntity(temp, temp.getPrimaryKeyName());
                 comments.add(temp);
             } catch (Exception ex) {
@@ -214,4 +215,11 @@ public class LabelComment implements IEntity{
         c.setEntityValues(this.getEntityValues());
         return c;
     }
+
+    @Override
+    public String toString() {
+        return "LabelComment{" + "commentId=" + commentId + ", comment=" + comment + ", commenter=" + commenter + '}';
+    }
+    
+    
 }
