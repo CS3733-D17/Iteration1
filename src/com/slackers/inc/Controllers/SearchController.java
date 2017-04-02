@@ -1,5 +1,7 @@
 package com.slackers.inc.Controllers;
 
+import com.slackers.inc.database.entities.Label;
+
 import java.util.List;
 
 /**
@@ -26,10 +28,11 @@ public class SearchController {
 
     }
 
-    public void runSearch(){
+    public List<Label> runSearch(){
         /*  I know that the class diagram says that this is supposed to be void, but would be nice
          *  if it returned a list of labels so we could display those onto the screen
          */
+        return null;
     }
 
 }

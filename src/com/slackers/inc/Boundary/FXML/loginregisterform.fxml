@@ -71,13 +71,13 @@
 
              <HBox layoutX="50.0" layoutY="202.0" prefHeight="30.0" prefWidth="300.0">
                <children>
-                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" selected="true" text="Customer" textAlignment="CENTER">
+                  <RadioButton fx:id="customer" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" selected="true" text="Customer" textAlignment="CENTER">
                      <toggleGroup>
                         <ToggleGroup fx:id="userType" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="155.0" text="Manufacturer" toggleGroup="$userType" />
-                  <RadioButton mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Employee" toggleGroup="$userType" />
+                  <RadioButton fx:id="manufacturer" mnemonicParsing="false" prefHeight="30.0" prefWidth="155.0" text="Manufacturer" toggleGroup="$userType" />
+                  <RadioButton fx:id="employee" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Employee" toggleGroup="$userType" />
                </children>
             </HBox>
              <Button fx:id="getStartedButton" disable="true" layoutX="140.0" layoutY="260.0" mnemonicParsing="false" onAction="#getStartedClick" prefWidth="120.0" text="Get Started" />

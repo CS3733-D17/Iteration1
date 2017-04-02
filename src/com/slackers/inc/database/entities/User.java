@@ -31,15 +31,11 @@ public class User implements IEntity{
     private String firstName;
     private String lastName;
 
-
-
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.firstName = "unknown";
-        this.lastName = "unknown";
         this.userType = UserType.UNKNOWN;
     }
     
@@ -99,8 +95,6 @@ public class User implements IEntity{
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
-        temp.put("firstName", this.firstName);
-        temp.put("lastName", this.lastName);
         return temp;
     }
 
@@ -112,8 +106,6 @@ public class User implements IEntity{
         temp.put("password", this.password);
         temp.put("email", this.email);
         temp.put("userType", this.userType);
-        temp.put("lastName", this.lastName);
-        temp.put("firstName", this.firstName);
         return temp;
     }
 
@@ -129,10 +121,6 @@ public class User implements IEntity{
             this.email = (String)values.get("email");
         if (values.containsKey("userType"))
             this.userType = (UserType)values.get("userType");
-        if (values.containsKey("firstName"))
-            this.firstName = (String)values.get("firstName");
-        if (values.containsKey("lastName"))
-            this.lastName = (String)values.get("lastName");
     }
 
     @Override
@@ -143,8 +131,6 @@ public class User implements IEntity{
         pairs.put("password", String.class);
         pairs.put("email", String.class);
         pairs.put("applications", String.class);
-        pairs.put("firstName", String.class);
-        pairs.put("lastName", String.class);
         pairs.put("previousApplications", String.class);
         pairs.put("templateApplication", Long.class);
         pairs.put("userType", Serializable.class);
@@ -170,12 +156,10 @@ public class User implements IEntity{
     @Override
     public List<String> tableColumnCreationSettings() {
         List<String> cols = new LinkedList<>();
-        cols.add("firstName varchar(256)");
-        cols.add("lastName varchar(256)");
-        cols.add("password varchar(256)");
-        cols.add("email varchar(256) PRIMARY KEY");
         cols.add("firstName varchar(64)");
         cols.add("lastName varchar(64)");
+        cols.add("password varchar(256)");
+        cols.add("email varchar(256) PRIMARY KEY");
         cols.add("applications long varchar");
         cols.add("previousApplications long varchar");
         cols.add("templateApplication varchar(8192)");
@@ -197,7 +181,7 @@ public class User implements IEntity{
 
     @Override
     public String toString() {
-        return "User{" + "password=" + password + ", email=" + email + ", userType=" + userType + '}';
+        return "User{" + "firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + ", email=" + email + ", userType=" + userType + '}';
     }
     
     
