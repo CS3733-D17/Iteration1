@@ -1,6 +1,10 @@
 package com.slackers.inc.Controllers;
 
 import com.slackers.inc.database.entities.ColaUser;
+import com.slackers.inc.database.entities.Label;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class COLASearchController {
 
@@ -38,7 +42,7 @@ public class COLASearchController {
      * @author Created by Fabio Borges on 4/2/17
      * @return
      */
-    public ColaUser getColaUser();
+    public ColaUser getColaUser()
     { return colaUser; }
 
     /**
@@ -57,9 +61,9 @@ public class COLASearchController {
         return searchControl;
     }
 
-    public List<Entity> search(Label target) throws SQLException
+    public List search(Label target) throws SQLException
     {
-        searchControl.runSearch(target);
+        return searchControl.runSearch(target);
     }
 
 }
