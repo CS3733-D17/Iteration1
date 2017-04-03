@@ -57,20 +57,26 @@ public class FormController implements Initializable {
     @FXML
     void submit(ActionEvent event) {
 
-        label.setAlcoholContent(Integer.parseInt(alcoholContent.getText()));
-        label.setBrandName(brand.getText());
-        //label.setProductType(type.getValue());
-        //label.setProductSource((Label.BeverageSource) source.getValue());
-        label.setPlantNumber(PBBNumber.getText());
-        label.setRepresentativeIdNumber(repID.getText());
+        try
+        {
+            label.setAlcoholContent(Integer.parseInt(alcoholContent.getText()));
+            label.setBrandName(brand.getText());
+            //label.setProductType(type.getValue());
+            //label.setProductSource((Label.BeverageSource) source.getValue());
+            label.setPlantNumber(PBBNumber.getText());
+            label.setRepresentativeIdNumber(repID.getText());
 
+            application.setApplicant(manufacturer);
+            application.setApplicationId(Integer.parseInt(repID.getText()));
+            application.setEmailAddress(manufacturer.getEmail());
+            application.setLabel(label);
 
-        application.setApplicant(manufacturer);
-        application.setApplicationId(Integer.parseInt(repID.getText()));
-        application.setEmailAddress(manufacturer.getEmail());
-        application.setLabel(label);
-
-        manufacturer.getApplications().add(application);
+            manufacturer.getApplications().add(application);
+        }
+        catch (Exception e)
+        {
+            
+        }
 
     }
 

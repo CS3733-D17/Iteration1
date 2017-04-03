@@ -63,7 +63,7 @@ public class ResultsController implements Initializable {
             for (int i = 0; i < results.size(); i++) {
 
                 try {
-                    FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
+                    FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
                     templateLoader.setController(this);
                     template = templateLoader.load();
                 } catch (IOException e) {

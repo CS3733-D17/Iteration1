@@ -1,8 +1,6 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
-import com.slackers.inc.database.entities.Manufacturer;
 import com.slackers.inc.database.entities.UsEmployee;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -55,7 +53,7 @@ public class USEmployeeController implements Initializable{
         for (int i = 0; i < employee.getApplications().size(); i++) {
 
             try {
-                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
+                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
                 templateLoader.setController(this);
                 template = templateLoader.load();
             } catch (IOException e) {
@@ -83,7 +81,7 @@ public class USEmployeeController implements Initializable{
 
     @FXML
     public void addApplication() throws IOException{
-        Parent newApp = FXMLLoader.load(getClass().getResource("../FXML/form.fxml"));
+        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("New Form");

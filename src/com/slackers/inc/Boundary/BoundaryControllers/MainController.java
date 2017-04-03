@@ -96,18 +96,18 @@ public class MainController implements Initializable{
     //TODO hide the application button for search users
 
     private void loadLogin() throws IOException{
-            FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("../FXML/loginregisterform.fxml"));
-            Parent login = loginLoader.load();
-            String cssDoc = getClass().getResource("../CSS/custom.css").toExternalForm();
-            login.getStylesheets().add(cssDoc);
+        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/loginregisterform.fxml"));
+        Parent login = loginLoader.load();
+        String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();
+        login.getStylesheets().add(cssDoc);
 
-            LoginController loginController = loginLoader.getController();
-            loginController.setMainController(this);
+        LoginController loginController = loginLoader.getController();
+        loginController.setMainController(this);
 
-            Stage stage = new Stage();
-            stage.setTitle("Login or Signup");
-            stage.setScene(new Scene(login));
-            stage.showAndWait();
+        Stage stage = new Stage();
+        stage.setTitle("Login or Signup");
+        stage.setScene(new Scene(login));
+        stage.showAndWait();
 
 
         if (userController.getUser().getEmail() == null) {
@@ -131,14 +131,14 @@ public class MainController implements Initializable{
 
     private void loadPages() throws IOException{
 
-        FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));
+        FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/settings.fxml"));
         settings = settingsLoader.load();
         SettingsController settingsController = settingsLoader.getController();
         settingsController.setMainController(this);
         settingsController.setTextBoxes();
 
         if(user.getUserType() == User.UserType.MANUFACTURER){
-            FXMLLoader applicationLoader = new FXMLLoader(getClass().getResource("../FXML/applications.fxml"));
+            FXMLLoader applicationLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/applications.fxml"));
             applications = applicationLoader.load();
             ApplicationsController applicationsController = applicationLoader.getController();
             applicationsController.setMainController(this);
@@ -149,7 +149,7 @@ public class MainController implements Initializable{
             searchButton.setVisible(false);
 
         }else if(user.getUserType() == User.UserType.US_EMPLOYEE) {
-            FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("../FXML/USEmployee.fxml"));
+            FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USEmployee.fxml"));
             applications = usEmployeeLoader.load();
             USEmployeeController applicationsController = usEmployeeLoader.getController();
             applicationsController.setMainController(this);
@@ -160,7 +160,7 @@ public class MainController implements Initializable{
             searchButton.setVisible(false);
 
         }else{
-            FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
+            FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/search.fxml"));
             search = searchLoader.load();
             SearchBoundaryController searchBoundaryController = searchLoader.getController();
             searchBoundaryController.setMainController(this);
@@ -194,8 +194,8 @@ public class MainController implements Initializable{
         Parent login = null;
         try {
 
-            login = FXMLLoader.load(getClass().getResource("../FXML/outershell.fxml"));
-            String cssDoc = getClass().getResource("../CSS/custom.css").toExternalForm();
+            login = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/outershell.fxml"));
+            String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();
             login.getStylesheets().add(cssDoc);
 
             Stage stage = new Stage();

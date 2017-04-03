@@ -63,9 +63,9 @@ public class SearchBoundaryController implements Initializable {
         user = (ColaUser) mainController.getUser();
         search.setColaUser(user);
 
-        FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("../FXML/results.fxml"));
+        FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/results.fxml"));
         Parent page = resultsLoader.load();
-        page.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
+        page.getStylesheets().add(getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm());
         ResultsController resultsController = resultsLoader.getController();
         resultsController.setSearchBoundaryController(this);
 
