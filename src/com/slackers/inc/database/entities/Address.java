@@ -69,5 +69,47 @@ public class Address implements Serializable{
     public void setZipCode(int zipCode) {
         this.zipCode = zipCode;
     }
+
+    @Override
+    public String toString() {
+        if (this.zipCode!=-1)
+            return line1 + "\n" + line2 + "\n" + city + " " + state + ", " + String.format("%05d", zipCode);
+        else
+            return "";
+    }
     
+    
+    public static Address tryParse(String addressBox)
+    {
+        try
+        {
+            String[] lines = addressBox.split("\n");
+            System.out.println(lines.length);
+            if (lines.length!=3)
+                return null;
+
+            int zipBreak = lines[2].lastIndexOf(" ");
+
+            String zipCode = lines[2].substring(zipBreak).trim();
+            if (zipCode.contains("-"))
+            {
+                zipCode = zipCode.substring(0, zipCode.indexOf("-"));
+            }
+            zipCode = zipCode.trim();
+
+            String cityAndState = lines[2].substring(0,zipBreak).trim();
+
+            String state = cityAndState.substring(cityAndState.lastIndexOf(" ")).trim();
+            state = state.replace(",", "").trim();
+
+            String city = cityAndState.substring(0, cityAndState.lastIndexOf(" ")).trim();
+            int zip=0;
+            zip = Integer.parseInt(zipCode);
+            return new Address(lines[0].trim(), lines[1].trim(), city, state, zip);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }        
+    }
 }

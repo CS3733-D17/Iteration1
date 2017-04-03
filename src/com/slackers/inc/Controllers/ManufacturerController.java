@@ -1,5 +1,6 @@
 package com.slackers.inc.Controllers;
 
+import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.Manufacturer;
 
@@ -36,15 +37,17 @@ public class ManufacturerController {
             app.setLabel(template.getLabel());
             app.setPhoneNumber(template.getPhoneNumber());
             app.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
-
         }
-        return formController.createApplication();
-
+        boolean res = formController.createApplication();
+        this.manufacturer.addApplications(this.formController.getLabelApplication());
+        return res;
     }
 
     public boolean submitApplication() throws SQLException {
-
-        return formController.submitApplication(manufacturer);
+        
+        boolean res = formController.submitApplication(manufacturer);
+        DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
+        return res;
     }
 
     public boolean editApplication() throws SQLException {
@@ -53,17 +56,25 @@ public class ManufacturerController {
     }
 
     public boolean saveApplication() throws SQLException {
-
-        return formController.saveApplication();
+        boolean res = formController.saveApplication();
+        DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
+        return res;
     }
 
     public boolean deleteApplication() throws SQLException {
-
-        return formController.deleteApplication();
+        this.manufacturer.removeApplications(this.formController.getLabelApplication());
+        boolean res = formController.deleteApplication();
+        DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
+        return res;
     }
 
     public LabelApplicationController getFormController(){
         return formController;
     }
 
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    
 }

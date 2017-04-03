@@ -2,6 +2,7 @@ package com.slackers.inc.Controllers.Filters;
 
 
 import com.slackers.inc.database.entities.Label;
+import com.slackers.inc.database.entities.WineLabel;
 
 /**
  * Created by jestrada on 4/2/17.
@@ -16,7 +17,8 @@ public class PHFilter implements Filter {
 
     @Override
     public Label preApply(Label aFilter) {
-        aFilter.setPhLevel(id);
+        if (aFilter instanceof WineLabel)
+            ((WineLabel)aFilter).setPhLevel(id);
         return aFilter;
     }
 

@@ -5,12 +5,16 @@
  */
 package com.slackers.inc.database.entities;
 
+import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.IEntity;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,8 +47,7 @@ public class Label implements IEntity{
     private BeverageSource productSource;
     private BeverageType productType;
     private String brandName;
-    private double phLevel;
-    private int vintage;
+    
     private ApplicationApproval approval;
     
     public Label()
@@ -65,20 +68,17 @@ public class Label implements IEntity{
     }
 
     public void setApproval(ApplicationApproval approval) {
-        this.approval = approval;
+        if (approval == null)
+        {
+            this.setIsAccepted(false);
+            this.approval = new ApplicationApproval();
+        }
+        else
+        {
+            this.setIsAccepted(true);
+            this.approval = approval;
+        }
     }    
-    
-    public double getPhLevel() { return phLevel;}
-
-    public void setPhLevel(double value) { phLevel = value; }
-
-    public void setVintage(int vintage) {
-        this.vintage = vintage;
-    }
-
-    public int getVintage() {
-        return vintage;
-    }
 
     public double getAlcoholContent() {
         return alcoholContent;
@@ -160,6 +160,7 @@ public class Label implements IEntity{
         values.put("productSource", this.productSource.name());
         values.put("productType", this.productType.name());
         values.put("brandName", this.brandName);
+        values.put("approval", this.approval.getPrimaryKeyValue());  
         return values;
     }
 
@@ -173,8 +174,7 @@ public class Label implements IEntity{
         values.put("productSource", this.productSource.name());
         values.put("productType", this.productType.name());
         values.put("brandName", this.brandName);
-        values.put("phLevel", phLevel);
-        values.put("vintage", vintage);
+        values.put("approval", this.approval.getPrimaryKeyValue());  
         return values;
     }
 
@@ -213,14 +213,21 @@ public class Label implements IEntity{
         {
             this.brandName = (String) values.get("brandName");
         }
-        if(values.containsKey("vintage")){
-            vintage = (int) values.get("vintage");
-        }
-        if(values.containsKey("phLevel")){
-            phLevel = (double) values.get("phLevel");
-        }
         if(values.containsKey("approval")){
-            values.put("approval", this.approval.getPrimaryKeyValue());  
+            long val = (long)values.get("approval");
+            if (val==0)
+            {
+                this.setApproval(null);
+            }
+            else
+            {
+                this.approval.setApprovalId(val);
+                try {
+                    DerbyConnection.getInstance().getEntity(this.approval, this.approval.getPrimaryKeyName());
+                } catch (SQLException ex) {
+                    Logger.getLogger(Label.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         
     }
@@ -236,8 +243,7 @@ public class Label implements IEntity{
         pairs.put("productSource", String.class);
         pairs.put("productType", String.class);
         pairs.put("brandName", String.class);
-        pairs.put("vintage", Integer.class);
-        pairs.put("phLevel", Double.class);
+        pairs.put("approval", Long.class);
         return pairs;
     }
 
@@ -246,6 +252,7 @@ public class Label implements IEntity{
         List<String> cols = new LinkedList<>();
         cols.add("labelId bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
         cols.add("isAccepted boolean");
+        cols.add("approval bigint");
         cols.add("alchoholContent float");        
         cols.add("representativeIdNumber varchar(128)");
         cols.add("plantNumber varchar(128)");

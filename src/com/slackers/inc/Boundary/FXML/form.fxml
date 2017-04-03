@@ -100,7 +100,12 @@
             <Font size="16.0" />
          </font>
       </TextField>
-      <Button layoutX="842.0" layoutY="747.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+      <Label fx:id="info" layoutX="48.0" layoutY="747.0" text="" AnchorPane.leftAnchor="40.0" AnchorPane.bottomAnchor="40.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="submit" layoutX="842.0" layoutY="747.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
       <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
       <ChoiceBox fx:id="type" layoutX="765.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
    </children>

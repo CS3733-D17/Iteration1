@@ -1,6 +1,7 @@
 package com.slackers.inc.Controllers.Filters;
 
 import com.slackers.inc.database.entities.Label;
+import com.slackers.inc.database.entities.WineLabel;
 
 /**
  * Created by Matt on 4/2/2017.
@@ -14,7 +15,8 @@ public class VintageFilter implements Filter {
     }
 
     public Label preApply(Label label){
-        label.setVintage(vintage);
+        if (label instanceof WineLabel)
+            ((WineLabel)label).setVintage(vintage);
         return label;
     }
 

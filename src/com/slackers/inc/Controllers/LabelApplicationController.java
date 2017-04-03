@@ -103,8 +103,8 @@ public class LabelApplicationController {
         this.application.setApplicant(submitter);
         this.application.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
         this.application.setApplicationDate(new Date(new java.util.Date().getTime()));
-        this.application.setSubmitter(null);
-        this.application.setReviewer(null);
+        this.application.setSubmitter(UsEmployee.NULL_EMPLOYEE);
+        this.application.setReviewer(UsEmployee.NULL_EMPLOYEE);
         this.application.setApplicationApproval(null);
         this.application.setAllowedRevisions(new HashSet<>());
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());

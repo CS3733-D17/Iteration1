@@ -50,7 +50,7 @@ public class WineLabel extends Label{
     public Map<String, Class> getEntityNameTypePairs() {
         Map<String,Class> pairs = super.getEntityNameTypePairs();
         pairs.put("phLevel", Double.class);
-        pairs.put("vintage", Double.class);
+        pairs.put("vintage", Integer.class);
         return pairs;
     }
 

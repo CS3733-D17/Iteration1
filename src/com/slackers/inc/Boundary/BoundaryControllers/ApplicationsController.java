@@ -1,29 +1,26 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.Controllers.ManufacturerController;
 import com.slackers.inc.database.entities.Manufacturer;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ApplicationsController implements Initializable{
 
@@ -94,20 +91,25 @@ public class ApplicationsController implements Initializable{
 
     @FXML
     public void addApplication() throws IOException {
-
-        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Form");
-        stage.setScene(new Scene(newApp));
-        stage.show();
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+            Parent newApp = loader.load();
+            FormController formController = loader.getController();
+            formController.setManufacturer(new ManufacturerController(this.manufacturer));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("New Form");
+            stage.setScene(new Scene(newApp));
+            stage.show();
+        } catch (SQLException ex) {
+            Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     //TODO make the accordian template and fill with form information
 
     public void setMainController(MainController mainController) {
-        this.main = mainController ;
+        this.main = mainController;
     }
 
 }

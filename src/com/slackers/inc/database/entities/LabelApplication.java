@@ -46,6 +46,9 @@ public class LabelApplication implements IEntity{
     
     private long applicationId;
     
+    
+    
+    private String representativeId;
     private Address applicantAddress;
     private Address mailingAddress;
     private String phoneNumber;
@@ -64,6 +67,7 @@ public class LabelApplication implements IEntity{
     {
         this.allowedRevisions = new HashSet<>();
         this.applicant = "";
+        this.representativeId = "";
         this.applicantAddress = new Address();
         this.applicationApproval = null;
         this.applicationDate = new java.sql.Date(new java.util.Date().getTime());
@@ -97,6 +101,7 @@ public class LabelApplication implements IEntity{
         values.put("phoneNumber", this.phoneNumber);        
         values.put("emailAddress", this.emailAddress);
         values.put("applicationDate", this.applicationDate);
+        values.put("representativeId", this.representativeId);
         values.put("status", this.status); 
         if (this.applicant!=null)
             values.put("applicant", this.applicant);
@@ -117,6 +122,7 @@ public class LabelApplication implements IEntity{
     public Map<String, Object> getUpdatableEntityValues() {
         Map<String,Object> values = new HashMap<>();        
         values.put("applicantAddress", this.applicantAddress);
+        values.put("representativeId", this.representativeId);
         values.put("mailingAddress", this.mailingAddress);
         values.put("phoneNumber", this.phoneNumber);        
         values.put("emailAddress", this.emailAddress);
@@ -150,6 +156,10 @@ public class LabelApplication implements IEntity{
         if (values.containsKey("mailingAddress"))
         {
             this.mailingAddress = (Address) values.get("mailingAddress");
+        }
+        if (values.containsKey("representativeId"))
+        {
+            this.representativeId = (String) values.get("representativeId");
         }
         if (values.containsKey("phoneNumber"))
         {
@@ -222,7 +232,8 @@ public class LabelApplication implements IEntity{
         pairs.put("applicationId", Long.class);        
         pairs.put("applicantAddress", Serializable.class);
         pairs.put("mailingAddress", Serializable.class);
-        pairs.put("phoneNumber", String.class);        
+        pairs.put("phoneNumber", String.class);    
+        pairs.put("representativeId", String.class);
         pairs.put("emailAddress", String.class);
         pairs.put("applicationDate", Date.class);
         pairs.put("status", Serializable.class);        
@@ -241,6 +252,7 @@ public class LabelApplication implements IEntity{
         List<String> cols = new LinkedList<>();
         cols.add("applicationId bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1)");
         cols.add("applicantAddress varchar(2048)");
+        cols.add("representativeId varchar(128)");
         cols.add("mailingAddress varchar(2048)");
         cols.add("phoneNumber varchar(64)");
         cols.add("emailAddress varchar(128)");
@@ -271,7 +283,14 @@ public class LabelApplication implements IEntity{
         this.applicationId = (long) value;
     }
 
+    public String getRepresentativeId() {
+        return representativeId;
+    }
 
+    public void setRepresentativeId(String representativeId) {
+        this.representativeId = representativeId;
+    }
+    
     public long getApplicationId() {
         return applicationId;
     }
@@ -401,7 +420,8 @@ public class LabelApplication implements IEntity{
         } catch (SQLException ex) {
             Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.applicationApproval.setApplication(this);
+        if (this.applicationApproval!=null)
+            this.applicationApproval.setApplication(this);
     }
 
     public Set<RevisionType> getAllowedRevisions() {
