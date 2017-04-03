@@ -131,8 +131,8 @@ public class MainController implements Initializable{
 
         FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
         search = searchLoader.load();
-        SearchController searchController = searchLoader.getController();
-        searchController.setMainController(this);
+        SearchBoundaryController searchBoundaryController = searchLoader.getController();
+        searchBoundaryController.setMainController(this);
         //results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));

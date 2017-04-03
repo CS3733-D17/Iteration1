@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SearchController implements Initializable {
+public class SearchBoundaryController implements Initializable {
 
     ObservableList<String> typeList = FXCollections.observableArrayList("All", "Beer", "Wine", "Hard Alcohol");
     ObservableList<String> contentList = FXCollections.observableArrayList("All", "20 <", "21-50", "51 >");
@@ -55,11 +55,14 @@ public class SearchController implements Initializable {
         user = (ColaUser) main.getUser();
         search.setColaUser(user);
 
-        results = search.search(label);
-
-
-        Parent page = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
+        FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("../FXML/results.fxml"));
+        Parent page = resultsLoader.load();
         page.getStylesheets().add(getClass().getResource("../CSS/custom.css").toExternalForm());
+        ResultsController resultsController = resultsLoader.getController();
+        resultsController.setSearchBoundaryController(this);
+
+        results = search.search(label);
+        resultsController.displayResults(results);
 
         //TODO actually search shit by keyword, alcohol content or type
 

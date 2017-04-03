@@ -1,5 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.Controllers.*;
+import com.slackers.inc.Controllers.SearchController;
 import com.slackers.inc.database.entities.Manufacturer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,8 +29,6 @@ import javafx.stage.Stage;
  */
 public class ResultsController implements Initializable {
 
-    //TODO make the accordian template and fill with label information
-
     @FXML Accordion accordionID;
     @FXML TitledPane titledPane;
 
@@ -45,21 +45,21 @@ public class ResultsController implements Initializable {
     @FXML private AnchorPane template;
 
     public MainController main;
+    public SearchBoundaryController searchBoundaryController;
     public com.slackers.inc.database.entities.Label temp;
     public Manufacturer manufacturer;
     public List results;
 
-    final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
     //final AnchorPane[] labels;
-    final TitledPane[] tps = new TitledPane[imageNames.length];
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {}
 
-        manufacturer = (Manufacturer) main.getUser();
+    public void displayResults(List results){
 
-        for (int i = 0; i < manufacturer.getApplications().size(); i++) {
+        this.results = results;
 
+        for (int i = 0; i < results.size(); i++) {
 
             try {
                 FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
@@ -69,12 +69,10 @@ public class ResultsController implements Initializable {
                 e.printStackTrace();
             }
 
-            repID.setText(manufacturer.getApplications().get(i).getLabel().getRepresentativeIdNumber());
-            type.setText(manufacturer.getApplications().get(i).getLabel().getProductType().toString());
-            source.setText(manufacturer.getApplications().get(i).getLabel().getProductSource().toString());
-            brand.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
-            progress.setText(manufacturer.getApplications().get(i).getLabel().getApproval().toString());
-            alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
+            type.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getProductType().toString());
+            source.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getProductSource().toString());
+            brand.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getBrandName());
+            alcoholContent.setText(Double.toString(((com.slackers.inc.database.entities.Label)results.get(i)).getAlcoholContent()));
 
             extraButton.setText("More Info");
 
@@ -84,12 +82,10 @@ public class ResultsController implements Initializable {
         if(accordionID.getPanes().size() > 0){
             accordionID.setExpandedPane(accordionID.getPanes().get(0));
         }
-
     }
 
-
-    public void setResults(List results){
-        this.results = results;
+    public void setSearchBoundaryController(SearchBoundaryController searchBoundaryController) {
+        this.searchBoundaryController = searchBoundaryController ;
     }
 
 
