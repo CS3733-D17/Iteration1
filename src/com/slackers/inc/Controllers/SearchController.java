@@ -30,7 +30,7 @@ public class SearchController {
 
     public void addFilter(Filter filter){
         filters.add(filter);
-        columns.add(filter.getColumn());
+
     }
 
     public void removeFilter(){
@@ -43,6 +43,7 @@ public class SearchController {
          */
         filters.forEach(filter -> {
             filter.preApply(target);
+            columns.add(filter.getColumn());
         });
 
         return db.getAllEntites(target, columns.toArray(new String[columns.size()]));
