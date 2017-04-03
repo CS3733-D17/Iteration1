@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ApplicationsController implements Initializable{
@@ -95,7 +96,16 @@ public class ApplicationsController implements Initializable{
     @FXML
     public void addApplication() throws IOException {
 
-        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+        FXMLLoader formLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+        Parent newApp = formLoader.load();
+        FormController formController = formLoader.getController();
+
+        try {
+            formController.init(manufacturer);
+        }catch(SQLException exception){
+            System.out.println("Unable to automatically fil form out!");
+        }
+
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("New Form");

@@ -8,26 +8,26 @@ import java.sql.SQLException;
 public class ManufacturerController {
 
     Manufacturer manufacturer;
-    LabelApplicationController formController;
+    LabelApplicationController labelAppController;
 
     public ManufacturerController() throws SQLException {
         this.manufacturer = null;
-        this.formController = new LabelApplicationController();
+        this.labelAppController = new LabelApplicationController();
     }
 
     public ManufacturerController(Manufacturer manufacturer) throws SQLException {
         this.manufacturer = manufacturer;
-        this.formController = new LabelApplicationController();
+        this.labelAppController = new LabelApplicationController();
     }
 
-    public ManufacturerController(Manufacturer manufacturer, LabelApplicationController formController){
+    public ManufacturerController(Manufacturer manufacturer, LabelApplicationController labelAppController){
         this.manufacturer = manufacturer;
-        this.formController = formController;
+        this.labelAppController = labelAppController;
     }
 
     public boolean createApplication() throws SQLException {
         LabelApplication template = manufacturer.getTemplateApplication();
-        LabelApplication app = formController.getLabelApplication();
+        LabelApplication app = labelAppController.getLabelApplication();
         app.setApplicant(manufacturer);
         if (template != null) {
             app.setApplicantAddress(template.getApplicantAddress());
@@ -38,32 +38,32 @@ public class ManufacturerController {
             app.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
 
         }
-        return formController.createApplication();
+        return labelAppController.createApplication();
 
     }
 
     public boolean submitApplication() throws SQLException {
 
-        return formController.submitApplication(manufacturer);
+        return labelAppController.submitApplication(manufacturer);
     }
 
     public boolean editApplication() throws SQLException {
 
-        return formController.editApplication();
+        return labelAppController.editApplication();
     }
 
     public boolean saveApplication() throws SQLException {
 
-        return formController.saveApplication();
+        return labelAppController.saveApplication();
     }
 
     public boolean deleteApplication() throws SQLException {
 
-        return formController.deleteApplication();
+        return labelAppController.deleteApplication();
     }
 
-    public LabelApplicationController getFormController(){
-        return formController;
+    public LabelApplicationController getLabelAppController(){
+        return labelAppController;
     }
 
 }
