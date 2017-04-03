@@ -141,7 +141,7 @@ public class MainController implements Initializable{
         settingsController.setMainController(this);
         settingsController.setTextBoxes();
 
-        if(user.getUserType() != User.UserType.COLA_USER){
+        if(user.getUserType() == User.UserType.MANUFACTURER){
             FXMLLoader applicationLoader = new FXMLLoader(getClass().getResource("../FXML/applications.fxml"));
             applications = applicationLoader.load();
             ApplicationsController applicationsController = applicationLoader.getController();
@@ -149,9 +149,19 @@ public class MainController implements Initializable{
             applicationsController.addAccordianChildren();
 
             mainContainer.getChildren().setAll(applications);
-            applicationButton.setVisible(false);
+            applicationButton.setVisible(true);
 
-        }else {
+        }else if(user.getUserType() == User.UserType.US_EMPLOYEE) {
+            FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("../FXML/USEmployee.fxml"));
+            applications = usEmployeeLoader.load();
+            USEmployeeController applicationsController = usEmployeeLoader.getController();
+            applicationsController.setMainController(this);
+            applicationsController.addAccordianChildren();
+
+            mainContainer.getChildren().setAll(applications);
+            applicationButton.setVisible(true);
+
+        }else{
             applicationButton.setVisible(false);
             mainContainer.getChildren().setAll(search);
         }
