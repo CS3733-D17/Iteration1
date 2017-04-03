@@ -154,7 +154,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane>
+            <AnchorPane fx:id="manufacturerSettings">
                <children>
                   <Label layoutX="30.0" text="Manufacturers Information" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0">
                      <font>
@@ -232,7 +232,7 @@
                   </HBox>
                   <HBox AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="196.0">
                      <children>
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#UpdatePersonal" text="Update">
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#UpdateManufacturer" text="Update">
                            <font>
                               <Font size="16.0" />
                            </font>

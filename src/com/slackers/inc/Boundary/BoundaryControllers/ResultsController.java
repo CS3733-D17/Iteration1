@@ -50,8 +50,6 @@ public class ResultsController implements Initializable {
     public Manufacturer manufacturer;
     public List results;
 
-    //final AnchorPane[] labels;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
 

@@ -84,7 +84,7 @@ public class USEmployeeController implements Initializable{
         Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Form");
+        stage.setTitle("Review Form");
         stage.setScene(new Scene(newApp));
         stage.show();
     }

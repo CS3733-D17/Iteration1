@@ -1,5 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.Controllers.ManufacturerController;
+import com.slackers.inc.database.entities.User;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -23,6 +26,8 @@ public class SettingsController implements Initializable {
     @FXML private TextField oldPassword;
     @FXML private TextField newPassword;
     @FXML private Label errorMessage;
+
+    @FXML private AnchorPane manufacturerSettings;
 
     private MainController main;
 
@@ -41,11 +46,15 @@ public class SettingsController implements Initializable {
     }
 
     public void setTextBoxes(){
-        String name = main.getUser().getFirstName();
-
         firstName.setText(main.getUser().getFirstName());
         lastName.setText(main.getUser().getLastName());
         email.setText(main.getUser().getEmail());
+
+        if(main.getUser().getUserType() == User.UserType.MANUFACTURER){
+
+        }else{
+
+        }
     }
 
     @FXML
