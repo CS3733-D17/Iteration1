@@ -14,8 +14,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        Parent login = FXMLLoader.load(getClass().getResource("FXML/outershell.fxml"));
-        String cssDoc = getClass().getResource("CSS/custom.css").toExternalForm();
+        Parent login = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/outershell.fxml"));
+        String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();
         login.getStylesheets().add(cssDoc);
 
         primaryStage.setTitle("Login Screen");

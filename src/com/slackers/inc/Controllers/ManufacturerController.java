@@ -9,26 +9,26 @@ import java.sql.SQLException;
 public class ManufacturerController {
 
     Manufacturer manufacturer;
-    LabelApplicationController formController;
+    LabelApplicationController labelAppController;
 
     public ManufacturerController() throws SQLException {
         this.manufacturer = null;
-        this.formController = new LabelApplicationController();
+        this.labelAppController = new LabelApplicationController();
     }
 
     public ManufacturerController(Manufacturer manufacturer) throws SQLException {
         this.manufacturer = manufacturer;
-        this.formController = new LabelApplicationController();
+        this.labelAppController = new LabelApplicationController();
     }
 
-    public ManufacturerController(Manufacturer manufacturer, LabelApplicationController formController){
+    public ManufacturerController(Manufacturer manufacturer, LabelApplicationController labelAppController){
         this.manufacturer = manufacturer;
-        this.formController = formController;
+        this.labelAppController = labelAppController;
     }
 
     public boolean createApplication() throws SQLException {
         LabelApplication template = manufacturer.getTemplateApplication();
-        LabelApplication app = formController.getLabelApplication();
+        LabelApplication app = labelAppController.getLabelApplication();
         app.setApplicant(manufacturer);
         if (template != null) {
             app.setApplicantAddress(template.getApplicantAddress());
@@ -38,38 +38,38 @@ public class ManufacturerController {
             app.setPhoneNumber(template.getPhoneNumber());
             app.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
         }
-        boolean res = formController.createApplication();
-        this.manufacturer.addApplications(this.formController.getLabelApplication());
+        boolean res = labelAppController.createApplication();
+        this.manufacturer.addApplications(this.labelAppController.getLabelApplication());
         return res;
     }
 
     public boolean submitApplication() throws SQLException {
         
-        boolean res = formController.submitApplication(manufacturer);
+        boolean res = labelAppController.submitApplication(manufacturer);
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
 
     public boolean editApplication() throws SQLException {
 
-        return formController.editApplication();
+        return labelAppController.editApplication();
     }
 
     public boolean saveApplication() throws SQLException {
-        boolean res = formController.saveApplication();
+        boolean res = labelAppController.saveApplication();
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
 
     public boolean deleteApplication() throws SQLException {
-        this.manufacturer.removeApplications(this.formController.getLabelApplication());
-        boolean res = formController.deleteApplication();
+        this.manufacturer.removeApplications(this.labelAppController.getLabelApplication());
+        boolean res = labelAppController.deleteApplication();
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
 
-    public LabelApplicationController getFormController(){
-        return formController;
+    public LabelApplicationController getLabelAppController(){
+        return labelAppController;
     }
 
     public Manufacturer getManufacturer() {

@@ -3,10 +3,13 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 import com.slackers.inc.Boundary.InputValidator;
 import com.slackers.inc.Controllers.ManufacturerController;
 import com.slackers.inc.database.entities.Address;
+import com.slackers.inc.Controllers.ManufacturerController;
 import com.slackers.inc.database.entities.Label;
 import com.slackers.inc.database.entities.Label.BeverageSource;
 import com.slackers.inc.database.entities.Label.BeverageType;
 import com.slackers.inc.database.entities.LabelApplication;
+import com.slackers.inc.database.entities.Manufacturer;
+import com.slackers.inc.database.entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,31 +46,26 @@ public class FormController implements Initializable {
     @FXML private Button submit;
 
     public ManufacturerController manufacturer;
+    public LabelApplication labelApplication;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //TODO auto fill sections with user info
-
-        // TODO send form information to the db
 
         source.setValue(BeverageSource.DOMESTIC.name());
         source.setItems(sourceList);
         type.setValue(BeverageType.BEER.name());
         type.setItems(typeList);
 
-        //email.setText(manufacturer.getEmail());
-        //nameAddress.setText(manufacturer.getFirstName() + manufacturer.getLastName());
     }
 
     public void setManufacturer(ManufacturerController manufacturer) throws SQLException {
         this.manufacturer = manufacturer;
         this.manufacturer.createApplication();
-        this.update(this.manufacturer.getFormController().getLabelApplication());
+        this.update(this.manufacturer.getLabelAppController().getLabelApplication());
     }
     
     @FXML
-    void submit(ActionEvent event) {
+    void submit() {
 
         if (this.validateFields())
         {
@@ -97,7 +95,7 @@ public class FormController implements Initializable {
     {
         try
         {
-            LabelApplication application = this.manufacturer.getFormController().getLabelApplication();
+            LabelApplication application = this.manufacturer.getLabelAppController().getLabelApplication();
             Label label = application.getLabel();            
             label.setAlcoholContent(InputValidator.validateDouble(alcoholContent.getText(), "Alcohol content", 0, 100));
             label.setBrandName(InputValidator.validateStringNotEmpty(brand.getText(),"Brand name"));
