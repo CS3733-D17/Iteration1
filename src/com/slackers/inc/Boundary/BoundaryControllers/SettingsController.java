@@ -36,18 +36,20 @@ public class SettingsController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        String name = main.getUser().getFirstName();
-
-        firstName.setText(main.getUser().getFirstName());
-        lastName.setText(main.getUser().getLastName());
-        email.setText(main.getUser().getEmail());
-
         fadeOut.setNode(errorMessage);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         fadeOut.setCycleCount(1);
         fadeOut.setAutoReverse(false);
 
+    }
+
+    public void setTextBoxes(){
+        String name = main.getUser().getFirstName();
+
+        firstName.setText(main.getUser().getFirstName());
+        lastName.setText(main.getUser().getLastName());
+        email.setText(main.getUser().getEmail());
     }
 
     @FXML

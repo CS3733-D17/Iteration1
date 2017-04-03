@@ -56,13 +56,13 @@ public class MainController implements Initializable{
         }else{
             String password = "";
             try {
-                password = CryptoTools.decrypt(programPref.get("password", null), programPref);
+                password = CryptoTools.decrypt(programPref.get("password", ""), programPref);
             } catch (GeneralSecurityException | IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                if(userController.loginUser(programPref.get("email", null), password) == null){
+                if(userController.loginUser(programPref.get("email", ""), password) == null){
                     programPref.put("email", "");
                     try {
                         loadLogin();
@@ -139,6 +139,7 @@ public class MainController implements Initializable{
         settings = settingsLoader.load();
         SettingsController settingsController = settingsLoader.getController();
         settingsController.setMainController(this);
+        settingsController.setTextBoxes();
 
         if(user.getUserType() != User.UserType.COLA_USER){
             applications = FXMLLoader.load(getClass().getResource("../FXML/applications.fxml"));
