@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -40,6 +41,7 @@ public class ResultsController implements Initializable {
     public MainController main;
     public com.slackers.inc.database.entities.Label temp;
     public Manufacturer manufacturer;
+    public List results;
 
     final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
     //final AnchorPane[] labels;
@@ -74,6 +76,11 @@ public class ResultsController implements Initializable {
         accordion.getPanes().addAll(tps);
         accordion.setExpandedPane(tps[0]);
 
+    }
+
+
+    public void setResults(List results){
+        this.results = results;
     }
 
 
