@@ -26,7 +26,7 @@
                         <Glyph fontFamily="FontAwesome" icon="LIST" prefHeight="60.0" prefWidth="60.0" styleClass="sideicons" />
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#searchClick" prefHeight="60.0" prefWidth="60.0" styleClass="sidebarbutton">
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchClick" prefHeight="60.0" prefWidth="60.0" styleClass="sidebarbutton">
                      <graphic>
                         <Glyph fontFamily="FontAwesome" icon="SEARCH" prefHeight="60.0" prefWidth="60.0" styleClass="sideicons" />
                      </graphic>

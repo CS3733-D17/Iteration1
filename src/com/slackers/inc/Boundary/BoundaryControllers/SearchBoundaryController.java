@@ -26,10 +26,10 @@ import java.util.ResourceBundle;
 
 public class SearchBoundaryController implements Initializable {
 
-    ObservableList<String> typeList = FXCollections.observableArrayList("All", "Beer", "Wine", "Hard Alcohol");
-    ObservableList<String> contentList = FXCollections.observableArrayList("All", "20 <", "21-50", "51 >");
-    ObservableList<String> pastList = FXCollections.observableArrayList("Vodka", "Gin", "Tequila", "Rum", "Mixers");
-    ObservableList<String> currentList = FXCollections.observableArrayList("Sweet", "Dry", "Coconut", "cherry");
+    private ObservableList<String> typeList = FXCollections.observableArrayList("All", "Beer", "Wine", "Hard Alcohol");
+    private ObservableList<String> contentList = FXCollections.observableArrayList("All", "20 <", "21-50", "51 >");
+    private ObservableList<String> pastList = FXCollections.observableArrayList("Vodka", "Gin", "Tequila", "Rum", "Mixers");
+    private ObservableList<String> currentList = FXCollections.observableArrayList("Sweet", "Dry", "Coconut", "cherry");
 
     private MainController mainController;
 
@@ -39,7 +39,6 @@ public class SearchBoundaryController implements Initializable {
     @FXML private ListView pastSearch;
     @FXML private ListView currentFilter;
 
-    public MainController main;
     public COLASearchController search;
     public ColaUser user;
     public Label label;
@@ -48,11 +47,20 @@ public class SearchBoundaryController implements Initializable {
     @FXML
     private void getResultsClick(ActionEvent e) throws IOException, SQLException {
 
-        label.setAlcoholContent(Double.parseDouble(alcoholContent.getValue().toString()));
-        label.setBrandName(keyword.getText());
-        label.setProductType(Label.BeverageType.valueOf(type.getValue().toString()));
+        search = new COLASearchController();
+        label = new Label();
 
-        user = (ColaUser) main.getUser();
+        if(!alcoholContent.getValue().toString().equals("All")){
+            label.setAlcoholContent(Double.parseDouble(alcoholContent.getValue().toString()));
+        }
+
+        label.setBrandName(keyword.getText());
+
+        if(!type.getValue().toString().equals("All")) {
+            label.setProductType(Label.BeverageType.valueOf(type.getValue().toString()));
+        }
+
+        user = (ColaUser) mainController.getUser();
         search.setColaUser(user);
 
         FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("../FXML/results.fxml"));

@@ -33,6 +33,8 @@ public class MainController implements Initializable{
     @FXML private AnchorPane settings;
 
     @FXML private Button applicationButton;
+    @FXML private Button searchButton;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -129,12 +131,6 @@ public class MainController implements Initializable{
 
     private void loadPages() throws IOException{
 
-        FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
-        search = searchLoader.load();
-        SearchBoundaryController searchBoundaryController = searchLoader.getController();
-        searchBoundaryController.setMainController(this);
-        //results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
-
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));
         settings = settingsLoader.load();
         SettingsController settingsController = settingsLoader.getController();
@@ -150,6 +146,7 @@ public class MainController implements Initializable{
 
             mainContainer.getChildren().setAll(applications);
             applicationButton.setVisible(true);
+            searchButton.setVisible(false);
 
         }else if(user.getUserType() == User.UserType.US_EMPLOYEE) {
             FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("../FXML/USEmployee.fxml"));
@@ -160,10 +157,17 @@ public class MainController implements Initializable{
 
             mainContainer.getChildren().setAll(applications);
             applicationButton.setVisible(true);
+            searchButton.setVisible(false);
 
         }else{
-            applicationButton.setVisible(false);
+            FXMLLoader searchLoader = new FXMLLoader(getClass().getResource("../FXML/search.fxml"));
+            search = searchLoader.load();
+            SearchBoundaryController searchBoundaryController = searchLoader.getController();
+            searchBoundaryController.setMainController(this);
+
             mainContainer.getChildren().setAll(search);
+            applicationButton.setVisible(false);
+            searchButton.setVisible(true);
         }
     }
 

@@ -55,32 +55,36 @@ public class ResultsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
 
-    public void displayResults(List results){
+    public void displayResults(List results) {
 
         this.results = results;
 
-        for (int i = 0; i < results.size(); i++) {
+        if (results != null && results.size() != 0) {
+            for (int i = 0; i < results.size(); i++) {
 
-            try {
-                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
-                templateLoader.setController(this);
-                template = templateLoader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
+                    templateLoader.setController(this);
+                    template = templateLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                type.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductType().toString());
+                source.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductSource().toString());
+                brand.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getBrandName());
+                alcoholContent.setText(Double.toString(((com.slackers.inc.database.entities.Label) results.get(i)).getAlcoholContent()));
+
+                extraButton.setText("More Info");
+
+                accordionID.getPanes().add(titledPane);
             }
 
-            type.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getProductType().toString());
-            source.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getProductSource().toString());
-            brand.setText(((com.slackers.inc.database.entities.Label)results.get(i)).getBrandName());
-            alcoholContent.setText(Double.toString(((com.slackers.inc.database.entities.Label)results.get(i)).getAlcoholContent()));
-
-            extraButton.setText("More Info");
-
-            accordionID.getPanes().add(titledPane);
-        }
-
-        if(accordionID.getPanes().size() > 0){
-            accordionID.setExpandedPane(accordionID.getPanes().get(0));
+            if (accordionID.getPanes().size() > 0) {
+                accordionID.setExpandedPane(accordionID.getPanes().get(0));
+            }
+        } else {
+            System.out.println("No results to display!");
         }
     }
 
