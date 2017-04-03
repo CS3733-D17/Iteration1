@@ -133,7 +133,7 @@ public class MainController implements Initializable{
         search = searchLoader.load();
         SearchController searchController = searchLoader.getController();
         searchController.setMainController(this);
-        results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
+        //results = FXMLLoader.load(getClass().getResource("../FXML/results.fxml"));
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("../FXML/settings.fxml"));
         settings = settingsLoader.load();
@@ -143,6 +143,7 @@ public class MainController implements Initializable{
         if(user.getUserType() != User.UserType.COLA_USER){
             applications = FXMLLoader.load(getClass().getResource("../FXML/applications.fxml"));
             mainContainer.getChildren().setAll(applications);
+            applicationButton.setVisible(false);
 
         }else {
             applicationButton.setVisible(false);
