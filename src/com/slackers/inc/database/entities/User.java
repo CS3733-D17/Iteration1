@@ -195,6 +195,4 @@ public class User implements IEntity{
         return "User{" + "firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + ", email=" + email + ", userType=" + userType + '}';
     }
     
-    
-    
 }

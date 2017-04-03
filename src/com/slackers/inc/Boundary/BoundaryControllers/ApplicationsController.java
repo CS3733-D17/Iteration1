@@ -42,7 +42,6 @@ public class ApplicationsController implements Initializable{
     public com.slackers.inc.database.entities.Label temp;
     public Manufacturer manufacturer;
 
-
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
 
@@ -56,6 +55,12 @@ public class ApplicationsController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the Application Controller");
 
+        //width.bind(accordionID.widthProperty());
+        //helloThing.styleProperty().bind(Bindings.concat("-fx-pref-width: ", width.subtract(50).asString(), ";"));
+
+    }
+
+    public void addAccordianChildren(){
         manufacturer = (Manufacturer) main.getUser();
 
         for (int i = 0; i < manufacturer.getApplications().size(); i++) {
@@ -81,10 +86,6 @@ public class ApplicationsController implements Initializable{
         accordionID.setExpandedPane(tps[0]);
 
 
-
-        //width.bind(accordionID.widthProperty());
-        //helloThing.styleProperty().bind(Bindings.concat("-fx-pref-width: ", width.subtract(50).asString(), ";"));
-
     }
 
     @FXML
@@ -100,5 +101,9 @@ public class ApplicationsController implements Initializable{
     }
 
     //TODO make the accordian template and fill with form information
+
+    public void setMainController(MainController mainController) {
+        this.main = mainController ;
+    }
 
 }

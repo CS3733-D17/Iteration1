@@ -12,10 +12,6 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-/**
- * Created by Jason on 4/1/2017.
- */
 public class SettingsController implements Initializable {
 
     // TODO Display information specific to each type of user

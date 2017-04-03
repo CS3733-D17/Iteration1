@@ -142,7 +142,12 @@ public class MainController implements Initializable{
         settingsController.setTextBoxes();
 
         if(user.getUserType() != User.UserType.COLA_USER){
-            applications = FXMLLoader.load(getClass().getResource("../FXML/applications.fxml"));
+            FXMLLoader applicationLoader = new FXMLLoader(getClass().getResource("../FXML/applications.fxml"));
+            applications = applicationLoader.load();
+            ApplicationsController applicationsController = applicationLoader.getController();
+            applicationsController.setMainController(this);
+            applicationsController.addAccordianChildren();
+
             mainContainer.getChildren().setAll(applications);
             applicationButton.setVisible(false);
 
