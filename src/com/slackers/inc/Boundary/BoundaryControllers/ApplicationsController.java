@@ -85,6 +85,7 @@ public class ApplicationsController implements Initializable{
         //width.bind(accordionID.widthProperty());
         //helloThing.styleProperty().bind(Bindings.concat("-fx-pref-width: ", width.subtract(50).asString(), ";"));
 
+
     }
 
     @FXML
@@ -100,5 +101,9 @@ public class ApplicationsController implements Initializable{
     }
 
     //TODO make the accordian template and fill with form information
+
+    public void setMainController(MainController mainController) {
+        this.main = mainController ;
+    }
 
 }
