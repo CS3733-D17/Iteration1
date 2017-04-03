@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
@@ -28,13 +29,18 @@ public class ResultsController implements Initializable {
 
     //TODO make the accordian template and fill with label information
 
-    @FXML Accordion accordion;
+    @FXML Accordion accordionID;
+    @FXML TitledPane titledPane;
+
     @FXML private Label alcoholContent;
     @FXML private Label progress;
     @FXML private Label source;
     @FXML private Label type;
     @FXML private Label brand;
     @FXML private Label repID;
+
+    @FXML private Label titleLabel;
+    @FXML private Button extraButton;
 
     @FXML private AnchorPane template;
 
@@ -70,11 +76,14 @@ public class ResultsController implements Initializable {
             progress.setText(manufacturer.getApplications().get(i).getLabel().getApproval().toString());
             alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
 
-            tps[i] = new TitledPane(manufacturer.getApplications().get(i).getLabel().getBrandName(), template);
+            extraButton.setText("More Info");
 
+            accordionID.getPanes().add(titledPane);
         }
-        accordion.getPanes().addAll(tps);
-        accordion.setExpandedPane(tps[0]);
+
+        if(accordionID.getPanes().size() > 0){
+            accordionID.setExpandedPane(accordionID.getPanes().get(0));
+        }
 
     }
 

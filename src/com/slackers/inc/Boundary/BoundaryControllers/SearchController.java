@@ -71,7 +71,6 @@ public class SearchController implements Initializable {
 
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources){
         type.setValue("All");

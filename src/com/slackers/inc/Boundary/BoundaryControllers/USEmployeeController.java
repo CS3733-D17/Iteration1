@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +23,7 @@ public class USEmployeeController implements Initializable{
 
     @FXML Accordion accordionID;
     @FXML private BorderPane helloThing;
-    @FXML TitledPane title1;
+    @FXML TitledPane titledPane;
     @FXML private Label alcoholContent;
     @FXML private Label progress;
     @FXML private Label source;
@@ -31,10 +32,11 @@ public class USEmployeeController implements Initializable{
     @FXML private Label repID;
     @FXML private AnchorPane template;
 
+    @FXML private Label titleLabel;
+    @FXML private Button extraButton;
+
     public MainController main;
     public UsEmployee employee;
-    final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
-    final TitledPane[] tps = new TitledPane[imageNames.length];
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,12 +64,20 @@ public class USEmployeeController implements Initializable{
             progress.setText(employee.getApplications().get(i).getLabel().getApproval().toString());
             alcoholContent.setText(Double.toString(employee.getApplications().get(i).getLabel().getAlcoholContent()));
 
-            tps[i] = new TitledPane(employee.getApplications().get(i).getLabel().getBrandName(), template);
+            titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName() + " - " + employee.getApplications().get(i).getLabel().getApproval().toString());
+            extraButton.setText("More Info");
 
+            accordionID.getPanes().add(titledPane);
         }
-        accordionID.getPanes().addAll(tps);
-        accordionID.setExpandedPane(tps[0]);
 
+        if(accordionID.getPanes().size() > 0){
+            accordionID.setExpandedPane(accordionID.getPanes().get(0));
+        }
+
+    }
+
+    @FXML
+    public void addApplication(){
 
     }
 

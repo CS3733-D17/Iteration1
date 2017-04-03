@@ -29,7 +29,7 @@ public class ApplicationsController implements Initializable{
 
     @FXML Accordion accordionID;
     @FXML private BorderPane helloThing;
-    @FXML TitledPane title1;
+    @FXML TitledPane titledPane;
     @FXML private Label alcoholContent;
     @FXML private Label progress;
     @FXML private Label source;
@@ -37,6 +37,9 @@ public class ApplicationsController implements Initializable{
     @FXML private Label brand;
     @FXML private Label repID;
     @FXML private AnchorPane template;
+
+    @FXML private Label titleLabel;
+    @FXML private Button extraButton;
 
     public MainController main;
     public Manufacturer manufacturer;
@@ -77,11 +80,14 @@ public class ApplicationsController implements Initializable{
             progress.setText(manufacturer.getApplications().get(i).getLabel().getApproval().toString());
             alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
 
-            tps[i] = new TitledPane(manufacturer.getApplications().get(i).getLabel().getBrandName(), template);
+            extraButton.setText("More Info");
 
+            accordionID.getPanes().add(titledPane);
         }
-        accordionID.getPanes().addAll(tps);
-        accordionID.setExpandedPane(tps[0]);
+
+        if(accordionID.getPanes().size() > 0){
+            accordionID.setExpandedPane(accordionID.getPanes().get(0));
+        }
 
 
     }

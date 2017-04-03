@@ -4,6 +4,7 @@ import com.slackers.inc.Controllers.Filters.Filter;
 import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.IEntity;
 import com.slackers.inc.database.entities.Label;
+import com.slackers.inc.database.entities.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,9 +39,6 @@ public class SearchController {
     }
 
     public List<IEntity> runSearch(Label target) throws SQLException {
-        /*  I know that the class diagram says that this is supposed to be void, but would be nice
-         *  if it returned a list of labels so we could display those onto the screen
-         */
         filters.forEach(filter -> {
             filter.preApply(target);
             columns.add(filter.getColumn());
