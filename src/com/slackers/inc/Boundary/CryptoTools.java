@@ -37,8 +37,6 @@ public class CryptoTools {
         return new String(decrypted);
     }
 
-
-
     private static SecretKeySpec getSecretKeySpec(Preferences p) throws NoSuchAlgorithmException, IOException {
         byte [] key = readKeyFile(p);
         SecretKeySpec sks = new SecretKeySpec(key, "AES");
@@ -73,21 +71,4 @@ public class CryptoTools {
         }
         return b;
     }
-
-    /*public static void main(String[] args) throws Exception {
-        String clearPwd= "my password is hello world";
-
-        Preferences p1 = Preferences.userNodeForPackage(CryptoTools.class);
-
-        p1.put("user", "Real Person");
-        String encryptedPwd = CryptoTools.encrypt(clearPwd, p1);
-        p1.put("pwd", encryptedPwd);
-
-        // ==================
-        Preferences p2 = Preferences.userNodeForPackage(CryptoTools.class);
-
-        encryptedPwd = p2.get("pwd", "Hello");
-        System.out.println(encryptedPwd);
-        System.out.println(CryptoTools.decrypt(encryptedPwd, p2));
-    }*/
 }

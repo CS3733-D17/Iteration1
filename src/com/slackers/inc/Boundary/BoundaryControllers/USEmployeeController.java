@@ -2,15 +2,20 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.database.entities.Manufacturer;
 import com.slackers.inc.database.entities.UsEmployee;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -77,8 +82,13 @@ public class USEmployeeController implements Initializable{
     }
 
     @FXML
-    public void addApplication(){
-
+    public void addApplication() throws IOException{
+        Parent newApp = FXMLLoader.load(getClass().getResource("../FXML/form.fxml"));
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("New Form");
+        stage.setScene(new Scene(newApp));
+        stage.show();
     }
 
     public void setMainController(MainController mainController) {

@@ -29,8 +29,8 @@ import javafx.stage.Stage;
  */
 public class ResultsController implements Initializable {
 
-    @FXML Accordion accordionID;
-    @FXML TitledPane titledPane;
+    @FXML private Accordion accordionID;
+    @FXML private TitledPane titledPane;
 
     @FXML private Label alcoholContent;
     @FXML private Label progress;
