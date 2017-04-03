@@ -41,9 +41,25 @@ public class COLASearchController {
     public ColaUser getColaUser();
     { return colaUser; }
 
-    public void search()
-    {
+    /**
+     * @return
+     * @author Created by Michael Steidel on 4/2/17
+     */
+    public void setSearchControl(SearchController searchControl) {
+        this.searchControl = searchControl;
+    }
 
+    /**
+     * @return
+     * @author Created by Michael Steidel on 4/2/17
+     */
+    public SearchController getSearchControl() {
+        return searchControl;
+    }
+
+    public List<Entity> search(Label target) throws SQLException
+    {
+        searchControl.runSearch(target);
     }
 
 }
