@@ -39,15 +39,12 @@ public class ApplicationsController implements Initializable{
     @FXML private AnchorPane template;
 
     public MainController main;
-    public com.slackers.inc.database.entities.Label temp;
     public Manufacturer manufacturer;
 
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
 
     final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
-    final Image[] images = new Image[imageNames.length];
-    final ImageView[] pics = new ImageView[imageNames.length];
     final TitledPane[] tps = new TitledPane[imageNames.length];
 
 
@@ -67,6 +64,7 @@ public class ApplicationsController implements Initializable{
 
             try {
                 FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
+                templateLoader.setController(this);
                 template = templateLoader.load();
             } catch (IOException e) {
                 e.printStackTrace();
