@@ -1,5 +1,6 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.database.entities.Manufacturer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -29,6 +30,19 @@ public class ApplicationsController implements Initializable{
     @FXML Accordion accordionID;
     @FXML private BorderPane helloThing;
     @FXML TitledPane title1;
+    @FXML private Label alcoholContent;
+    @FXML private Label progress;
+    @FXML private Label source;
+    @FXML private Label type;
+    @FXML private Label brand;
+    @FXML private Label repID;
+    @FXML private AnchorPane template;
+
+    public MainController main;
+    public com.slackers.inc.database.entities.Label temp;
+    public Manufacturer manufacturer;
+
+
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
 
@@ -42,13 +56,30 @@ public class ApplicationsController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the Application Controller");
 
-        for (int i = 0; i < imageNames.length; i++) {
-            //images[i] = new Image(getClass().getResourceAsStream(imageNames[i] + ".jpg"));
-            pics[i] = new ImageView(images[i]);
-            tps[i] = new TitledPane(imageNames[i],pics[i]);
+        manufacturer = (Manufacturer) main.getUser();
+
+        for (int i = 0; i < manufacturer.getApplications().size(); i++) {
+
+            try {
+                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("../FXML/formTemplate.fxml"));
+                template = templateLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            repID.setText(manufacturer.getApplications().get(i).getLabel().getRepresentativeIdNumber());
+            type.setText(manufacturer.getApplications().get(i).getLabel().getProductType().toString());
+            source.setText(manufacturer.getApplications().get(i).getLabel().getProductSource().toString());
+            brand.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
+            progress.setText(manufacturer.getApplications().get(i).getLabel().getApproval().toString());
+            alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
+
+            tps[i] = new TitledPane(manufacturer.getApplications().get(i).getLabel().getBrandName(), template);
+
         }
         accordionID.getPanes().addAll(tps);
         accordionID.setExpandedPane(tps[0]);
+
 
 
         //width.bind(accordionID.widthProperty());

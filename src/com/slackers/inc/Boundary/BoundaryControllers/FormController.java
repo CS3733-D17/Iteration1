@@ -1,5 +1,8 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.database.entities.Label;
+import com.slackers.inc.database.entities.LabelApplication;
+import com.slackers.inc.database.entities.Manufacturer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,13 +32,15 @@ public class FormController implements Initializable {
     @FXML private TextField repID;
     @FXML private TextField email;
 
-    public MainController main;
+    public Manufacturer manufacturer;
+    public LabelApplication application;
+    public Label label;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        //TODO auto fill sections with usre info
+        //TODO auto fill sections with user info
 
         // TODO send form information to the db
 
@@ -44,15 +49,28 @@ public class FormController implements Initializable {
         type.setValue("Beer");
         type.setItems(typeList);
 
-        //email.setText(main.getUser().getEmail());
-        //nameAddress.setText(main.getUser().getFirstName() + main.getUser().getLastName());
+        //email.setText(manufacturer.getEmail());
+        //nameAddress.setText(manufacturer.getFirstName() + manufacturer.getLastName());
     }
 
 
     @FXML
     void submit(ActionEvent event) {
 
-        //main.getUser().
+        label.setAlcoholContent(Integer.parseInt(alcoholContent.getText()));
+        label.setBrandName(brand.getText());
+        //label.setProductType(type.getValue());
+        //label.setProductSource((Label.BeverageSource) source.getValue());
+        label.setPlantNumber(PBBNumber.getText());
+        label.setRepresentativeIdNumber(repID.getText());
+
+
+        application.setApplicant(manufacturer);
+        application.setApplicationId(Integer.parseInt(repID.getText()));
+        application.setEmailAddress(manufacturer.getEmail());
+        application.setLabel(label);
+
+        manufacturer.getApplications().add(application);
 
     }
 
