@@ -1,6 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Boundary.CryptoTools;
+import com.slackers.inc.Boundary.Main;
 import com.slackers.inc.Controllers.AccountController;
 import com.slackers.inc.database.entities.User;
 import javafx.application.Platform;
@@ -10,8 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,19 +29,32 @@ import java.util.prefs.Preferences;
 
 public class MainController implements Initializable{
 
+    // Main Objects for User Information
     private Preferences programPref;
     private AccountController userController;
+    private User user;
 
+    // Pages in the Application
     @FXML private AnchorPane mainContainer;
-    @FXML private AnchorPane results;
     @FXML private AnchorPane search;
     @FXML private AnchorPane applications;
     @FXML private AnchorPane settings;
 
+    // Side label of the User to Indicate Signed in Info
+    @FXML private Label userNameLabel;
+    @FXML private Label userEmailLabel;
+
+    // Side buttons to access different pages on screen
     @FXML private Button applicationButton;
     @FXML private Button searchButton;
 
 
+    /**
+     * Initializes the Entire program
+     * Checks for User Login or Displays login page, and then loads pages
+     * @param location Location of FXML
+     * @param resources Any Language Packs or other Resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("This is the main controller. Starting up program ...");
@@ -84,6 +102,12 @@ public class MainController implements Initializable{
             }
         }
 
+        // Assign objects to their respective information
+        user = userController.getUser();
+        userNameLabel.setText(user.getFirstName() + " " + user.getLastName());
+        userEmailLabel.setText(user.getEmail());
+
+        // Tries to load the Pages
         try {
             loadPages();
         } catch (IOException e) {
@@ -94,6 +118,10 @@ public class MainController implements Initializable{
     //TODO fix signup so that it creates the user
     //TODO hide the application button for search users
 
+    /**
+     * Loads the Login Page and Puts the Login User in the Preferences File
+     * @throws IOException When unable to load the login page FXML or CSS
+     */
     private void loadLogin() throws IOException{
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/loginregisterform.fxml"));
         Parent login = loginLoader.load();
@@ -120,15 +148,20 @@ public class MainController implements Initializable{
             programPref.put("password", CryptoTools.encrypt(userController.getUser().getPassword(), programPref));
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
+            Notifications.create().title("Username Not Saved").text("Could not save username and password for reiterations. Please try again later.").showError();
             System.out.println("Could not save username and password for reiterations");
         }
 
+        Main.notifier("Worked", "as you can see");
     }
 
     // TODO Make sure that preferences are completly deleted except for the key
     // TODO Figure out why it fails on Jason's computer
-    // TODO Change outer shell so it only shows possible options
 
+    /**
+     * Load all of the necessary pages for the user into the program for display
+     * @throws IOException When unable to load any of the FXML Files
+     */
     private void loadPages() throws IOException{
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/settings.fxml"));
@@ -171,21 +204,33 @@ public class MainController implements Initializable{
         }
     }
 
+    /**
+     * Changes the main page to the application page if possible
+     */
     @FXML
     private void applicationClick(){
         mainContainer.getChildren().setAll(applications);
     }
 
+    /**
+     * Changes the main page to the search page if possible
+     */
     @FXML
     private void searchClick(){
         mainContainer.getChildren().setAll(search);
     }
 
+    /**
+     * Changes the main page to the settings page if possible
+     */
     @FXML
     private void settingsClick(){
         mainContainer.getChildren().setAll(settings);
     }
 
+    /**
+     * Logs the user out pf the program and removes the name from the preferences file
+     */
     @FXML
     private void logoutClick(){
         mainContainer.getScene().getWindow().hide();
@@ -215,18 +260,18 @@ public class MainController implements Initializable{
 
     }
 
-    public void resultsClick(){
-        mainContainer.getChildren().setAll(results);
-    }
-
+    /**
+     * Returns the Account Controller
+     * @return Account Controller for accessing the User
+     */
     public AccountController getAccountController(){
         return this.userController;
     }
 
-    public Preferences getPreferences(){
-        return this.programPref;
-    }
-
+    /**
+     * Returns the User of the Program to access infomration of it
+     * @return User of program
+     */
     public User getUser(){
         return this.getAccountController().getUser();
     }

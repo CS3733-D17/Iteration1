@@ -11,7 +11,7 @@
             <Accordion fx:id="accordion" prefHeight="492.0" prefWidth="600.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="download" layoutX="256.0" layoutY="12.0" mnemonicParsing="false" text="Download" />
+                  <Button onAction="#download" layoutX="256.0" layoutY="12.0" mnemonicParsing="false" text="Download" />
                </children>
             </AnchorPane>
          </children>

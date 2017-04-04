@@ -153,8 +153,7 @@ public class FormController implements Initializable {
 
     }
     
-    private void update(LabelApplication application)
-    {
+    private void update(LabelApplication application) {
         source.setValue(application.getLabel().getProductSource().name());
         type.setValue(application.getLabel().getProductType().name());
         PBBNumber.setText(application.getLabel().getPlantNumber());

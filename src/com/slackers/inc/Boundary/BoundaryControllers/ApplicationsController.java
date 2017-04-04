@@ -48,7 +48,7 @@ public class ApplicationsController implements Initializable{
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
 
-    final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
+    private final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
     final TitledPane[] tps = new TitledPane[imageNames.length];
 
 
@@ -61,7 +61,7 @@ public class ApplicationsController implements Initializable{
 
     }
 
-    public void addAccordianChildren(){
+    void addAccordianChildren(){
         accordionID.getPanes().clear();
         for (int i = 0; i < manufacturer.getManufacturer().getApplications().size(); i++) {
 
@@ -91,9 +91,7 @@ public class ApplicationsController implements Initializable{
             extraButton.setOnAction(event -> {
                 try {
                     edit();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
+                } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 }
             });
@@ -127,7 +125,7 @@ public class ApplicationsController implements Initializable{
         }
     }
 
-    public void edit() throws IOException, SQLException {
+    private void edit() throws IOException, SQLException {
         System.out.println("edit page");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
