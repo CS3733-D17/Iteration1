@@ -17,17 +17,19 @@ public class Address implements Serializable{
     private String city;
     private String state;
     private int zipCode;
+    private String country;
 
-    public Address(String line1, String line2, String city, String state, int zipCode) {
+    public Address(String line1, String line2, String city, String state, int zipCode, String country) {
         this.line1 = line1;
         this.line2 = line2;
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
+        this.country = country;
     }
     public Address()
     {
-        this("","","","",-1);
+        this("","","","",-1,"");
     }
 
     public String getLine1() {
@@ -70,6 +72,14 @@ public class Address implements Serializable{
         this.zipCode = zipCode;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         if (this.zipCode!=-1)
@@ -104,7 +114,8 @@ public class Address implements Serializable{
             String city = cityAndState.substring(0, cityAndState.lastIndexOf(" ")).trim();
             int zip=0;
             zip = Integer.parseInt(zipCode);
-            return new Address(lines[0].trim(), lines[1].trim(), city, state, zip);
+            String country = "";
+            return new Address(lines[0].trim(), lines[1].trim(), city, state, zip, country);
         }
         catch (Exception e)
         {
