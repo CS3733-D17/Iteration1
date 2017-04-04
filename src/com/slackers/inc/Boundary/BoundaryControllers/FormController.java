@@ -96,21 +96,11 @@ public class FormController implements Initializable {
     }
 
     public void setManufacturer(User user) throws SQLException {
+        man = (Manufacturer) user;
+        manufacturer = new ManufacturerController(man);
+        manufacturer.createApplication();
+        this.update(this.manufacturer.getLabelAppController().getLabelApplication());
 
-        if(user.getUserType() == User.UserType.US_EMPLOYEE) {
-            emp = (UsEmployee) user;
-            this.employee = new UsEmployeeController(emp);
-
-            for (int i = 0; i < formAnchor.getChildren().size(); i++) {
-                formAnchor.getChildren().get(i).setDisable(true);
-            }
-        }
-        else{
-            man = (Manufacturer) user;
-            manufacturer = new ManufacturerController(man);
-            manufacturer.createApplication();
-            this.update(this.manufacturer.getLabelAppController().getLabelApplication());
-        }
     }
     
     @FXML
@@ -136,7 +126,7 @@ public class FormController implements Initializable {
         phone.setText(application.getPhoneNumber());
         alcoholContent.setText(Double.toString(application.getLabel().getAlcoholContent()));
         address1Field.setText(application.getApplicantAddress().toString());
-        address1Field.setText(application.getMailingAddress().toString());
+        address2Field.setText(application.getMailingAddress().toString());
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());

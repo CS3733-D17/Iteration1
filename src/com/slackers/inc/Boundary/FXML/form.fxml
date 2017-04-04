@@ -43,7 +43,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="phone" layoutX="203.0" layoutY="443.0" prefWidth="180.0" AnchorPane.leftAnchor="203.0" AnchorPane.topAnchor="443.0">
+                  <TextField fx:id="phone" layoutX="224.0" layoutY="444.0" prefWidth="180.0" AnchorPane.leftAnchor="224.0" AnchorPane.topAnchor="444.0">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -96,7 +96,7 @@
                   </TextField>
                   <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
                   <ChoiceBox fx:id="type" layoutX="767.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
-                  <Label layoutX="35.0" layoutY="193.0" text="Address 1:">
+                  <Label layoutX="30.0" layoutY="180.0" prefHeight="55.0" prefWidth="160.0" text="Applicatn Address">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -106,7 +106,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="351.0" text="Address 2:">
+                  <Label layoutX="35.0" layoutY="351.0" text="Mailing Address">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -118,8 +118,8 @@
                      </font>
                   </Label>
                   <TextField fx:id="country2Field" layoutX="744.0" layoutY="351.0" prefHeight="31.0" prefWidth="207.0" />
-                  <TextArea fx:id="address2Field" layoutX="151.0" layoutY="305.0" prefHeight="111.0" prefWidth="558.0" text="&#10;&#10;" />
-                  <TextArea fx:id="address1Field" layoutX="151.0" layoutY="152.0" prefHeight="111.0" prefWidth="558.0" />
+                  <TextArea fx:id="address2Field" layoutX="224.0" layoutY="305.0" prefHeight="111.0" prefWidth="485.0" text="&#10;&#10;" />
+                  <TextArea fx:id="address1Field" layoutX="224.0" layoutY="152.0" prefHeight="111.0" prefWidth="485.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="wineStuff" prefHeight="75.0" prefWidth="1000.0">

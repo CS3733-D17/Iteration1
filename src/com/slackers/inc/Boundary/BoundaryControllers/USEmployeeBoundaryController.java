@@ -1,5 +1,6 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.UsEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +43,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
     public MainController main;
     public UsEmployee employee;
+    public UsEmployeeController UScontroller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +72,14 @@ public class USEmployeeBoundaryController implements Initializable{
             alcoholContent.setText(Double.toString(employee.getApplications().get(i).getLabel().getAlcoholContent()));
 
             titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName() + " - " + employee.getApplications().get(i).getLabel().getApproval().toString());
-            extraButton.setText("More Info");
+            extraButton.setText("Review");
+            extraButton.setOnAction(event -> {
+                try {
+                    review();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
             accordionID.getPanes().add(titledPane);
         }
@@ -83,7 +92,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
     @FXML
     public void addApplication() throws IOException{
-        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");
@@ -92,15 +101,19 @@ public class USEmployeeBoundaryController implements Initializable{
 
     }
 
-    @FXML
-    public void accept(){
-
+    public void review() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+        Parent newApp = loader.load();
+        USEmployeeFormController USformController = loader.getController();
+        USformController.setEmployee((UsEmployee) main.getUser());
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Review Form");
+        stage.setScene(new Scene(newApp));
+        stage.show();
     }
 
-    @FXML
-    public void reject(){
 
-    }
 
     public void setMainController(MainController mainController) {
         this.main = mainController ;
