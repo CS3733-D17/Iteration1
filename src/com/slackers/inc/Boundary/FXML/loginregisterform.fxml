@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.glyphfont.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -14,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.glyphfont.Glyph?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.LoginController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.LoginController">
    <children>
       <AnchorPane prefHeight="150.0" prefWidth="400.0" style="-fx-background-color: -main-color;">
          <children>
@@ -69,7 +74,7 @@
                </children>
             </HBox>
 
-             <HBox layoutX="50.0" layoutY="202.0" prefHeight="30.0" prefWidth="300.0">
+             <HBox layoutX="21.0" layoutY="203.0" prefHeight="30.0" prefWidth="358.0">
                <children>
                   <RadioButton fx:id="customer" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" selected="true" text="Customer" textAlignment="CENTER">
                      <toggleGroup>

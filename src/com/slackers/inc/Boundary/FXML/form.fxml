@@ -34,16 +34,11 @@
             <Font size="16.0" />
          </font>
       </TextField>
-      <Label layoutX="89.0" layoutY="108.0" text="Name and Address of Applicant:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="170.0">
+      <Label layoutX="39.0" layoutY="172.0" text="First Name:" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="172.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextArea fx:id="nameAddress" layoutX="76.0" layoutY="172.0" prefHeight="200.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="200.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextArea>
       <Label layoutX="99.0" layoutY="118.0" text="Phone Number:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0">
          <font>
             <Font size="20.0" />
@@ -100,7 +95,7 @@
             <Font size="16.0" />
          </font>
       </TextField>
-      <Label fx:id="info" layoutX="48.0" layoutY="747.0" text="" AnchorPane.leftAnchor="40.0" AnchorPane.bottomAnchor="40.0">
+      <Label fx:id="info" layoutX="48.0" layoutY="747.0" text="" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -108,5 +103,48 @@
       <Button fx:id="submit" layoutX="842.0" layoutY="747.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
       <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
       <ChoiceBox fx:id="type" layoutX="765.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
+      <Label layoutX="37.0" layoutY="233.0" text="Address 1:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="348.0" text="City:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="777.0" layoutY="351.0" text="Zip:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="476.0" layoutY="351.0" text="Country:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="453.0" layoutY="172.0" text="Last Name:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="290.0" text="Address 2:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="firstNameField" layoutX="167.0" layoutY="172.0" prefHeight="31.0" prefWidth="207.0" />
+      <TextField fx:id="lastNameField" layoutX="563.0" layoutY="172.0" prefHeight="31.0" prefWidth="214.0" />
+      <TextField fx:id="addressField1" layoutX="167.0" layoutY="233.0" prefHeight="31.0" prefWidth="798.0" />
+      <TextField fx:id="addressField2" layoutX="167.0" layoutY="290.0" prefHeight="31.0" prefWidth="798.0" />
+      <TextField fx:id="cityField" layoutX="84.0" layoutY="348.0" prefHeight="31.0" prefWidth="207.0" />
+      <TextField fx:id="countryField" layoutX="563.0" layoutY="349.0" prefHeight="31.0" prefWidth="207.0" />
+      <TextField fx:id="zipField" layoutX="821.0" layoutY="350.0" prefHeight="31.0" prefWidth="139.0" />
+      <Label layoutX="305.0" layoutY="351.0" text="State:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="stateField" layoutX="362.0" layoutY="351.0" prefHeight="31.0" prefWidth="98.0" />
    </children>
 </AnchorPane>
