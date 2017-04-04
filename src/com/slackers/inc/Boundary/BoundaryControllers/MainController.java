@@ -18,13 +18,14 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 public class MainController implements Initializable{
 
     private Preferences programPref;
     private AccountController userController;
-    private User user;
 
     @FXML private AnchorPane mainContainer;
     @FXML private AnchorPane results;
@@ -83,8 +84,6 @@ public class MainController implements Initializable{
             }
         }
 
-        user = userController.getUser();
-
         try {
             loadPages();
         } catch (IOException e) {
@@ -138,7 +137,7 @@ public class MainController implements Initializable{
         settingsController.setMainController(this);
         settingsController.setTextBoxes();
 
-        if(user.getUserType() == User.UserType.MANUFACTURER){
+        if(this.userController.getUser().getUserType() == User.UserType.MANUFACTURER){
             FXMLLoader applicationLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/applications.fxml"));
             applications = applicationLoader.load();
             ApplicationsController applicationsController = applicationLoader.getController();
@@ -149,7 +148,7 @@ public class MainController implements Initializable{
             applicationButton.setVisible(true);
             searchButton.setVisible(false);
 
-        }else if(user.getUserType() == User.UserType.US_EMPLOYEE) {
+        }else if(this.userController.getUser().getUserType() == User.UserType.US_EMPLOYEE) {
             FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USEmployee.fxml"));
             applications = usEmployeeLoader.load();
             USEmployeeBoundaryController applicationsController = usEmployeeLoader.getController();
@@ -190,7 +189,11 @@ public class MainController implements Initializable{
     @FXML
     private void logoutClick(){
         mainContainer.getScene().getWindow().hide();
-        user = null;
+        try {
+            this.userController.logout();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         programPref.put("email", "");
         Parent login = null;
         try {
@@ -225,6 +228,6 @@ public class MainController implements Initializable{
     }
 
     public User getUser(){
-        return this.user;
+        return this.getAccountController().getUser();
     }
 }

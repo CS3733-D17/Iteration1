@@ -43,7 +43,7 @@ public class ApplicationsController implements Initializable{
     @FXML private Button extraButton;
 
     public MainController main;
-    public Manufacturer manufacturer;
+    public ManufacturerController manufacturer;
 
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
@@ -62,9 +62,8 @@ public class ApplicationsController implements Initializable{
     }
 
     public void addAccordianChildren(){
-        manufacturer = (Manufacturer) main.getUser();
         accordionID.getPanes().clear();
-        for (int i = 0; i < manufacturer.getApplications().size(); i++) {
+        for (int i = 0; i < manufacturer.getManufacturer().getApplications().size(); i++) {
 
             try {
                 FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
@@ -73,19 +72,19 @@ public class ApplicationsController implements Initializable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            titleLabel.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
-            repID.setText(manufacturer.getApplications().get(i).getLabel().getRepresentativeIdNumber());
-            type.setText(manufacturer.getApplications().get(i).getLabel().getProductType().toString());
-            source.setText(manufacturer.getApplications().get(i).getLabel().getProductSource().toString());
-            brand.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
-            progress.setText(manufacturer.getApplications().get(i).getStatus().toString());
-            alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
-            agentName.setText(manufacturer.getApplications().get(i).getReviewer().getFirstName());
-            if (manufacturer.getApplications().get(i).getApplicationApproval()!=null)
+            LabelApplication app = manufacturer.getManufacturer().getApplications().get(i);
+            titleLabel.setText(app.getLabel().getBrandName());
+            repID.setText(app.getLabel().getRepresentativeIdNumber());
+            type.setText(app.getLabel().getProductType().toString());
+            source.setText(app.getLabel().getProductSource().toString());
+            brand.setText(app.getLabel().getBrandName());
+            progress.setText(app.getStatus().toString());
+            alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
+            agentName.setText(app.getReviewer().getFirstName());
+            if (app.getApplicationApproval()!=null)
             {
-                approvalDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getApprovalDate().toString());
-                expireDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getExperationDate().toString());
+                approvalDate.setText(app.getApplicationApproval().getApprovalDate().toString());
+                expireDate.setText(app.getApplicationApproval().getExperationDate().toString());
             }
 
             extraButton.setText("Edit");
@@ -115,7 +114,7 @@ public class ApplicationsController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
             Parent newApp = loader.load();
             FormController formController = loader.getController();
-            formController.setManufacturer(main.getUser());
+            formController.setManufacturer(main.getAccountController());
             formController.setAppController(this);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -134,7 +133,7 @@ public class ApplicationsController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
         Parent newApp = loader.load();
         FormController formController = loader.getController();
-        formController.setManufacturer(main.getUser());
+        formController.setManufacturer(main.getAccountController());
         formController.setAppController(this);
         formController.edit();
 
@@ -150,6 +149,11 @@ public class ApplicationsController implements Initializable{
 
     public void setMainController(MainController mainController) {
         this.main = mainController;
+        try {
+            this.manufacturer = new ManufacturerController((Manufacturer) this.main.getAccountController().getUser());
+        } catch (SQLException ex) {
+            Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

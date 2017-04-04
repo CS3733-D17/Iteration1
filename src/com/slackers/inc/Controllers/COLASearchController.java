@@ -8,16 +8,15 @@ import java.util.List;
 
 public class COLASearchController {
 
-    ColaUser colaUser;
-    SearchController searchControl;
+    private ColaUser colaUser;
+    private SearchController searchControl;
 
     /**
      * Edited by Fabio Borges on 4/2/17
      */
-    public COLASearchController()
+    public COLASearchController(ColaUser user)
     {
-        this.colaUser = null;
-        this.searchControl = new SearchController();
+        this(user, new SearchController());
     }
 
     /**
@@ -31,25 +30,10 @@ public class COLASearchController {
 
     /**
      * Created by Fabio Borges on 4/2/17
-     * Sets the COLA user associated with this controller
-     */
-    public void setColaUser(ColaUser colaUser)
-    { this.colaUser = colaUser; }
-
-    /**
-     * Created by Fabio Borges on 4/2/17
      * Returns the COLA user associated with this controller
      */
     public ColaUser getColaUser()
     { return colaUser; }
-
-    /**
-     * Created by Michael Steidel on 4/2/17
-     * Sets the search controller associated with this controller
-     */
-    public void setSearchControl(SearchController searchControl) {
-        this.searchControl = searchControl;
-    }
 
     /**
      * Created by Michael Steidel on 4/2/17
@@ -63,7 +47,7 @@ public class COLASearchController {
      * Created by Michael Steidel on 4/2/17
      * Searches the database for a specified label and returns the list of search results
      */
-    public List search(Label target) throws SQLException
+    public List<Label> search(Label target) throws SQLException
     {
         return searchControl.runSearch(target);
     }

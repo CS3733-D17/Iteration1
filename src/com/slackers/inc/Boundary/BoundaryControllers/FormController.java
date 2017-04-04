@@ -1,7 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Boundary.InputValidator;
-import com.slackers.inc.Controllers.ManufacturerController;
+import com.slackers.inc.Controllers.AccountController;
 import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.*;
 import com.slackers.inc.Controllers.ManufacturerController;
@@ -55,11 +55,8 @@ public class FormController implements Initializable {
     @FXML private javafx.scene.control.Label info;
     @FXML private Button submit;
 
-    public User user;
     public ManufacturerController manufacturer;
-    public Manufacturer man;
     public UsEmployeeController employee;
-    public UsEmployee emp;
     public LabelApplication labelApplication;
 
     private ApplicationsController appController;
@@ -103,16 +100,14 @@ public class FormController implements Initializable {
 
     }
 
-    public void setManufacturer(User user) throws SQLException {
+    public void setManufacturer(AccountController user) throws SQLException {
         if(format == Mode.SUBMIT){
-            man = (Manufacturer) user;
-            manufacturer = new ManufacturerController(man);
+            manufacturer = new ManufacturerController((Manufacturer) user.getUser());
             manufacturer.createApplication();
             this.update(this.manufacturer.getLabelAppController().getLabelApplication());
         }
         else{
-            man = (Manufacturer) user;
-            manufacturer = new ManufacturerController(man);
+            manufacturer = new ManufacturerController((Manufacturer) user.getUser());
             this.update(this.manufacturer.getLabelAppController().getLabelApplication());
         }
 
