@@ -1,6 +1,9 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.ManufacturerController;
+import com.slackers.inc.database.entities.Address;
+import com.slackers.inc.database.entities.LabelApplication;
+import com.slackers.inc.database.entities.Manufacturer;
 import com.slackers.inc.database.entities.User;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -28,8 +31,14 @@ public class SettingsController implements Initializable {
     @FXML private Label errorMessage;
 
     @FXML private AnchorPane manufacturerSettings;
+    @FXML private TextField repIDField;
+    @FXML private TextField pbbnumField;
+    @FXML private TextField addressField;
+    @FXML private TextField phoneField;
 
-    private MainController main;
+    private MainController mainController;
+    private User user;
+    private LabelApplication userTemplate;
 
     private FadeTransition fadeOut = new FadeTransition(
             Duration.millis(1000)
@@ -46,28 +55,33 @@ public class SettingsController implements Initializable {
     }
 
     public void setTextBoxes(){
-        firstName.setText(main.getUser().getFirstName());
-        lastName.setText(main.getUser().getLastName());
-        email.setText(main.getUser().getEmail());
+        firstName.setText(user.getFirstName());
+        lastName.setText(user.getLastName());
+        email.setText(user.getEmail());
 
-        if(main.getUser().getUserType() == User.UserType.MANUFACTURER){
+        if(user.getUserType() == User.UserType.MANUFACTURER){
+            repIDField.setText(userTemplate.getRepresentativeId());
+            pbbnumField.setText(userTemplate.getLabel().getPlantNumber());
+            addressField.setText(userTemplate.getApplicantAddress().toString());
+            phoneField.setText(userTemplate.getPhoneNumber());
 
+            manufacturerSettings.setVisible(true);
         }else{
-
+            manufacturerSettings.setVisible(false);
         }
     }
 
     @FXML
     void UpdatePersonal() {
-        main.getUser().setEmail(email.getText());
-        main.getUser().setFirstName(firstName.getText());
-        main.getUser().setLastName(lastName.getText());
+        user.setEmail(email.getText());
+        user.setFirstName(firstName.getText());
+        user.setLastName(lastName.getText());
     }
 
     @FXML
     void UpdatePassword() {
-        if(main.getUser().getPassword().equals(oldPassword.getText())){
-            main.getUser().setPassword(newPassword.getText());
+        if(user.getPassword().equals(oldPassword.getText())){
+           user.setPassword(newPassword.getText());
         }
         else{
             System.out.println("Incorrect password");
@@ -76,11 +90,19 @@ public class SettingsController implements Initializable {
         }
     }
 
-    // TODO Connect to ManufacturerController and Add that Information
-
+    @FXML
+    void UpdateManufacturer() {
+        userTemplate.setRepresentativeId(repIDField.getText());
+        userTemplate.getLabel().setPlantNumber(pbbnumField.getText());
+        userTemplate.setApplicantAddress(Address.tryParse(addressField.getText()));
+        userTemplate.setPhoneNumber(phoneField.getText());
+    }
 
     public void setMainController(MainController mainController) {
-        this.main = mainController ;
+        this.mainController = mainController;
+        this.user = mainController.getUser();
+        this.userTemplate = ((Manufacturer) user).getTemplateApplication();
+
     }
 
 }

@@ -78,7 +78,6 @@ public class Address implements Serializable{
             return "";
     }
     
-    
     public static Address tryParse(String addressBox)
     {
         try

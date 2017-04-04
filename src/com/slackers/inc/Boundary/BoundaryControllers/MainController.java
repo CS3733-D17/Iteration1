@@ -110,10 +110,10 @@ public class MainController implements Initializable{
         stage.showAndWait();
 
 
-        if (userController.getUser().getEmail() == null) {
+        if (userController.getUser().getEmail() == null || userController.getUser().getEmail().equals("")) {
             Platform.exit();
             System.exit(1);
-        }
+        }else if(userController.getUser().getPassword() == null || userController.getUser().getPassword().equals(""))
 
         programPref.put("email", userController.getUser().getEmail());
         try {

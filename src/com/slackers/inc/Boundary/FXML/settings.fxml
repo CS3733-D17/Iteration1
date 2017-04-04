@@ -172,7 +172,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="oldPassword1" prefWidth="115.0">
+                        <TextField fx:id="repIDField" prefWidth="115.0">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -189,7 +189,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="oldPassword11" prefWidth="80.0">
+                        <TextField fx:id="pbbnumField" prefWidth="80.0">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -206,7 +206,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="oldPassword111" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="addressField" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -223,7 +223,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="oldPassword12" prefWidth="200.0">
+                        <TextField fx:id="phoneField" prefWidth="200.0">
                            <font>
                               <Font size="16.0" />
                            </font>
