@@ -46,6 +46,8 @@ public class FormController implements Initializable {
     @FXML private TextArea address2Field;
     @FXML private TextField country1Field;
     @FXML private TextField country2Field;
+    @FXML private TextField vintage;
+    @FXML private TextField ph;
     @FXML private AnchorPane formAnchor;
     @FXML private AnchorPane wineStuff;
 
@@ -61,6 +63,12 @@ public class FormController implements Initializable {
     public LabelApplication labelApplication;
 
     private ApplicationsController appController;
+    private enum Mode{
+        EDIT,
+        SUBMIT;
+    };
+
+    private Mode format = Mode.SUBMIT;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,27 +104,58 @@ public class FormController implements Initializable {
     }
 
     public void setManufacturer(User user) throws SQLException {
+        if(format == Mode.SUBMIT){
+            man = (Manufacturer) user;
+            manufacturer = new ManufacturerController(man);
+            manufacturer.createApplication();
+            this.update(this.manufacturer.getLabelAppController().getLabelApplication());
+        }
+        else{
+            man = (Manufacturer) user;
+            manufacturer = new ManufacturerController(man);
+            this.update(this.manufacturer.getLabelAppController().getLabelApplication());
+        }
 
-        man = (Manufacturer) user;
-        manufacturer = new ManufacturerController(man);
-        manufacturer.createApplication();
-        this.update(this.manufacturer.getLabelAppController().getLabelApplication());
 
     }
     
     @FXML
-    void submit(ActionEvent event) {
-
-        if (this.validateFields())
-        {
-            try {
-                manufacturer.submitApplication();
-                this.appController.addAccordianChildren();
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+    void submit(ActionEvent event) throws SQLException {
+        if(format == Mode.SUBMIT) {
+            if (this.validateFields()) {
+                try {
+                    manufacturer.submitApplication();
+                    this.appController.addAccordianChildren();
+                    ((Node) (event.getSource())).getScene().getWindow().hide();
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+        else{
+            manufacturer.editApplication();
+            this.appController.addAccordianChildren();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        }
+
+
+    }
+
+    void edit(){
+        format = Mode.EDIT;
+
+        source.setDisable(true);
+        PBBNumber.setDisable(true);
+        phone.setDisable(true);
+        alcoholContent.setDisable(true);
+        address1Field.setDisable(true);
+        address2Field.setDisable(true);
+        brand.setDisable(true);
+        repID.setDisable(true);
+        email.setDisable(true);
+        country1Field.setDisable(true);
+        country2Field.setDisable(true);
+
     }
     
     private void update(LabelApplication application)
@@ -131,6 +170,8 @@ public class FormController implements Initializable {
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());
+        //vintage.setText(application.getLabel().getVintage());
+        //ph.setText(application.getLabel().getPH());
         validateFields();
     }
     

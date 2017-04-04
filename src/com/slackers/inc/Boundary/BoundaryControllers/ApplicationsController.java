@@ -1,6 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.ManufacturerController;
+import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.Manufacturer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -135,9 +136,11 @@ public class ApplicationsController implements Initializable{
         FormController formController = loader.getController();
         formController.setManufacturer(main.getUser());
         formController.setAppController(this);
+        formController.edit();
+
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("New Form");
+        stage.setTitle("edit Form");
         stage.setScene(new Scene(newApp));
         formController.init();
         stage.show();
