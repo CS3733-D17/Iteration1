@@ -18,10 +18,6 @@
    <children>
       <Accordion fx:id="accordionID" layoutX="32.0" layoutY="76.0" prefHeight="300.0" prefWidth="550.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="80.0">
         <panes>
-          <TitledPane fx:id="title1" animated="false" contentDisplay="GRAPHIC_ONLY" graphicTextGap="300.0" text="Francois Special - Wine">
-            <content>
-            </content>
-          </TitledPane>
         </panes>
       </Accordion>
       <Label layoutX="25.0" layoutY="48.0" text="Applications" AnchorPane.leftAnchor="25.0">

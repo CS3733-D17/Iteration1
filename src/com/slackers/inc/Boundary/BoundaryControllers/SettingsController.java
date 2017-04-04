@@ -62,7 +62,7 @@ public class SettingsController implements Initializable {
         if(user.getUserType() == User.UserType.MANUFACTURER){
             repIDField.setText(userTemplate.getRepresentativeId());
             pbbnumField.setText(userTemplate.getLabel().getPlantNumber());
-            addressField.setText(userTemplate.getApplicantAddress().toString());
+//            addressField.setText(userTemplate.getApplicantAddress().toString());
             phoneField.setText(userTemplate.getPhoneNumber());
 
             manufacturerSettings.setVisible(true);
@@ -101,7 +101,10 @@ public class SettingsController implements Initializable {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
         this.user = mainController.getUser();
-        this.userTemplate = ((Manufacturer) user).getTemplateApplication();
+
+        if(this.user.getUserType() == User.UserType.MANUFACTURER){
+            this.userTemplate = ((Manufacturer) user).getTemplateApplication();
+        }
 
     }
 

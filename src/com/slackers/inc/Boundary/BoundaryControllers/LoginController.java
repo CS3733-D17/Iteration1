@@ -1,6 +1,8 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.AccountController;
+import com.slackers.inc.database.entities.Address;
+import com.slackers.inc.database.entities.Manufacturer;
 import com.slackers.inc.database.entities.User;
 import javafx.animation.FadeTransition;
 import javafx.beans.binding.BooleanBinding;
@@ -15,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import sun.plugin.javascript.navig.Anchor;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,9 +45,12 @@ public class LoginController implements Initializable{
     @FXML private Button logInButton;
     @FXML private Button getStartedButton;
 
+
     private FadeTransition fadeOut = new FadeTransition(
             Duration.millis(1000)
     );
+
+    // TODO Figure out why closing doesn't work exactly all the time
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -137,10 +143,8 @@ public class LoginController implements Initializable{
         try {
             mainController.getAccountController().createAccount(firstNameField.getText(), lastNameField.getText(),
                     emailField.getText(), passwordField.getText(), type);
-            ((Node)(event.getSource())).getScene().getWindow().hide();
 
             // TODO Form validation for right information
-            // TODO Form validation for SQL Injection (do in another iteration)
 
         }catch (IllegalStateException exception){
             System.out.println("Account Creation Failed. Crashes.");
@@ -148,6 +152,27 @@ public class LoginController implements Initializable{
             fadeOut.playFromStart();
         }
 
+        if(type == User.UserType.MANUFACTURER) {
+            try {
+
+                FXMLLoader extraLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/manufacturerregisterform.fxml"));
+                Parent moreInfo = extraLoader.load();
+                String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();
+                moreInfo.getStylesheets().add(cssDoc);
+                ExtraManufacturerLoginController extraController = extraLoader.getController();
+                extraController.setMainController(mainController);
+
+                Stage stage = new Stage();
+                stage.setTitle("Manufacturer More Info");
+                stage.setScene(new Scene(moreInfo));
+                stage.showAndWait();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
@@ -170,7 +195,7 @@ public class LoginController implements Initializable{
 
     }
 
-    // TODO Figure out why closing doesn't work exactly all the time
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController ;

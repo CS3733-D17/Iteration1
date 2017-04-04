@@ -18,7 +18,7 @@ public class Main extends Application {
         String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();
         login.getStylesheets().add(cssDoc);
 
-        primaryStage.setTitle("Login Screen");
+        primaryStage.setTitle("Main Screen");
         primaryStage.setScene(new Scene(login));
         primaryStage.show();
     }
