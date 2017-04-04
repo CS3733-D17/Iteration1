@@ -25,17 +25,14 @@ public class SearchController {
         db = DerbyConnection.getInstance();
     }
 
-    public void filters(){
-        // NOTE I Have no Idea what this is supposed to be
-    }
 
     public void addFilter(Filter filter){
         filters.add(filter);
 
     }
 
-    public void removeFilter(){
-
+    public void removeFilter(Filter filter){
+        filters.remove(filter);
     }
 
     public List<Label> runSearch(Label target) throws SQLException {
