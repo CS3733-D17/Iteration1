@@ -96,6 +96,7 @@ public class FormController implements Initializable {
     }
 
     public void setManufacturer(User user) throws SQLException {
+
         man = (Manufacturer) user;
         manufacturer = new ManufacturerController(man);
         manufacturer.createApplication();

@@ -35,6 +35,7 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private TextField address2Field;
     @FXML private TextField country1Field;
     @FXML private TextField country2Field;
+    @FXML private Label agentName;
 
     @FXML private AnchorPane template;
 
@@ -64,12 +65,14 @@ public class USEmployeeBoundaryController implements Initializable{
                 e.printStackTrace();
             }
 
+            titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName());
             repID.setText(employee.getApplications().get(i).getLabel().getRepresentativeIdNumber());
             type.setText(employee.getApplications().get(i).getLabel().getProductType().toString());
             source.setText(employee.getApplications().get(i).getLabel().getProductSource().toString());
             brand.setText(employee.getApplications().get(i).getLabel().getBrandName());
             progress.setText(employee.getApplications().get(i).getLabel().getApproval().toString());
             alcoholContent.setText(Double.toString(employee.getApplications().get(i).getLabel().getAlcoholContent()));
+            agentName.setText(employee.getApplications().get(i).getReviewer().getFirstName());
 
             titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName() + " - " + employee.getApplications().get(i).getLabel().getApproval().toString());
             extraButton.setText("Review");
@@ -92,12 +95,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
     @FXML
     public void addApplication() throws IOException{
-        Parent newApp = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Review Form");
-        stage.setScene(new Scene(newApp));
-        stage.show();
+
 
     }
 

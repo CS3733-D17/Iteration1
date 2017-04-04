@@ -88,7 +88,15 @@ public class ApplicationsController implements Initializable{
             }
 
             extraButton.setText("Edit");
-            extraButton.setOnAction(event->edit());
+            extraButton.setOnAction(event -> {
+                try {
+                    edit();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
 
             accordionID.getPanes().add(titledPane);
         }
@@ -119,8 +127,20 @@ public class ApplicationsController implements Initializable{
         }
     }
 
-    public void edit(){
+    public void edit() throws IOException, SQLException {
         System.out.println("edit page");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
+        Parent newApp = loader.load();
+        FormController formController = loader.getController();
+        formController.setManufacturer(main.getUser());
+        formController.setAppController(this);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("New Form");
+        stage.setScene(new Scene(newApp));
+        formController.init();
+        stage.show();
     }
 
     //TODO make the accordian template and fill with form information
