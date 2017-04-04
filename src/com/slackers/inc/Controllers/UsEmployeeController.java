@@ -16,6 +16,7 @@ public class UsEmployeeController {
 
 
     //constructor
+    // controller for anything USEmployee related. allows a cleaner flow of code to be used and take advantage of other controllers
     public UsEmployeeController(UsEmployee employee, LabelApplicationController formController){
         this.employee = employee;
         this.formController=formController;
@@ -27,10 +28,13 @@ public class UsEmployeeController {
 
     //methods:
 
+   //allows a USEmployee to pull an application from the database for viewing
     boolean pullNewApplications(LabelApplication application, Label label, LabelComment comment){
         this.employee.getApplications().remove(application);
         return true;
     }
+
+    //allows a USEmployee to accept an application
     boolean acceptApplicaton(LabelApplication application,Label label, LabelComment comment, Date experationDate){
 
         try {
@@ -43,7 +47,7 @@ public class UsEmployeeController {
 
         //application.setApplicationApproval(app);
     }
-
+//allows a USEmployee to reject an application back to the manufacturer
     boolean rejectApplication(LabelApplication application,Label label, LabelComment comment){
 
         try {
@@ -53,6 +57,8 @@ public class UsEmployeeController {
         }
         return true;
     }
+
+    //allows a USEmployee to send a application back to the manufacturer for revisions
     boolean sendForRevision(LabelApplication application, UsEmployee employee, LabelComment comment){
         try {
             formController.sendForCorrections(comment);
@@ -62,6 +68,7 @@ public class UsEmployeeController {
         return true;
     }
 
+    //allows a USEmployee to send the application to another USEmployee for secondary review
     boolean sendForSecondOpinion(LabelApplication application,UsEmployee employee, LabelComment comment){
         try {
             formController.setNewReviewer(employee, comment);

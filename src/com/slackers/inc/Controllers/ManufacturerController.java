@@ -11,7 +11,7 @@ public class ManufacturerController {
 
     Manufacturer manufacturer;
     LabelApplicationController labelAppController;
-
+// controller for anything manufacturer related. allows a cleaner flow of code to be used and take advantage of other controllers
     public ManufacturerController() throws SQLException {
         this.manufacturer = null;
         this.labelAppController = new LabelApplicationController();
@@ -26,7 +26,7 @@ public class ManufacturerController {
         this.manufacturer = manufacturer;
         this.labelAppController = labelAppController;
     }
-
+// allows a manufacturer to create and application with all the appropriate fields and forms
     public boolean createApplication() throws SQLException {
         LabelApplication template = manufacturer.getTemplateApplication();
         LabelApplication app = labelAppController.getLabelApplication();
@@ -46,32 +46,32 @@ public class ManufacturerController {
         this.manufacturer.addApplications(this.labelAppController.getLabelApplication());
         return res;
     }
-
+//allows the manufacturer to subitthe application to the database
     public boolean submitApplication() throws SQLException {
         
         boolean res = labelAppController.submitApplication(manufacturer);
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
-
+//allows a manufacturer to edit the application in the database
     public boolean editApplication() throws SQLException {
 
         return labelAppController.editApplication();
     }
-
+//allows a manufacturer to sabe an application in progress
     public boolean saveApplication() throws SQLException {
         boolean res = labelAppController.saveApplication();
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
-
+//allows a manufacturer to delete an application and remove it from the database
     public boolean deleteApplication() throws SQLException {
         this.manufacturer.removeApplications(this.labelAppController.getLabelApplication());
         boolean res = labelAppController.deleteApplication();
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
-    
+ //allows a manufacturer to edit thier profile information
     public boolean updateManufacturer() throws SQLException {
         return DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
     }
