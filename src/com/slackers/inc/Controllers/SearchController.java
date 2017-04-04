@@ -38,13 +38,13 @@ public class SearchController {
 
     }
 
-    public List<IEntity> runSearch(Label target) throws SQLException {
+    public List<Label> runSearch(Label target) throws SQLException {
         filters.forEach(filter -> {
             filter.preApply(target);
             columns.add(filter.getColumn());
         });
 
-        return db.getAllEntites(target, columns.toArray(new String[columns.size()]));
+        return db.getAllEntites_Typed(target, columns.toArray(new String[columns.size()]));
     }
 
 }

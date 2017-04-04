@@ -113,7 +113,7 @@ public class LabelApplication implements IEntity{
             values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
         if (this.applicationApproval!=null)
-            values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());        
+            values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
         return values;
     }
@@ -138,7 +138,7 @@ public class LabelApplication implements IEntity{
             values.put("label", this.label.getPrimaryKeyValue());
         values.put("comments", LabelComment.commentListToString(this.comments));
         if (this.applicationApproval!=null)
-            values.put("applicationApproval", this.applicationApproval.getPrimaryKeyValue());          
+            values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());          
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
         return values;
     }
@@ -209,10 +209,10 @@ public class LabelApplication implements IEntity{
                     Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            else if (this.applicationApproval == null)
+            else if (this.applicationApproval == null && (Long)values.get("applicationApproval")!=0)
             {
                 this.applicationApproval = new ApplicationApproval(new UsEmployee(), new Date(new java.util.Date().getTime()));
-                this.applicationApproval.setPrimaryKeyValue((Serializable)values.get("applicationApproval"));
+                this.applicationApproval.setPrimaryKeyValue((Long)values.get("applicationApproval"));
                 try {
                     DerbyConnection.getInstance().getEntity(this.applicationApproval, this.applicationApproval.getPrimaryKeyName());
                 } catch (SQLException ex) {
@@ -263,7 +263,7 @@ public class LabelApplication implements IEntity{
         cols.add("submitter varchar(256)");
         cols.add("label varchar(4096)");
         cols.add("comments long varchar");
-        cols.add("applicationApproval varchar(128)");
+        cols.add("applicationApproval bigint");
         cols.add("allowedRevisions long varchar");
         return cols;
     }

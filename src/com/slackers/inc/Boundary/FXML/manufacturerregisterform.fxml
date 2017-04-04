@@ -63,6 +63,7 @@
             <Label alignment="CENTER_RIGHT" layoutX="175.0" layoutY="241.0" prefHeight="30.0" text="Address" />
             <TextArea fx:id="addressField" layoutX="30.0" layoutY="277.0" prefHeight="140.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
             <Button layoutX="160.0" layoutY="452.0" mnemonicParsing="false" text="Continue" onAction="#continueClick"/>
+            <Label fx:id="info" layoutX="30" layoutY="470.0" prefHeight="30.0" text="" AnchorPane.leftAnchor="30.0" AnchorPane.bottomAnchor="5.0"/>
          </children>
       </AnchorPane>
    </children>

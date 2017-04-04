@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
@@ -59,6 +60,8 @@ public class FormController implements Initializable {
     public UsEmployee emp;
     public LabelApplication labelApplication;
 
+    private ApplicationsController appController;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -111,12 +114,14 @@ public class FormController implements Initializable {
     }
     
     @FXML
-    void submit() {
+    void submit(ActionEvent event) {
 
         if (this.validateFields())
         {
             try {
                 manufacturer.submitApplication();
+                this.appController.addAccordianChildren();
+                ((Node)(event.getSource())).getScene().getWindow().hide();
             } catch (SQLException ex) {
                 Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -131,6 +136,7 @@ public class FormController implements Initializable {
         phone.setText(application.getPhoneNumber());
         alcoholContent.setText(Double.toString(application.getLabel().getAlcoholContent()));
         address1Field.setText(application.getApplicantAddress().toString());
+        address1Field.setText(application.getMailingAddress().toString());
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());
@@ -158,7 +164,12 @@ public class FormController implements Initializable {
 
             if (adr!=null && adr2!=null)
             {
-                application.setMailingAddress(adr2);
+                application.setApplicantAddress(adr);
+                application.setMailingAddress(adr2);                
+            }
+            else if (adr!=null && adr2==null)
+            {
+                application.setMailingAddress(adr);
                 application.setApplicantAddress(adr);
             }
             else
@@ -175,4 +186,8 @@ public class FormController implements Initializable {
         return false;
     }
 
+    public void setAppController(ApplicationsController appController) {
+        this.appController = appController;
+    }
+    
 }

@@ -3,13 +3,13 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 import com.slackers.inc.Controllers.COLASearchController;
 import com.slackers.inc.database.entities.ColaUser;
 import com.slackers.inc.database.entities.Label;
+import com.slackers.inc.database.entities.Label.BeverageType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -26,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class SearchBoundaryController implements Initializable {
 
-    private ObservableList<String> typeList = FXCollections.observableArrayList("All", "Beer", "Wine", "Hard Alcohol");
+    private ObservableList<String> typeList = FXCollections.observableArrayList("All", BeverageType.BEER.name(), BeverageType.WINE.name(), BeverageType.DISTILLED.name());
     private ObservableList<String> contentList = FXCollections.observableArrayList("All", "20 <", "21-50", "51 >");
     private ObservableList<String> pastList = FXCollections.observableArrayList("Vodka", "Gin", "Tequila", "Rum", "Mixers");
     private ObservableList<String> currentList = FXCollections.observableArrayList("Sweet", "Dry", "Coconut", "cherry");

@@ -62,7 +62,7 @@ public class ApplicationsController implements Initializable{
 
     public void addAccordianChildren(){
         manufacturer = (Manufacturer) main.getUser();
-
+        accordionID.getPanes().clear();
         for (int i = 0; i < manufacturer.getApplications().size(); i++) {
 
             try {
@@ -81,8 +81,11 @@ public class ApplicationsController implements Initializable{
             progress.setText(manufacturer.getApplications().get(i).getStatus().toString());
             alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
             agentName.setText(manufacturer.getApplications().get(i).getReviewer().getFirstName());
-            approvalDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getApprovalDate().toString());
-            expireDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getExperationDate().toString());
+            if (manufacturer.getApplications().get(i).getApplicationApproval()!=null)
+            {
+                approvalDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getApprovalDate().toString());
+                expireDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getExperationDate().toString());
+            }
 
             extraButton.setText("Edit");
             extraButton.setOnAction(event->edit());
@@ -104,6 +107,7 @@ public class ApplicationsController implements Initializable{
             Parent newApp = loader.load();
             FormController formController = loader.getController();
             formController.setManufacturer(main.getUser());
+            formController.setAppController(this);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("New Form");

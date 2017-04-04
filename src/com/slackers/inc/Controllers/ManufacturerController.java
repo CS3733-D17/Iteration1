@@ -1,6 +1,7 @@
 package com.slackers.inc.Controllers;
 
 import com.slackers.inc.database.DerbyConnection;
+import com.slackers.inc.database.entities.Label;
 import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.Manufacturer;
 
@@ -34,7 +35,10 @@ public class ManufacturerController {
             app.setApplicantAddress(template.getApplicantAddress());
             app.setEmailAddress(template.getEmailAddress());
             app.setMailingAddress(template.getMailingAddress());
-            app.setLabel(template.getLabel());
+            app.setRepresentativeId(template.getRepresentativeId());
+            Label l = new Label();
+            l.setEntityValues(template.getLabel().getEntityValues());
+            app.setLabel(l);
             app.setPhoneNumber(template.getPhoneNumber());
             app.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
         }
@@ -67,7 +71,11 @@ public class ManufacturerController {
         DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
         return res;
     }
-
+    
+    public boolean updateManufacturer() throws SQLException {
+        return DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
+    }
+    
     public LabelApplicationController getLabelAppController(){
         return labelAppController;
     }
