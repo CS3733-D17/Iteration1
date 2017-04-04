@@ -33,6 +33,9 @@ public class ApplicationsController implements Initializable{
     @FXML private Label type;
     @FXML private Label brand;
     @FXML private Label repID;
+    @FXML private Label approvalDate;
+    @FXML private Label agentName;
+    @FXML private Label expireDate;
     @FXML private TitledPane template;
 
     @FXML private Label titleLabel;
@@ -70,14 +73,19 @@ public class ApplicationsController implements Initializable{
                 e.printStackTrace();
             }
 
+            titleLabel.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
             repID.setText(manufacturer.getApplications().get(i).getLabel().getRepresentativeIdNumber());
             type.setText(manufacturer.getApplications().get(i).getLabel().getProductType().toString());
             source.setText(manufacturer.getApplications().get(i).getLabel().getProductSource().toString());
             brand.setText(manufacturer.getApplications().get(i).getLabel().getBrandName());
-            progress.setText(manufacturer.getApplications().get(i).getLabel().getApproval().toString());
+            progress.setText(manufacturer.getApplications().get(i).getStatus().toString());
             alcoholContent.setText(Double.toString(manufacturer.getApplications().get(i).getLabel().getAlcoholContent()));
+            agentName.setText(manufacturer.getApplications().get(i).getReviewer().getFirstName());
+            approvalDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getApprovalDate().toString());
+            expireDate.setText(manufacturer.getApplications().get(i).getApplicationApproval().getExperationDate().toString());
 
-            extraButton.setText("More Info");
+            extraButton.setText("Edit");
+            extraButton.setOnAction(event->edit());
 
             accordionID.getPanes().add(titledPane);
         }
@@ -105,6 +113,10 @@ public class ApplicationsController implements Initializable{
         } catch (SQLException ex) {
             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void edit(){
+        System.out.println("edit page");
     }
 
     //TODO make the accordian template and fill with form information

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="formAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.FormController">
+<AnchorPane fx:id="formAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.USEmployeeBoundaryController">
    <children>
       <VBox layoutX="79.0" layoutY="724.0" prefHeight="1315.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -140,12 +140,13 @@
             </AnchorPane>
             <AnchorPane prefHeight="58.0" prefWidth="1000.0">
                <children>
-                  <Button fx:id="submit" layoutX="842.0" layoutY="28.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="219.0" AnchorPane.rightAnchor="38.0" />
                   <Label fx:id="info" layoutX="47.0" layoutY="25.0" prefHeight="30.0" prefWidth="0.0" text="" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="47.0">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <Button layoutX="335.0" layoutY="15.0" mnemonicParsing="false" onAction="#accept" text="Accept" />
+                  <Button layoutX="550.0" layoutY="15.0" mnemonicParsing="false" onAction="#reject" text="Reject" />
                </children>
             </AnchorPane>
          </children>

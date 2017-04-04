@@ -30,14 +30,11 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private Label type;
     @FXML private Label brand;
     @FXML private Label repID;
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField addressField1;
-    @FXML private TextField addressField2;
-    @FXML private TextField countryField;
-    @FXML private TextField cityField;
-    @FXML private TextField zipField;
-    @FXML private TextField stateField;
+    @FXML private TextField address1Field;
+    @FXML private TextField address2Field;
+    @FXML private TextField country1Field;
+    @FXML private TextField country2Field;
+
     @FXML private AnchorPane template;
 
     @FXML private Label titleLabel;
@@ -92,6 +89,16 @@ public class USEmployeeBoundaryController implements Initializable{
         stage.setTitle("Review Form");
         stage.setScene(new Scene(newApp));
         stage.show();
+
+    }
+
+    @FXML
+    public void accept(){
+
+    }
+
+    @FXML
+    public void reject(){
 
     }
 

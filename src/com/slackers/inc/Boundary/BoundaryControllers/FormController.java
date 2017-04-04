@@ -41,14 +41,10 @@ public class FormController implements Initializable {
     @FXML private TextField brand;
     @FXML private TextField repID;
     @FXML private TextField email;
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField addressField1;
-    @FXML private TextField addressField2;
-    @FXML private TextField countryField;
-    @FXML private TextField cityField;
-    @FXML private TextField zipField;
-    @FXML private TextField stateField;
+    @FXML private TextArea address1Field;
+    @FXML private TextArea address2Field;
+    @FXML private TextField country1Field;
+    @FXML private TextField country2Field;
     @FXML private AnchorPane formAnchor;
     @FXML private AnchorPane wineStuff;
 
@@ -134,7 +130,7 @@ public class FormController implements Initializable {
         PBBNumber.setText(application.getLabel().getPlantNumber());
         phone.setText(application.getPhoneNumber());
         alcoholContent.setText(Double.toString(application.getLabel().getAlcoholContent()));
-        addressField1.setText(application.getApplicantAddress().toString());
+        address1Field.setText(application.getApplicantAddress().toString());
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());
@@ -156,17 +152,13 @@ public class FormController implements Initializable {
             label.setProductSource(BeverageSource.valueOf(source.getValue()));
             label.setIsAccepted(false);
             application.setLabel(label);
-            Address adr = new Address();
-            adr.setCity(cityField.getText());
-            adr.setState(stateField.getText());
-            adr.setZipCode(Integer.parseInt(zipField.getText()));
-            adr.setLine1(addressField1.getText());
-            adr.setLine2(addressField2.getText());
-            adr.setCountry(countryField.getText());
+            Address adr = Address.tryParse(address1Field.getText());
+            Address adr2 = Address.tryParse(address2Field.getText());
 
-            if (adr!=null)
+
+            if (adr!=null && adr2!=null)
             {
-                application.setMailingAddress(adr);
+                application.setMailingAddress(adr2);
                 application.setApplicantAddress(adr);
             }
             else

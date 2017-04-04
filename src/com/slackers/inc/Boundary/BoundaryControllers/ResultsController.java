@@ -3,6 +3,7 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 import com.slackers.inc.Controllers.*;
 import com.slackers.inc.Controllers.SearchController;
 import com.slackers.inc.database.entities.Manufacturer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -84,6 +87,13 @@ public class ResultsController implements Initializable {
         } else {
             System.out.println("No results to display!");
         }
+    }
+
+    @FXML
+    public void download(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
     }
 
     public void setSearchBoundaryController(SearchBoundaryController searchBoundaryController) {
