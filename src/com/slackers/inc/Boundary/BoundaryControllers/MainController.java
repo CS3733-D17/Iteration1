@@ -151,7 +151,7 @@ public class MainController implements Initializable{
         }else if(user.getUserType() == User.UserType.US_EMPLOYEE) {
             FXMLLoader usEmployeeLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USEmployee.fxml"));
             applications = usEmployeeLoader.load();
-            USEmployeeController applicationsController = usEmployeeLoader.getController();
+            USEmployeeBoundaryController applicationsController = usEmployeeLoader.getController();
             applicationsController.setMainController(this);
             applicationsController.addAccordianChildren();
 

@@ -33,7 +33,7 @@ public class ApplicationsController implements Initializable{
     @FXML private Label type;
     @FXML private Label brand;
     @FXML private Label repID;
-    @FXML private AnchorPane template;
+    @FXML private TitledPane template;
 
     @FXML private Label titleLabel;
     @FXML private Button extraButton;
@@ -95,11 +95,12 @@ public class ApplicationsController implements Initializable{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
             Parent newApp = loader.load();
             FormController formController = loader.getController();
-            formController.setManufacturer(new ManufacturerController(this.manufacturer));
+            formController.setManufacturer(main.getUser());
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("New Form");
             stage.setScene(new Scene(newApp));
+            formController.init();
             stage.show();
         } catch (SQLException ex) {
             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);

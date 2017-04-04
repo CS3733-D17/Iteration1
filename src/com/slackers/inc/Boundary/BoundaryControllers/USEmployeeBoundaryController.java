@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -22,7 +19,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Jason on 4/2/2017.
  */
-public class USEmployeeController implements Initializable{
+public class USEmployeeBoundaryController implements Initializable{
 
     @FXML Accordion accordionID;
     @FXML private BorderPane helloThing;
@@ -33,6 +30,14 @@ public class USEmployeeController implements Initializable{
     @FXML private Label type;
     @FXML private Label brand;
     @FXML private Label repID;
+    @FXML private TextField firstNameField;
+    @FXML private TextField lastNameField;
+    @FXML private TextField addressField1;
+    @FXML private TextField addressField2;
+    @FXML private TextField countryField;
+    @FXML private TextField cityField;
+    @FXML private TextField zipField;
+    @FXML private TextField stateField;
     @FXML private AnchorPane template;
 
     @FXML private Label titleLabel;
@@ -87,6 +92,7 @@ public class USEmployeeController implements Initializable{
         stage.setTitle("Review Form");
         stage.setScene(new Scene(newApp));
         stage.show();
+
     }
 
     public void setMainController(MainController mainController) {

@@ -6,145 +6,173 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.FormController">
+<AnchorPane fx:id="formAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.slackers.inc.Boundary.BoundaryControllers.FormController">
    <children>
-      <Label layoutX="59.0" layoutY="39.0" text="Applicant Information" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Separator layoutX="245.0" layoutY="68.0" prefWidth="200.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="75.0" />
-      <Label layoutX="62.0" layoutY="53.0" text="Representative ID NO:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="repID" layoutX="330.0" layoutY="40.0" prefWidth="120.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="108.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="72.0" layoutY="63.0" text="Plant Registry / Basic Permit / Brewer's NO:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="110.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="PBBNumber" layoutX="340.0" layoutY="50.0" prefWidth="120.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="108.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="39.0" layoutY="172.0" text="First Name:" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="172.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="99.0" layoutY="118.0" text="Phone Number:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="phone" layoutX="247.0" layoutY="354.0" prefWidth="180.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="418.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="109.0" layoutY="128.0" text="Email Address:" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="420.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="email" layoutX="257.0" layoutY="364.0" prefWidth="220.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="418.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="155.0" layoutY="481.0" text="Product Information" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="500.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Separator layoutX="341.0" layoutY="510.0" prefWidth="200.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="535.0" />
-      <Label layoutX="64.0" layoutY="572.0" text="Brand Name:" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="572.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="brand" layoutX="230.0" layoutY="565.0" prefHeight="37.0" prefWidth="730.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label layoutX="65.0" layoutY="581.0" text="Source of Product:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="630.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="75.0" layoutY="591.0" text="Type of Product:" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="630.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="48.0" layoutY="691.0" text="Alcohol Content:" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="691.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="alcoholContent" layoutX="230.0" layoutY="687.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="687.0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </TextField>
-      <Label fx:id="info" layoutX="48.0" layoutY="747.0" text="" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="submit" layoutX="842.0" layoutY="747.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
-      <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
-      <ChoiceBox fx:id="type" layoutX="765.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
-      <Label layoutX="37.0" layoutY="233.0" text="Address 1:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="39.0" layoutY="348.0" text="City:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="777.0" layoutY="351.0" text="Zip:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="476.0" layoutY="351.0" text="Country:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="453.0" layoutY="172.0" text="Last Name:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="37.0" layoutY="290.0" text="Address 2:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="firstNameField" layoutX="167.0" layoutY="172.0" prefHeight="31.0" prefWidth="207.0" />
-      <TextField fx:id="lastNameField" layoutX="563.0" layoutY="172.0" prefHeight="31.0" prefWidth="214.0" />
-      <TextField fx:id="addressField1" layoutX="167.0" layoutY="233.0" prefHeight="31.0" prefWidth="798.0" />
-      <TextField fx:id="addressField2" layoutX="167.0" layoutY="290.0" prefHeight="31.0" prefWidth="798.0" />
-      <TextField fx:id="cityField" layoutX="84.0" layoutY="348.0" prefHeight="31.0" prefWidth="207.0" />
-      <TextField fx:id="countryField" layoutX="563.0" layoutY="349.0" prefHeight="31.0" prefWidth="207.0" />
-      <TextField fx:id="zipField" layoutX="821.0" layoutY="350.0" prefHeight="31.0" prefWidth="139.0" />
-      <Label layoutX="305.0" layoutY="351.0" text="State:">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="stateField" layoutX="362.0" layoutY="351.0" prefHeight="31.0" prefWidth="98.0" />
+      <VBox layoutX="79.0" layoutY="724.0" prefHeight="1315.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="782.0" prefWidth="1000.0">
+               <children>
+                  <Label text="Applicant Information" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="75.0" />
+                  <Label text="Representative ID NO:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="repID" prefWidth="120.0" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="108.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Plant Registry / Basic Permit / Brewer's NO:" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="110.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="PBBNumber" prefWidth="120.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="108.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label text="First Name:" AnchorPane.leftAnchor="39.0" AnchorPane.topAnchor="172.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Phone Number:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="420.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="phone" prefWidth="180.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="418.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Email Address:" AnchorPane.rightAnchor="270.0" AnchorPane.topAnchor="420.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="email" prefWidth="220.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="418.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Product Information" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="500.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="200.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="535.0" />
+                  <Label text="Brand Name:" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="572.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="brand" prefHeight="37.0" prefWidth="730.0" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="568.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Source of Product:" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="630.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="Type of Product:" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="630.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="46.0" layoutY="691.0" text="Alcohol Content:" AnchorPane.leftAnchor="46.0" AnchorPane.topAnchor="691.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="alcoholContent" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="687.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextField>
+                  <ChoiceBox fx:id="source" layoutX="230.0" layoutY="630.0" prefHeight="31.0" prefWidth="200.0" />
+                  <ChoiceBox fx:id="type" layoutX="767.0" layoutY="630.0" prefHeight="31.0" prefWidth="193.0" />
+                  <Label layoutX="35.0" layoutY="234.0" text="Address 1:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="35.0" layoutY="355.0" text="City:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="824.0" layoutY="355.0" text="Zip:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="512.0" layoutY="355.0" text="Country:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="451.0" layoutY="173.0" text="Last Name:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="35.0" layoutY="297.0" text="Address 2:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="firstNameField" layoutX="595.0" layoutY="354.0" prefHeight="31.0" prefWidth="207.0" />
+                  <TextField fx:id="lastNameField" layoutX="81.0" layoutY="354.0" prefHeight="31.0" prefWidth="214.0" />
+                  <TextField fx:id="addressField1" layoutX="151.0" layoutY="296.0" prefHeight="31.0" prefWidth="798.0" />
+                  <TextField fx:id="addressField2" layoutX="150.0" layoutY="234.0" prefHeight="31.0" prefWidth="798.0" />
+                  <TextField fx:id="cityField" layoutX="563.0" layoutY="172.0" prefHeight="31.0" prefWidth="207.0" />
+                  <TextField fx:id="countryField" layoutX="162.0" layoutY="172.0" prefHeight="31.0" prefWidth="207.0" />
+                  <TextField fx:id="zipField" layoutX="361.0" layoutY="355.0" prefHeight="31.0" prefWidth="139.0" />
+                  <Label layoutX="311.0" layoutY="355.0" text="State:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="stateField" layoutX="864.0" layoutY="354.0" prefHeight="31.0" prefWidth="98.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="wineStuff" prefHeight="75.0" prefWidth="1000.0">
+               <children>
+                  <Label layoutX="41.0" layoutY="14.0" text="Vintage Year:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="419.0" layoutY="15.0" text="pH Level:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="184.0" layoutY="14.0" />
+                  <TextField layoutX="506.0" layoutY="15.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="58.0" prefWidth="1000.0">
+               <children>
+                  <Button fx:id="submit" layoutX="842.0" layoutY="28.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="219.0" AnchorPane.rightAnchor="38.0" />
+                  <Label fx:id="info" layoutX="47.0" layoutY="25.0" prefHeight="30.0" prefWidth="0.0" text="" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="47.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

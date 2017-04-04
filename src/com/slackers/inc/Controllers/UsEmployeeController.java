@@ -21,6 +21,10 @@ public class UsEmployeeController {
         this.formController=formController;
     }
 
+    public UsEmployeeController(UsEmployee employee){
+        this.employee = employee;
+    }
+
     //methods:
 
     boolean pullNewApplications(LabelApplication application, Label label, LabelComment comment){

@@ -2,14 +2,13 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Boundary.InputValidator;
 import com.slackers.inc.Controllers.ManufacturerController;
-import com.slackers.inc.database.entities.Address;
+import com.slackers.inc.Controllers.UsEmployeeController;
+import com.slackers.inc.database.entities.*;
 import com.slackers.inc.Controllers.ManufacturerController;
-import com.slackers.inc.database.entities.Label;
 import com.slackers.inc.database.entities.Label.BeverageSource;
 import com.slackers.inc.database.entities.Label.BeverageType;
-import com.slackers.inc.database.entities.LabelApplication;
-import com.slackers.inc.database.entities.Manufacturer;
-import com.slackers.inc.database.entities.User;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +24,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 
 public class FormController implements Initializable {
 
@@ -49,12 +49,18 @@ public class FormController implements Initializable {
     @FXML private TextField cityField;
     @FXML private TextField zipField;
     @FXML private TextField stateField;
+    @FXML private AnchorPane formAnchor;
+    @FXML private AnchorPane wineStuff;
 
 
     @FXML private javafx.scene.control.Label info;
     @FXML private Button submit;
 
+    public User user;
     public ManufacturerController manufacturer;
+    public Manufacturer man;
+    public UsEmployeeController employee;
+    public UsEmployee emp;
     public LabelApplication labelApplication;
 
     @Override
@@ -65,12 +71,47 @@ public class FormController implements Initializable {
         type.setValue(BeverageType.BEER.name());
         type.setItems(typeList);
 
+
+        type.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> selected, String oldType, String newType) {
+                BeverageType typeB = BeverageType.valueOf(newType);
+                wineStuff.setVisible(false);
+                if (typeB != null) {
+                    switch (typeB) {
+                        case BEER:
+                            break;
+                        case WINE:
+                            wineStuff.setVisible(true);
+                            break;
+                        case DISTILLED:
+                            break;
+                    }
+                }
+            }
+        });
     }
 
-    public void setManufacturer(ManufacturerController manufacturer) throws SQLException {
-        this.manufacturer = manufacturer;
-        this.manufacturer.createApplication();
-        this.update(this.manufacturer.getLabelAppController().getLabelApplication());
+    public void init(){
+
+    }
+
+    public void setManufacturer(User user) throws SQLException {
+
+        if(user.getUserType() == User.UserType.US_EMPLOYEE) {
+            emp = (UsEmployee) user;
+            this.employee = new UsEmployeeController(emp);
+
+            for (int i = 0; i < formAnchor.getChildren().size(); i++) {
+                formAnchor.getChildren().get(i).setDisable(true);
+            }
+        }
+        else{
+            man = (Manufacturer) user;
+            manufacturer = new ManufacturerController(man);
+            manufacturer.createApplication();
+            this.update(this.manufacturer.getLabelAppController().getLabelApplication());
+        }
     }
     
     @FXML
@@ -112,7 +153,7 @@ public class FormController implements Initializable {
             label.setRepresentativeIdNumber(repID.getText());
             application.setEmailAddress(InputValidator.validateStringWithinLength(email.getText(),"Email",5,200));
             label.setProductType(BeverageType.valueOf(type.getValue()));
-            label.setProductSource(BeverageSource.valueOf(type.getValue()));
+            label.setProductSource(BeverageSource.valueOf(source.getValue()));
             label.setIsAccepted(false);
             application.setLabel(label);
             Address adr = new Address();
