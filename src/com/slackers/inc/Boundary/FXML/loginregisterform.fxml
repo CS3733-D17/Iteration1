@@ -36,7 +36,7 @@
                <toggleGroup>
                   <ToggleGroup fx:id="signType" />
                </toggleGroup></ToggleButton>
-            <ToggleButton fx:id="signUpToggleButton" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#signUpToggle" prefWidth="120.0" selected="true" styleClass="first" text="SIgn Up" toggleGroup="$signType" />
+            <ToggleButton fx:id="signUpToggleButton" layoutX="80.0" layoutY="35.0" mnemonicParsing="false" onAction="#signUpToggle" prefWidth="120.0" selected="true" styleClass="first" text="Sign Up" toggleGroup="$signType" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="signUpPane" prefHeight="350.0" prefWidth="400.0" visible="true">
