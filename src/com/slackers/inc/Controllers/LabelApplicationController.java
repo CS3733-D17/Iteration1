@@ -114,7 +114,9 @@ public class LabelApplicationController {
         this.application.setReviewer(UsEmployee.NULL_EMPLOYEE);
         this.application.setApplicationApproval(null);
         this.application.setAllowedRevisions(new HashSet<>());
-        return db.writeEntity(this.application, this.application.getPrimaryKeyName());
+        boolean res = db.writeEntity(this.application, this.application.getPrimaryKeyName());
+        this.autoSelectReviewer();
+        return res;
     }
     
     public boolean approveApplication(UsEmployee submitter, Date experationDate) throws SQLException
