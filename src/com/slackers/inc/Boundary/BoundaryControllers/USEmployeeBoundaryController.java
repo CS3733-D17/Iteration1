@@ -83,7 +83,7 @@ public class USEmployeeBoundaryController implements Initializable{
                 extraButton.setText("Review");
                 extraButton.setOnAction(event -> {
                     try {
-                        review(app);
+                        review(app, app.getApplicationId());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
