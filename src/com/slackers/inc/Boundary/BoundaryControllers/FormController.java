@@ -117,6 +117,7 @@ public class FormController implements Initializable {
         if(format == Mode.SUBMIT) {
             if (this.validateFields()) {
                 try {
+                    manufacturer.getLabelAppController().autoSelectReviewer();
                     manufacturer.submitApplication();
                     this.appController.addAccordianChildren();
                     System.out.println("SUBMITTED");
