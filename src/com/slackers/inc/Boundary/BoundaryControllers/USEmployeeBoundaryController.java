@@ -15,8 +15,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -32,14 +34,14 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private Label source;
     @FXML private Label type;
     @FXML private Label brand;
-    @FXML private Label repID;
+    @FXML private TextField repID;
     @FXML private TextField address1Field;
     @FXML private TextField address2Field;
     @FXML private TextField country1Field;
     @FXML private TextField country2Field;
     @FXML private Label agentName;
 
-    @FXML private AnchorPane template;
+    @FXML private TitledPane template;
 
     @FXML private Label titleLabel;
     @FXML private Button extraButton;
@@ -54,37 +56,41 @@ public class USEmployeeBoundaryController implements Initializable{
 
 
     public void addAccordianChildren(){
+        List<LabelApplication> apps = UScontroller.getEmployee().getApplications();
+        accordionID.getPanes().clear();
+        if (apps != null && apps.size() != 0) {
+            for (int i = 0; i < apps.size(); i++) {
 
-        for (int i = 0; i < UScontroller.getEmployee().getApplications().size(); i++) {
-
-            try {
-                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
-                templateLoader.setController(this);
-                template = templateLoader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            LabelApplication app = UScontroller.getEmployee().getApplications().get(i);
-            titleLabel.setText(app.getLabel().getBrandName());
-            repID.setText(app.getLabel().getRepresentativeIdNumber());
-            type.setText(app.getLabel().getProductType().toString());
-            source.setText(app.getLabel().getProductSource().toString());
-            brand.setText(app.getLabel().getBrandName());
-            progress.setText(app.getLabel().getApproval().toString());
-            alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
-            agentName.setText(app.getReviewer().getFirstName());
-
-            titleLabel.setText(app.getLabel().getBrandName());
-            extraButton.setText("Review");
-            extraButton.setOnAction(event -> {
                 try {
-                    review(app);
+                    FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
+                    templateLoader.setController(this);
+                    template = templateLoader.load();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            });
 
-            accordionID.getPanes().add(titledPane);
+                LabelApplication app = apps.get(i);
+                //titleLabel.setText(app.getLabel().getBrandName());
+                repID.setText(app.getLabel().getRepresentativeIdNumber());
+                type.setText(app.getLabel().getProductType().toString());
+                source.setText(app.getLabel().getProductSource().toString());
+                brand.setText(app.getLabel().getBrandName());
+                progress.setText(app.getLabel().getApproval().toString());
+                alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
+                agentName.setText(app.getReviewer().getFirstName());
+
+                titleLabel.setText(app.getLabel().getBrandName());
+                extraButton.setText("Review");
+                extraButton.setOnAction(event -> {
+                    try {
+                        review(app);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+
+                accordionID.getPanes().add(titledPane);
+            }
         }
 
         if(accordionID.getPanes().size() > 0){
