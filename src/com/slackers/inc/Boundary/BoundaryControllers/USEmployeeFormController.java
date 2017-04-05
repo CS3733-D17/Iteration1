@@ -84,22 +84,18 @@ public class USEmployeeFormController implements Initializable {
 
     @FXML
     public void accept(){
-        LabelComment comment = new LabelComment(employee, "Valid application");
-        Date expiration = new Date(new java.util.Date().getTime());
+        Date expiration = new Date(new java.util.Date().getTime()+63072000000L);// 2 yrs
 
-        employeeController.acceptApplicaton(form, form.getLabel(), comment, expiration);
+        employeeController.acceptApplicaton(expiration);
     }
 
     @FXML
     public void reject(){
-
-        LabelComment comment = new LabelComment(employee, "Invalid application");
-        employeeController.rejectApplication(form, form.getLabel(), comment);
+        employeeController.rejectApplication(form);
     }
 
-    public void setEmployee(UsEmployeeController employeeController, UsEmployee employee, LabelApplication application) {
-        this.employeeController = employeeController ;
-        this.employee = employee;
+    public void setEmployee(UsEmployeeController employeeController, LabelApplication application) {
+        this.employeeController = employeeController;
         this.form = application;
 
         ArrayList<Node> nodes = new ArrayList<Node>();
