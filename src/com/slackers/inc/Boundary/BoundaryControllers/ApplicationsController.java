@@ -49,8 +49,6 @@ public class ApplicationsController implements Initializable{
     private DoubleProperty width = new SimpleDoubleProperty(500);
 
 
-    private final String[] imageNames = new String[]{"Apples", "Flowers", "Leaves", "banana"};
-    final TitledPane[] tps = new TitledPane[imageNames.length];
 
 
     @Override
@@ -73,6 +71,7 @@ public class ApplicationsController implements Initializable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             LabelApplication app = manufacturer.getManufacturer().getApplications().get(i);
             titleLabel.setText(app.getLabel().getBrandName());
             repID.setText(app.getLabel().getRepresentativeIdNumber());
@@ -91,7 +90,7 @@ public class ApplicationsController implements Initializable{
             extraButton.setText("Edit");
             extraButton.setOnAction(event -> {
                 try {
-                    edit();
+                    edit(app.getApplicationId());
                 } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 }
@@ -140,7 +139,7 @@ public class ApplicationsController implements Initializable{
         }
     }
 
-    private void edit() throws IOException, SQLException {
+    private void edit(long applicationID) throws IOException, SQLException {
         System.out.println("edit page");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));

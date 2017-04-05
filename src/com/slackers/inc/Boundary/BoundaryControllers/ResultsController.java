@@ -1,8 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
-import com.slackers.inc.Controllers.*;
-import com.slackers.inc.Controllers.SearchController;
 import com.slackers.inc.database.entities.Manufacturer;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,22 +9,17 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 /**
  * @author Created by Jason on 3/28/2017.
@@ -93,7 +87,15 @@ public class ResultsController implements Initializable {
     public void download(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.showOpenDialog(((Node)event.getSource()).getScene().getWindow());
+        
+        File result = fileChooser.showSaveDialog(((Node)event.getSource()).getScene().getWindow());
+        if (result!=null)
+        {
+            Path p = Paths.get(result.getAbsolutePath());
+            System.out.println(p.getParent());
+            System.out.println(p.getFileName());
+            //FileWritter w = new FileWritter(p.getParent());
+        }
     }
 
     public void setSearchBoundaryController(SearchBoundaryController searchBoundaryController) {

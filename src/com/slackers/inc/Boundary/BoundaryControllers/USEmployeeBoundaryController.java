@@ -105,7 +105,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
     }
 
-    public void review(LabelApplication app) throws IOException {
+    public void review(LabelApplication app, long appID) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
