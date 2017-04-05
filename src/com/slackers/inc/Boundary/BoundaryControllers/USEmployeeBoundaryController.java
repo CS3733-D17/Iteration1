@@ -1,6 +1,7 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.UsEmployeeController;
+import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.UsEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,6 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private Button extraButton;
 
     public MainController main;
-    public UsEmployee employee;
     public UsEmployeeController UScontroller;
 
     @Override
@@ -53,9 +53,8 @@ public class USEmployeeBoundaryController implements Initializable{
 
 
     public void addAccordianChildren(){
-        employee = (UsEmployee) main.getUser();
 
-        for (int i = 0; i < employee.getApplications().size(); i++) {
+        for (int i = 0; i < UScontroller.getEmployee().getApplications().size(); i++) {
 
             try {
                 FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
@@ -64,17 +63,17 @@ public class USEmployeeBoundaryController implements Initializable{
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            LabelApplication app = UScontroller.getEmployee().getApplications().get(i);
+            titleLabel.setText(app.getLabel().getBrandName());
+            repID.setText(app.getLabel().getRepresentativeIdNumber());
+            type.setText(app.getLabel().getProductType().toString());
+            source.setText(app.getLabel().getProductSource().toString());
+            brand.setText(app.getLabel().getBrandName());
+            progress.setText(app.getLabel().getApproval().toString());
+            alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
+            agentName.setText(app.getReviewer().getFirstName());
 
-            titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName());
-            repID.setText(employee.getApplications().get(i).getLabel().getRepresentativeIdNumber());
-            type.setText(employee.getApplications().get(i).getLabel().getProductType().toString());
-            source.setText(employee.getApplications().get(i).getLabel().getProductSource().toString());
-            brand.setText(employee.getApplications().get(i).getLabel().getBrandName());
-            progress.setText(employee.getApplications().get(i).getLabel().getApproval().toString());
-            alcoholContent.setText(Double.toString(employee.getApplications().get(i).getLabel().getAlcoholContent()));
-            agentName.setText(employee.getApplications().get(i).getReviewer().getFirstName());
-
-            titleLabel.setText(employee.getApplications().get(i).getLabel().getBrandName() + " - " + employee.getApplications().get(i).getLabel().getApproval().toString());
+            titleLabel.setText(app.getLabel().getBrandName());
             extraButton.setText("Review");
             extraButton.setOnAction(event -> {
                 try {
@@ -103,7 +102,7 @@ public class USEmployeeBoundaryController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
-        USformController.setEmployee((UsEmployee) main.getUser());
+        USformController.setEmployee(this.UScontroller);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");
@@ -115,5 +114,6 @@ public class USEmployeeBoundaryController implements Initializable{
 
     public void setMainController(MainController mainController) {
         this.main = mainController ;
+        this.UScontroller = new UsEmployeeController((UsEmployee) this.main.getAccountController().getUser());
     }
 }

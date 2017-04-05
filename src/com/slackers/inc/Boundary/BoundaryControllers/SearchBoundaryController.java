@@ -4,6 +4,7 @@ import com.slackers.inc.Controllers.COLASearchController;
 import com.slackers.inc.database.entities.ColaUser;
 import com.slackers.inc.database.entities.Label;
 import com.slackers.inc.database.entities.Label.BeverageType;
+import com.slackers.inc.database.entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,14 +40,12 @@ public class SearchBoundaryController implements Initializable {
     @FXML private ListView currentFilter;
 
     public COLASearchController search;
-    public ColaUser user;
     public Label label;
     public List results;
 
     @FXML
     private void getResultsClick(ActionEvent e) throws IOException, SQLException {
-
-        search = new COLASearchController();
+        
         label = new Label();
 
         if(!alcoholContent.getValue().toString().equals("All")){
@@ -58,9 +57,6 @@ public class SearchBoundaryController implements Initializable {
         if(!type.getValue().toString().equals("All")) {
             label.setProductType(Label.BeverageType.valueOf(type.getValue().toString()));
         }
-
-        user = (ColaUser) mainController.getUser();
-        search.setColaUser(user);
 
         FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/results.fxml"));
         Parent page = resultsLoader.load();
@@ -94,6 +90,11 @@ public class SearchBoundaryController implements Initializable {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController ;
+        User usr = this.mainController.getUser();
+        if (usr instanceof ColaUser)
+        {
+            this.search = new COLASearchController((ColaUser) usr);
+        }
     }
 
 }

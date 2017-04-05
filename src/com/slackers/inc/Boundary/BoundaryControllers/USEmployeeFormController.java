@@ -28,7 +28,7 @@ public class USEmployeeFormController implements Initializable {
     @FXML private TextField country2Field;
     @FXML private AnchorPane formAnchor;
 
-    public UsEmployee employee;
+    public UsEmployeeController employeeController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,8 +46,8 @@ public class USEmployeeFormController implements Initializable {
 
     }
 
-    public void setEmployee(UsEmployee employee) {
-        this.employee = employee ;
+    public void setEmployee(UsEmployeeController employee) {
+        this.employeeController = employee ;
 
         for (int i = 0; i < formAnchor.getChildren().size(); i++) {
             formAnchor.getChildren().get(i).setDisable(true);

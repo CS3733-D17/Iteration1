@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class ManufacturerController {
 
-    Manufacturer manufacturer;
-    LabelApplicationController labelAppController;
+    private  Manufacturer manufacturer;
+    private LabelApplicationController labelAppController;
 // controller for anything manufacturer related. allows a cleaner flow of code to be used and take advantage of other controllers
     public ManufacturerController() throws SQLException {
         this.manufacturer = null;
