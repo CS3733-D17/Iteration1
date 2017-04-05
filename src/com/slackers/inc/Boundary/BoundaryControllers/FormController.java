@@ -195,6 +195,9 @@ public class FormController implements Initializable {
             label.setProductSource(BeverageSource.valueOf(source.getValue()));
             label.setIsAccepted(false);
             application.setLabel(label);
+            System.out.println(label);
+            System.out.println(source.getValue());
+            System.out.println(BeverageSource.valueOf(source.getValue()));
             Address adr = Address.tryParse(address1Field.getText());
             Address adr2 = Address.tryParse(address2Field.getText());
 

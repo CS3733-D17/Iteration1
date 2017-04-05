@@ -83,6 +83,7 @@ public class LabelApplicationController {
     
     public boolean editApplication() throws SQLException
     {
+        this.application.updateLabel();
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
 
@@ -120,6 +121,7 @@ public class LabelApplicationController {
         this.application.setReviewer(UsEmployee.NULL_EMPLOYEE);
         this.application.setApplicationApproval(null);
         this.application.setAllowedRevisions(new HashSet<>());
+        System.out.println(this.application);
         boolean res = db.writeEntity(this.application, this.application.getPrimaryKeyName());
         this.autoSelectReviewer();
         return res;

@@ -118,7 +118,6 @@ public class LabelApplication implements IEntity{
         if (this.applicationApproval!=null)
             values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
-        this.updateLabel();
         return values;
     }
 
@@ -144,7 +143,6 @@ public class LabelApplication implements IEntity{
         if (this.applicationApproval!=null)
             values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());          
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
-        this.updateLabel();
         return values;
     }
 
@@ -585,7 +583,7 @@ public class LabelApplication implements IEntity{
     }
 
     
-    private void updateLabel()
+    public void updateLabel()
     {
         try {
             DerbyConnection.getInstance().writeEntity(this.label, this.label.getPrimaryKeyName());
