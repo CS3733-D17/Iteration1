@@ -15,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -34,14 +33,14 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private Label source;
     @FXML private Label type;
     @FXML private Label brand;
-    @FXML private TextField repID;
+    @FXML private Label repID;
     @FXML private TextField address1Field;
     @FXML private TextField address2Field;
     @FXML private TextField country1Field;
     @FXML private TextField country2Field;
     @FXML private Label agentName;
 
-    @FXML private TitledPane template;
+    @FXML private AnchorPane template;
 
     @FXML private Label titleLabel;
     @FXML private Button extraButton;
@@ -79,15 +78,15 @@ public class USEmployeeBoundaryController implements Initializable{
                 alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
                 agentName.setText(app.getReviewer().getFirstName());
 
-                titleLabel.setText(app.getLabel().getBrandName());
-                extraButton.setText("Review");
-                extraButton.setOnAction(event -> {
-                    try {
-                        review(app);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
+            titleLabel.setText(app.getLabel().getBrandName());
+            extraButton.setText("Review");
+            extraButton.setOnAction(event -> {
+                try {
+                    review(app, app.getApplicationId());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
                 accordionID.getPanes().add(titledPane);
             }
@@ -105,7 +104,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
     }
 
-    public void review(LabelApplication app) throws IOException {
+    public void review(LabelApplication app, long appID) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
