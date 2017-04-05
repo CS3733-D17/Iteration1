@@ -61,12 +61,12 @@
                   </ImageView>
                   <VBox prefHeight="200.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" minHeight="30.0" prefWidth="200.0" text="Login Name">
+                        <Label fx:id="userNameLabel" alignment="CENTER_RIGHT" minHeight="30.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Login Name">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="userEmailLabel" alignment="CENTER_RIGHT" minHeight="20.0" prefWidth="200.0" text="Login Email" />
+                        <Label fx:id="userEmailLabel" alignment="CENTER_RIGHT" minHeight="20.0" prefWidth="200.0" style="-fx-text-fill: white;" text="Login Email" />
                      </children>
                   </VBox>
                </children></AnchorPane>
