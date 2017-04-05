@@ -1,5 +1,6 @@
 package com.slackers.inc.Boundary;
 
+import com.slackers.inc.database.DerbyConnection;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +42,7 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+        DerbyConnection.getInstance().shutdownDb();
     }
 
     public static void notifier(String pTitle, String pMessage) {
