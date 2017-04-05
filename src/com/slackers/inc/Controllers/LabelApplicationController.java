@@ -40,6 +40,12 @@ public class LabelApplicationController {
         this(new LabelApplication());
     }
     
+    public LabelApplicationController(long applicationId) throws SQLException {
+        this.application = new LabelApplication(applicationId);
+        db = DerbyConnection.getInstance();
+        db.getEntity(application, application.getPrimaryKeyName());
+    }
+    
     public LabelApplication getLabelApplication()
     {
         return this.application;

@@ -4,6 +4,7 @@ package com.slackers.inc.Boundary.BoundaryControllers;
  * @author Created by SrinuL on 4/3/17.
  */
 
+import com.slackers.inc.Controllers.LabelApplicationController;
 import com.slackers.inc.Controllers.ManufacturerController;
 import com.slackers.inc.database.entities.Address;
 import com.slackers.inc.database.entities.Manufacturer;
@@ -38,6 +39,7 @@ public class ExtraManufacturerLoginController {
             if (adr==null)
                 throw new IllegalArgumentException("You must provide a valid address");
             controller.getManufacturer().getTemplateApplication().setApplicantAddress(adr);
+            new LabelApplicationController(controller.getManufacturer().getTemplateApplication()).createApplication();
             controller.updateManufacturer();
             ((Node)(event.getSource())).getScene().getWindow().hide();
         } catch (SQLException ex) {

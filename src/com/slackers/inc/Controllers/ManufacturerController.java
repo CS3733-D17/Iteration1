@@ -33,7 +33,7 @@ public class ManufacturerController {
         app.setApplicant(manufacturer);
         if (template != null) {
             app.setApplicantAddress(template.getApplicantAddress());
-            app.setEmailAddress(template.getEmailAddress());
+            app.setEmailAddress(manufacturer.getEmail());
             app.setMailingAddress(template.getMailingAddress());
             app.setRepresentativeId(template.getRepresentativeId());
             Label l = new Label();

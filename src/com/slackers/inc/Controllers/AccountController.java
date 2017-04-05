@@ -64,6 +64,7 @@ public class AccountController {
                throw new IllegalStateException("User type is unknown!"); 
             }
             db.getEntity(this.user, this.user.getPrimaryKeyName());
+            System.out.println("LOADED USER: "+this.user);
             return this.user;
         }
         else
