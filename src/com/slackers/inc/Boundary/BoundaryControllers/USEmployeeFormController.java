@@ -93,6 +93,7 @@ public class USEmployeeFormController implements Initializable {
     public void accept(){
         Date expiration = new Date(new java.util.Date().getTime()+63072000000L);// 2 yrs
         employeeController.acceptApplicaton(expiration);
+
     }
 
     @FXML
@@ -110,6 +111,7 @@ public class USEmployeeFormController implements Initializable {
         for(Node n: nodes){
             n.setDisable(true);
         }
+
 
         acceptButton.setDisable(false);
         rejectButton.setDisable(false);

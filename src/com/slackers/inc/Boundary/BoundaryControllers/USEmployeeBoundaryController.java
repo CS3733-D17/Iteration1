@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -86,6 +87,8 @@ public class USEmployeeBoundaryController implements Initializable{
                         review(app, app.getApplicationId());
                     } catch (IOException e) {
                         e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
                 });
 
@@ -105,10 +108,13 @@ public class USEmployeeBoundaryController implements Initializable{
 
     }
 
-    public void review(LabelApplication app, long appID) throws IOException {
+    public void review(LabelApplication app, long appID) throws IOException, SQLException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
+
+        LabelApplicationController labelapp = new LabelApplicationController(appID);
+        UScontroller = new UsEmployeeController((UsEmployee) this.main.getAccountController().getUser(), labelapp);
         USformController.setEmployee(this.UScontroller, app);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -119,8 +125,8 @@ public class USEmployeeBoundaryController implements Initializable{
 
 
 
-    public void setMainController(MainController mainController) {
+    public void setMainController(MainController mainController) throws SQLException {
         this.main = mainController ;
-        this.UScontroller = new UsEmployeeController((UsEmployee) this.main.getAccountController().getUser());
+        this.UScontroller = new UsEmployeeController((UsEmployee) this.main.getAccountController().getUser(), new LabelApplicationController());
     }
 }

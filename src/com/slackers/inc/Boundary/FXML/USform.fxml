@@ -118,8 +118,8 @@
                      </font>
                   </Label>
                   <TextField fx:id="country2Field" layoutX="744.0" layoutY="351.0" prefHeight="31.0" prefWidth="207.0" />
-                  <TextArea fx:id="address2Field" layoutX="151.0" layoutY="305.0" prefHeight="111.0" prefWidth="558.0" text="&#10;&#10;" />
-                  <TextArea fx:id="address1Field" layoutX="151.0" layoutY="152.0" prefHeight="111.0" prefWidth="558.0" />
+                  <TextArea fx:id="address2Field" layoutX="229.0" layoutY="305.0" prefHeight="111.0" prefWidth="480.0" text="&#10;&#10;" />
+                  <TextArea fx:id="address1Field" layoutX="229.0" layoutY="152.0" prefHeight="111.0" prefWidth="480.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="wineStuff" prefHeight="75.0" prefWidth="1000.0">
@@ -134,8 +134,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="184.0" layoutY="14.0" fx:id="vintage"/>
-                  <TextField layoutX="506.0" layoutY="15.0" fx:id="ph"/>
+                  <TextField fx:id="vintage" layoutX="184.0" layoutY="14.0" />
+                  <TextField fx:id="ph" layoutX="506.0" layoutY="15.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="58.0" prefWidth="1000.0">
@@ -145,8 +145,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button layoutX="335.0" layoutY="15.0" mnemonicParsing="false" onAction="#accept" text="Accept" fx:id="acceptButton" />
-                  <Button layoutX="550.0" layoutY="15.0" mnemonicParsing="false" onAction="#reject" text="Reject" fx:id="rejectButton" />
+                  <Button fx:id="acceptButton" layoutX="335.0" layoutY="15.0" mnemonicParsing="false" onAction="#accept" text="Accept" />
+                  <Button fx:id="rejectButton" layoutX="550.0" layoutY="15.0" mnemonicParsing="false" onAction="#reject" text="Reject" />
                </children>
             </AnchorPane>
          </children>

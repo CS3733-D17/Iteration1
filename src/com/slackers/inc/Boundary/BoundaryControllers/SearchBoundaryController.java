@@ -35,7 +35,7 @@ public class SearchBoundaryController implements Initializable {
 
     @FXML private TextField keyword;
     @FXML private ChoiceBox type;
-    @FXML private ChoiceBox alcoholContent;
+    @FXML private TextField alcoholContent;
     @FXML private ListView pastSearch;
     @FXML private ListView currentFilter;
 
@@ -48,8 +48,8 @@ public class SearchBoundaryController implements Initializable {
         
         label = new Label();
 
-        if(!alcoholContent.getValue().toString().equals("All")){
-            label.setAlcoholContent(Double.parseDouble(alcoholContent.getValue().toString()));
+        if(!alcoholContent.getText().equals("All")){
+            label.setAlcoholContent(Double.parseDouble(alcoholContent.getText()));
         }
 
         label.setBrandName(keyword.getText());
@@ -80,9 +80,7 @@ public class SearchBoundaryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources){
         type.setValue("All");
-        alcoholContent.setValue("All");
         type.setItems(typeList);
-        alcoholContent.setItems(contentList);
         pastSearch.setItems(pastList);
         currentFilter.setItems(currentList);
 

@@ -110,6 +110,8 @@ public class MainController implements Initializable{
             loadPages();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -159,7 +161,7 @@ public class MainController implements Initializable{
      * Load all of the necessary pages for the user into the program for display
      * @throws IOException When unable to load any of the FXML Files
      */
-    private void loadPages() throws IOException{
+    private void loadPages() throws IOException, SQLException {
 
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/settings.fxml"));
         settings = settingsLoader.load();
