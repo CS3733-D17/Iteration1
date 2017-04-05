@@ -76,7 +76,7 @@ public class USEmployeeBoundaryController implements Initializable{
                 type.setText(app.getLabel().getProductType().toString());
                 source.setText(app.getLabel().getProductSource().toString());
                 brand.setText(app.getLabel().getBrandName());
-                progress.setText(app.getLabel().getApproval().toString());
+                progress.setText(app.getStatus().name());
                 alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
                 agentName.setText(app.getReviewer().getFirstName());
 
@@ -109,7 +109,7 @@ public class USEmployeeBoundaryController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/USform.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
-        USformController.setEmployee(this.UScontroller, (UsEmployee) main.getUser(), app);
+        USformController.setEmployee(this.UScontroller, app);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");

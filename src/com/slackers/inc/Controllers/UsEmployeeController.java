@@ -29,17 +29,16 @@ public class UsEmployeeController {
     //methods:
 
    //allows a USEmployee to pull an application from the database for viewing
-    public boolean pullNewApplications(LabelApplication application, Label label, LabelComment comment){
-        this.employee.getApplications().remove(application);
+    public boolean pullNewApplications(){
+        //stub
         return true;
     }
 
     //allows a USEmployee to accept an application
-    public boolean acceptApplicaton(LabelApplication application,Label label, LabelComment comment, Date experationDate){
+    public boolean acceptApplicaton(Date experationDate){
 
         try {
             formController.approveApplication(this.employee, experationDate);
-            formController.attachComment(comment);
         } catch (SQLException e) {
             return false;
         }
@@ -48,10 +47,10 @@ public class UsEmployeeController {
         //application.setApplicationApproval(app);
     }
 //allows a USEmployee to reject an application back to the manufacturer
-    public boolean rejectApplication(LabelApplication application,Label label, LabelComment comment){
+    public boolean rejectApplication(LabelApplication application){
 
         try {
-            formController.rejectApplication(comment);
+            formController.rejectApplication();
         } catch (SQLException e) {
             return false;
         }
@@ -59,9 +58,9 @@ public class UsEmployeeController {
     }
 
     //allows a USEmployee to send a application back to the manufacturer for revisions
-    public boolean sendForRevision(LabelApplication application, UsEmployee employee, LabelComment comment){
+    public boolean sendForRevision(LabelApplication application, UsEmployee employee){
         try {
-            formController.sendForCorrections(comment);
+            formController.sendForCorrections();
         } catch (SQLException e) {
             return false;
         }
@@ -69,9 +68,9 @@ public class UsEmployeeController {
     }
 
     //allows a USEmployee to send the application to another USEmployee for secondary review
-    public boolean sendForSecondOpinion(LabelApplication application,UsEmployee employee, LabelComment comment){
+    public boolean sendForSecondOpinion(LabelApplication application,UsEmployee employee){
         try {
-            formController.setNewReviewer(employee, comment);
+            formController.setNewReviewer(employee);
         } catch (SQLException e) {
             return false;
         }

@@ -37,7 +37,6 @@ public class USEmployeeFormController implements Initializable {
 
     public UsEmployeeController employeeController;
     public LabelApplication form;
-    public UsEmployee employee;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -48,22 +47,18 @@ public class USEmployeeFormController implements Initializable {
 
     @FXML
     public void accept(){
-        LabelComment comment = new LabelComment(employee, "Valid application");
-        Date expiration = new Date(new java.util.Date().getTime());
+        Date expiration = new Date(new java.util.Date().getTime()+63072000000L);// 2 yrs
 
-        employeeController.acceptApplicaton(form, form.getLabel(), comment, expiration);
+        employeeController.acceptApplicaton(expiration);
     }
 
     @FXML
     public void reject(){
-
-        LabelComment comment = new LabelComment(employee, "Invalid application");
-        employeeController.rejectApplication(form, form.getLabel(), comment);
+        employeeController.rejectApplication(form);
     }
 
-    public void setEmployee(UsEmployeeController employeeController, UsEmployee employee, LabelApplication app) {
-        this.employeeController = employeeController ;
-        this.employee = employee;
+    public void setEmployee(UsEmployeeController employeeController, LabelApplication app) {
+        this.employeeController = employeeController;
         this.form = app;
 
         for (int i = 0; i < formAnchor.getChildren().size(); i++) {

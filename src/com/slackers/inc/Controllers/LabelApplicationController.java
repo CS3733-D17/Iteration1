@@ -51,11 +51,10 @@ public class LabelApplicationController {
         return this.application;
     }
     
-    public boolean setNewReviewer(UsEmployee employee, LabelComment comment) throws SQLException
+    public boolean setNewReviewer(UsEmployee employee) throws SQLException
     {
         this.application.setSubmitter(this.application.getReviewer());
-        this.application.setReviewer(employee);
-        this.application.getComments().add(comment);       
+        this.application.setReviewer(employee);      
         this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
@@ -129,16 +128,16 @@ public class LabelApplicationController {
         return db.writeEntity(this.application, this.application.getPrimaryKeyName());
     }
     
-    public boolean rejectApplication(LabelComment comment) throws SQLException
+    public boolean rejectApplication() throws SQLException
     {
         this.application.setStatus(LabelApplication.ApplicationStatus.REJECTED);
-        return this.attachComment(comment);
+        return this.saveApplication();
     }
     
-    public boolean sendForCorrections(LabelComment comment) throws SQLException
+    public boolean sendForCorrections() throws SQLException
     {
         this.application.setStatus(LabelApplication.ApplicationStatus.SENT_FOR_CORRECTIONS);
-        return this.attachComment(comment);
+        return this.saveApplication();
     }
     
     public boolean autoSelectReviewer()
@@ -157,11 +156,23 @@ public class LabelApplicationController {
                     }
                 });
                 UsEmployee reviewer = employees.get(0);
-                reviewer.getApplications().add(this.application);
-                this.application.setReviewer(reviewer);
-                this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
-                this.db.writeEntity(reviewer, reviewer.getPrimaryKeyName());
-                this.saveApplication();
+                boolean add = true;
+                for (LabelApplication a : reviewer.getApplications())
+                {
+                    if (a.getApplicationId() == this.application.getApplicationId())
+                    {
+                        add = false;
+                        break;
+                    }
+                }
+                if (add)
+                {
+                    reviewer.getApplications().add(this.application);
+                    this.application.setReviewer(reviewer);
+                    this.application.setStatus(LabelApplication.ApplicationStatus.UNDER_REVIEW);
+                    this.db.writeEntity(reviewer, reviewer.getPrimaryKeyName());
+                    this.saveApplication();
+                }
             }
             
         } catch (SQLException ex) {
