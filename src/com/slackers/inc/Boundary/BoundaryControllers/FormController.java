@@ -56,8 +56,6 @@ public class FormController implements Initializable {
     @FXML private Button submit;
 
     public ManufacturerController manufacturer;
-    public UsEmployeeController employee;
-    public LabelApplication labelApplication;
 
     private ApplicationsController appController;
     private enum Mode{

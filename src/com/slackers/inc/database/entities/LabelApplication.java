@@ -32,6 +32,8 @@ public class LabelApplication implements IEntity{
 
     public static enum ApplicationStatus
     {
+        NOT_COMPLETE,
+        SUBMITTED,
         SUBMITTED_FOR_REVIEW,
         UNDER_REVIEW,
         REJECTED,

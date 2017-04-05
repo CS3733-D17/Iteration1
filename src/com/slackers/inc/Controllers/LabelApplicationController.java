@@ -88,6 +88,7 @@ public class LabelApplicationController {
 
     public boolean createApplication() throws SQLException
     {
+        this.application.setStatus(LabelApplication.ApplicationStatus.NOT_COMPLETE);
         db.createEntity(this.application);
         return true;
     }
@@ -101,7 +102,7 @@ public class LabelApplicationController {
     public boolean submitApplication(Manufacturer submitter) throws SQLException
     {
         this.application.setApplicant(submitter);
-        this.application.setStatus(LabelApplication.ApplicationStatus.SUBMITTED_FOR_REVIEW);
+        this.application.setStatus(LabelApplication.ApplicationStatus.SUBMITTED);
         this.application.setApplicationDate(new Date(new java.util.Date().getTime()));
         this.application.setSubmitter(UsEmployee.NULL_EMPLOYEE);
         this.application.setReviewer(UsEmployee.NULL_EMPLOYEE);
