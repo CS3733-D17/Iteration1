@@ -1,5 +1,6 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
+import com.slackers.inc.Controllers.LabelApplicationController;
 import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.UsEmployee;
@@ -77,7 +78,7 @@ public class USEmployeeBoundaryController implements Initializable{
             extraButton.setText("Review");
             extraButton.setOnAction(event -> {
                 try {
-                    review();
+                    review(app);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -98,11 +99,11 @@ public class USEmployeeBoundaryController implements Initializable{
 
     }
 
-    public void review() throws IOException {
+    public void review(LabelApplication app) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/form.fxml"));
         Parent newApp = loader.load();
         USEmployeeFormController USformController = loader.getController();
-        USformController.setEmployee(this.UScontroller);
+        USformController.setEmployee(this.UScontroller, (UsEmployee) main.getUser(), app);
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");
