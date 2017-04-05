@@ -34,7 +34,7 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private Label source;
     @FXML private Label type;
     @FXML private Label brand;
-    @FXML private TextField repID;
+    @FXML private Label repID;
     @FXML private TextField address1Field;
     @FXML private TextField address2Field;
     @FXML private TextField country1Field;
@@ -67,10 +67,11 @@ public class USEmployeeBoundaryController implements Initializable{
                     template = templateLoader.load();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("This is not loading!");
                 }
 
                 LabelApplication app = apps.get(i);
-                //titleLabel.setText(app.getLabel().getBrandName());
+                titleLabel.setText(app.getLabel().getBrandName());
                 repID.setText(app.getLabel().getRepresentativeIdNumber());
                 type.setText(app.getLabel().getProductType().toString());
                 source.setText(app.getLabel().getProductSource().toString());
@@ -79,7 +80,6 @@ public class USEmployeeBoundaryController implements Initializable{
                 alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
                 agentName.setText(app.getReviewer().getFirstName());
 
-                titleLabel.setText(app.getLabel().getBrandName());
                 extraButton.setText("Review");
                 extraButton.setOnAction(event -> {
                     try {

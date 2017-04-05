@@ -7,10 +7,10 @@ import com.slackers.inc.database.entities.LabelComment;
 import com.slackers.inc.database.entities.UsEmployee;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
+import javax.xml.soap.Text;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
@@ -20,17 +20,20 @@ import java.util.ResourceBundle;
  */
 public class USEmployeeFormController implements Initializable {
 
-    @FXML private Label alcoholContent;
+    @FXML private TextField alcoholContent;
 
-    @FXML private Label source;
-    @FXML private Label type;
-    @FXML private Label brand;
-    @FXML private Label repID;
-    @FXML private TextField address1Field;
-    @FXML private TextField address2Field;
+    @FXML private ChoiceBox source;
+    @FXML private ChoiceBox type;
+    @FXML private TextField brand;
+    @FXML private TextField repID;
+    @FXML private TextArea address1Field;
+    @FXML private TextArea address2Field;
     @FXML private TextField country1Field;
     @FXML private TextField country2Field;
     @FXML private AnchorPane formAnchor;
+
+    @FXML private Button acceptButton;
+    @FXML private Button rejectButton;
 
     public UsEmployeeController employeeController;
     public LabelApplication form;
@@ -38,7 +41,8 @@ public class USEmployeeFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        acceptButton.setDisable(false);
+        rejectButton.setDisable(false);
     }
 
 
@@ -65,5 +69,9 @@ public class USEmployeeFormController implements Initializable {
         for (int i = 0; i < formAnchor.getChildren().size(); i++) {
             formAnchor.getChildren().get(i).setDisable(true);
         }
+
+        acceptButton.setDisable(false);
+        rejectButton.setDisable(false);
+
     }
 }

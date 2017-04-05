@@ -145,8 +145,8 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button layoutX="335.0" layoutY="15.0" mnemonicParsing="false" onAction="#accept" text="Accept" />
-                  <Button layoutX="550.0" layoutY="15.0" mnemonicParsing="false" onAction="#reject" text="Reject" />
+                  <Button layoutX="335.0" layoutY="15.0" mnemonicParsing="false" onAction="#accept" text="Accept" fx:id="acceptButton" />
+                  <Button layoutX="550.0" layoutY="15.0" mnemonicParsing="false" onAction="#reject" text="Reject" fx:id="rejectButton"/>
                </children>
             </AnchorPane>
          </children>
