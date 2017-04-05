@@ -142,7 +142,6 @@ public class FormController implements Initializable {
         source.setDisable(true);
         PBBNumber.setDisable(true);
         phone.setDisable(true);
-        alcoholContent.setDisable(true);
         address1Field.setDisable(true);
         address2Field.setDisable(true);
         brand.setDisable(true);
