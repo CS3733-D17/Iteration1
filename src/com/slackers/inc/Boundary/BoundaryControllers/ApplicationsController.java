@@ -133,10 +133,11 @@ public class ApplicationsController implements Initializable{
                     }
                 }
             });
-            stage.show();
+            stage.showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.addAccordianChildren();
     }
 
     private void edit(long applicationID) throws IOException, SQLException {
@@ -147,7 +148,7 @@ public class ApplicationsController implements Initializable{
         FormController formController = loader.getController();
         formController.setManufacturer(main.getAccountController());
         formController.setAppController(this);
-        formController.edit();
+        formController.edit(applicationID);
 
         Stage stage = new Stage();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
@@ -164,7 +165,8 @@ public class ApplicationsController implements Initializable{
         stage.setTitle("edit Form");
         stage.setScene(new Scene(newApp));
         formController.init();
-        stage.show();
+        stage.showAndWait();
+        this.addAccordianChildren();
     }
 
     //TODO make the accordian template and fill with form information

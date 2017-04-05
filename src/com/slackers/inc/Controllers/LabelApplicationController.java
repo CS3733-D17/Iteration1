@@ -98,6 +98,13 @@ public class LabelApplicationController {
         return true;
     }
     
+    public boolean loadApplication(long id) throws SQLException
+    {
+        this.application.setApplicationId(id); 
+        db.getEntity(this.application, this.application.getPrimaryKeyName());
+        return true;
+    }
+    
     public boolean createApplication(LabelApplication application) throws SQLException
     {
         this.application = application;

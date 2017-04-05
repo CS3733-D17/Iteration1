@@ -2,6 +2,7 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Boundary.InputValidator;
 import com.slackers.inc.Controllers.AccountController;
+import com.slackers.inc.Controllers.LabelApplicationController;
 import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.*;
 import com.slackers.inc.Controllers.ManufacturerController;
@@ -128,6 +129,7 @@ public class FormController implements Initializable {
             }
         }
         else{
+            this.validateFields();
             manufacturer.editApplication();
             this.appController.addAccordianChildren();
             ((Node) (event.getSource())).getScene().getWindow().hide();            
@@ -136,7 +138,7 @@ public class FormController implements Initializable {
 
     }
 
-    void edit(){
+    void edit(long id){
         format = Mode.EDIT;
 
         source.setDisable(true);
@@ -149,6 +151,12 @@ public class FormController implements Initializable {
         email.setDisable(true);
         country1Field.setDisable(true);
         country2Field.setDisable(true);
+        try {
+            this.manufacturer.getLabelAppController().loadApplication(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.update(this.manufacturer.getLabelAppController().getLabelApplication());
     }
     
     private void update(LabelApplication application) {
