@@ -150,7 +150,6 @@ public class MainController implements Initializable{
             System.out.println("Could not save username and password for reiterations");
         }
 
-        Main.notifier("Worked", "as you can see");
     }
 
     // TODO Make sure that preferences are completly deleted except for the key
