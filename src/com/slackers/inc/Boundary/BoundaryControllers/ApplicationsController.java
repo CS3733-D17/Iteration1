@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +21,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 public class ApplicationsController implements Initializable{
 
@@ -119,6 +120,20 @@ public class ApplicationsController implements Initializable{
             stage.setTitle("New Form");
             stage.setScene(new Scene(newApp));
             formController.init();
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+                @Override
+                public void handle(WindowEvent t) {
+                    LabelApplication app = formController.manufacturer.getLabelAppController().getLabelApplication();
+                    if (app.getStatus()==LabelApplication.ApplicationStatus.NOT_COMPLETE)
+                    {
+                        try {
+                            formController.manufacturer.getLabelAppController().deleteApplication();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            });
             stage.show();
         } catch (SQLException ex) {
             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,6 +151,16 @@ public class ApplicationsController implements Initializable{
         formController.edit();
 
         Stage stage = new Stage();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent t) {
+                try {
+                    formController.manufacturer.getLabelAppController().editApplication();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            });
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("edit Form");
         stage.setScene(new Scene(newApp));

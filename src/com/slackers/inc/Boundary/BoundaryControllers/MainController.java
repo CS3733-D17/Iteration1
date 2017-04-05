@@ -32,7 +32,6 @@ public class MainController implements Initializable{
     // Main Objects for User Information
     private Preferences programPref;
     private AccountController userController;
-    private User user;
 
     // Pages in the Application
     @FXML private AnchorPane mainContainer;
@@ -103,9 +102,8 @@ public class MainController implements Initializable{
         }
 
         // Assign objects to their respective information
-        user = userController.getUser();
-        userNameLabel.setText(user.getFirstName() + " " + user.getLastName());
-        userEmailLabel.setText(user.getEmail());
+        userNameLabel.setText(userController.getUser().getFirstName() + " " + userController.getUser().getLastName());
+        userEmailLabel.setText(userController.getUser().getEmail());
 
         // Tries to load the Pages
         try {

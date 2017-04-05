@@ -10,7 +10,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.controlsfx.control.Notifications;
-import sun.util.logging.PlatformLogger;
 
 import java.io.IOException;
 
@@ -24,8 +23,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        sun.util.logging.PlatformLogger platformLogger = PlatformLogger.getLogger("java.util.prefs");
-        platformLogger.setLevel(PlatformLogger.Level.OFF);
+        //sun.util.logging.PlatformLogger platformLogger = PlatformLogger.getLogger("java.util.prefs");
+        //platformLogger.setLevel(PlatformLogger.Level.OFF);
 
         Parent login = FXMLLoader.load(getClass().getResource("/com/slackers/inc/Boundary/FXML/outershell.fxml"));
         String cssDoc = getClass().getResource("/com/slackers/inc/Boundary/CSS/custom.css").toExternalForm();

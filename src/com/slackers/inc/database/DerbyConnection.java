@@ -175,7 +175,7 @@ public class DerbyConnection {
                 vals.add(e.getValue());
             }
         }
-        String stmt = String.format("DELETE * FROM %s WHERE %s", entity.getTableName(), conds.toString());
+        String stmt = String.format("DELETE FROM %s WHERE %s", entity.getTableName(), conds.toString());
         PreparedStatement call = con.prepareStatement(stmt);
         int i = 1;
         for (Object o : vals)
