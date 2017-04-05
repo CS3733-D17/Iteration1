@@ -54,25 +54,28 @@ public class USEmployeeBoundaryController implements Initializable{
 
 
     public void addAccordianChildren(){
+        List<LabelApplication> apps = UScontroller.getEmployee().getApplications();
+        accordionID.getPanes().clear();
+        if (apps != null && apps.size() != 0) {
+            for (int i = 0; i < apps.size(); i++) {
 
-        for (int i = 0; i < UScontroller.getEmployee().getApplications().size(); i++) {
+                try {
+                    FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
+                    templateLoader.setController(this);
+                    template = templateLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-            try {
-                FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
-                templateLoader.setController(this);
-                template = templateLoader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            LabelApplication app = UScontroller.getEmployee().getApplications().get(i);
-            titleLabel.setText(app.getLabel().getBrandName());
-            repID.setText(app.getLabel().getRepresentativeIdNumber());
-            type.setText(app.getLabel().getProductType().toString());
-            source.setText(app.getLabel().getProductSource().toString());
-            brand.setText(app.getLabel().getBrandName());
-            progress.setText(app.getLabel().getApproval().toString());
-            alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
-            agentName.setText(app.getReviewer().getFirstName());
+                LabelApplication app = apps.get(i);
+                //titleLabel.setText(app.getLabel().getBrandName());
+                repID.setText(app.getLabel().getRepresentativeIdNumber());
+                type.setText(app.getLabel().getProductType().toString());
+                source.setText(app.getLabel().getProductSource().toString());
+                brand.setText(app.getLabel().getBrandName());
+                progress.setText(app.getLabel().getApproval().toString());
+                alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
+                agentName.setText(app.getReviewer().getFirstName());
 
             titleLabel.setText(app.getLabel().getBrandName());
             extraButton.setText("Review");
@@ -84,7 +87,8 @@ public class USEmployeeBoundaryController implements Initializable{
                 }
             });
 
-            accordionID.getPanes().add(titledPane);
+                accordionID.getPanes().add(titledPane);
+            }
         }
 
         if(accordionID.getPanes().size() > 0){

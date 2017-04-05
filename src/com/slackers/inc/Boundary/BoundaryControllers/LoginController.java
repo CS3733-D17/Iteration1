@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginController implements Initializable{
 
@@ -171,6 +173,11 @@ public class LoginController implements Initializable{
                 e.printStackTrace();
             }
 
+        }
+        try {
+            mainController.getAccountController().editAccount();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }

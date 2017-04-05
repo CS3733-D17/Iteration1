@@ -40,6 +40,12 @@ public class LabelApplicationController {
         this(new LabelApplication());
     }
     
+    public LabelApplicationController(long applicationId) throws SQLException {
+        this.application = new LabelApplication(applicationId);
+        db = DerbyConnection.getInstance();
+        db.getEntity(application, application.getPrimaryKeyName());
+    }
+    
     public LabelApplication getLabelApplication()
     {
         return this.application;
@@ -108,7 +114,9 @@ public class LabelApplicationController {
         this.application.setReviewer(UsEmployee.NULL_EMPLOYEE);
         this.application.setApplicationApproval(null);
         this.application.setAllowedRevisions(new HashSet<>());
-        return db.writeEntity(this.application, this.application.getPrimaryKeyName());
+        boolean res = db.writeEntity(this.application, this.application.getPrimaryKeyName());
+        this.autoSelectReviewer();
+        return res;
     }
     
     public boolean approveApplication(UsEmployee submitter, Date experationDate) throws SQLException

@@ -115,6 +115,11 @@ public class Manufacturer extends User{
         return m;
     }
 
+    @Override
+    public String toString() {
+        return "Manufacturer{ " + super.toString()+ ", applications=" + LabelApplication.applicationListToString(applications) + ", templateApplication=" + templateApplication.getApplicationId() + '}';
+    }
 
+    
 
 }

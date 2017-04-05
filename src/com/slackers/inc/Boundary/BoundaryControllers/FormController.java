@@ -117,8 +117,10 @@ public class FormController implements Initializable {
         if(format == Mode.SUBMIT) {
             if (this.validateFields()) {
                 try {
+                    manufacturer.getLabelAppController().autoSelectReviewer();
                     manufacturer.submitApplication();
                     this.appController.addAccordianChildren();
+                    System.out.println("SUBMITTED");
                     ((Node) (event.getSource())).getScene().getWindow().hide();
                 } catch (SQLException ex) {
                     Logger.getLogger(FormController.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,7 +130,7 @@ public class FormController implements Initializable {
         else{
             manufacturer.editApplication();
             this.appController.addAccordianChildren();
-            ((Node) (event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().hide();            
         }
 
 
@@ -147,7 +149,6 @@ public class FormController implements Initializable {
         email.setDisable(true);
         country1Field.setDisable(true);
         country2Field.setDisable(true);
-
     }
     
     private void update(LabelApplication application) {
@@ -200,10 +201,12 @@ public class FormController implements Initializable {
                 throw new IllegalArgumentException("You must enter a valid address in the address field");
             }
             info.setText("");
+            System.out.println("VALID");
             return true;
         }
         catch (Exception e)
         {
+            System.out.println(e.getMessage());
             info.setText(e.getMessage());
         }
         return false;

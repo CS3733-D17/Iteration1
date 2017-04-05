@@ -141,7 +141,7 @@
             <AnchorPane prefHeight="58.0" prefWidth="1000.0">
                <children>
                   <Button fx:id="submit" layoutX="842.0" layoutY="28.0" mnemonicParsing="false" onAction="#submit" prefHeight="31.0" prefWidth="120.0" text="Submit" AnchorPane.bottomAnchor="219.0" AnchorPane.rightAnchor="38.0" />
-                  <Label fx:id="info" layoutX="47.0" layoutY="25.0" prefHeight="30.0" prefWidth="0.0" text="" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="47.0">
+                  <Label fx:id="info" layoutX="47.0" layoutY="25.0" prefHeight="30.0" prefWidth="600.0" text="" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="47.0">
                      <font>
                         <Font size="20.0" />
                      </font>
