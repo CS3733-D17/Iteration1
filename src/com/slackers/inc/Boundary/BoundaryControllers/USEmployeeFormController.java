@@ -31,17 +31,12 @@ import javafx.collections.ObservableList;
  */
 public class USEmployeeFormController implements Initializable {
 
-    private ObservableList<String> sourceList = FXCollections.observableArrayList(com.slackers.inc.database.entities.Label.BeverageSource.DOMESTIC.name(), com.slackers.inc.database.entities.Label.BeverageSource.IMPORTED.name());
-    private ObservableList<String> typeList = FXCollections.observableArrayList(com.slackers.inc.database.entities.Label.BeverageType.BEER.name(), com.slackers.inc.database.entities.Label.BeverageType.WINE.name(), com.slackers.inc.database.entities.Label.BeverageType.DISTILLED.name());
-
-
     @FXML private TextField alcoholContent;
 
     @FXML private ChoiceBox source;
     @FXML private ChoiceBox type;
     @FXML private TextField brand;
     @FXML private TextField repID;
-    @FXML private TextField email;
     @FXML private TextArea address1Field;
     @FXML private TextArea address2Field;
     @FXML private TextField country1Field;
@@ -50,13 +45,9 @@ public class USEmployeeFormController implements Initializable {
     @FXML private TextField phone;
     @FXML private TextField email;
     @FXML private TextField PBBNumber;
-    @FXML private TextField vintage;
-    @FXML private TextField ph;
     @FXML private Button acceptButton;
     @FXML private Button rejectButton;
-
-    @FXML private AnchorPane wineStuff;
-
+    
     public UsEmployeeController employeeController;
     public LabelApplication form;
     public UsEmployee employee;
@@ -119,6 +110,10 @@ public class USEmployeeFormController implements Initializable {
         for(Node n: nodes){
             n.setDisable(true);
         }
+
+        acceptButton.setDisable(false);
+        rejectButton.setDisable(false);
+
         this.update(this.form);
     }
 
@@ -133,32 +128,8 @@ public class USEmployeeFormController implements Initializable {
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());
-        //acceptButton.setDisable(false);
-        //rejectButton.setDisable(false);
-        if (application.getLabel() instanceof WineLabel)
-        {
-            vintage.setText(Integer.toString(((WineLabel)application.getLabel()).getVintage()));
-            ph.setText(Double.toString(((WineLabel)application.getLabel()).getPhLevel()));
-        }
-
-        acceptButton.setDisable(false);
-        rejectButton.setDisable(false);
-
-        source.setValue(application.getLabel().getProductSource().name());
-        type.setValue(application.getLabel().getProductType().name());
-        PBBNumber.setText(application.getLabel().getPlantNumber());
-        phone.setText(application.getPhoneNumber());
-        alcoholContent.setText(Double.toString(application.getLabel().getAlcoholContent()));
-        address1Field.setText(application.getApplicantAddress().toString());
-        address2Field.setText(application.getMailingAddress().toString());
-        brand.setText(application.getLabel().getBrandName());
-        repID.setText(application.getRepresentativeId());
-        email.setText(application.getEmailAddress());
         country1Field.setText(application.getApplicantAddress().getCountry());
         country2Field.setText(application.getMailingAddress().getCountry());
-
-        source.setValue(application.getLabel().getProductSource().name());
-        type.setValue(application.getLabel().getProductType().name());
 
         if(application.getLabel().getProductType() == Label.BeverageType.WINE) {
             vintage.setText(String.valueOf(((WineLabel) application.getLabel()).getVintage()));
