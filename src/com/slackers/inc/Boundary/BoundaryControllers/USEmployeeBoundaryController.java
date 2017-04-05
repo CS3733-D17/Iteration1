@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -40,7 +41,7 @@ public class USEmployeeBoundaryController implements Initializable{
     @FXML private TextField country2Field;
     @FXML private Label agentName;
 
-    @FXML private AnchorPane template;
+    @FXML private TitledPane template;
 
     @FXML private Label titleLabel;
     @FXML private Button extraButton;
@@ -66,10 +67,11 @@ public class USEmployeeBoundaryController implements Initializable{
                     template = templateLoader.load();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.out.println("This is not loading!");
                 }
 
                 LabelApplication app = apps.get(i);
-                //titleLabel.setText(app.getLabel().getBrandName());
+                titleLabel.setText(app.getLabel().getBrandName());
                 repID.setText(app.getLabel().getRepresentativeIdNumber());
                 type.setText(app.getLabel().getProductType().toString());
                 source.setText(app.getLabel().getProductSource().toString());
@@ -78,15 +80,14 @@ public class USEmployeeBoundaryController implements Initializable{
                 alcoholContent.setText(Double.toString(app.getLabel().getAlcoholContent()));
                 agentName.setText(app.getReviewer().getFirstName());
 
-            titleLabel.setText(app.getLabel().getBrandName());
-            extraButton.setText("Review");
-            extraButton.setOnAction(event -> {
-                try {
-                    review(app, app.getApplicationId());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+                extraButton.setText("Review");
+                extraButton.setOnAction(event -> {
+                    try {
+                        review(app);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
                 accordionID.getPanes().add(titledPane);
             }
