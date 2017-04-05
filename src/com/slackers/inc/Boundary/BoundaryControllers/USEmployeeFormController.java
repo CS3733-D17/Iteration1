@@ -9,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -90,15 +91,16 @@ public class USEmployeeFormController implements Initializable {
 
 
     @FXML
-    public void accept(){
+    public void accept(ActionEvent event){
         Date expiration = new Date(new java.util.Date().getTime()+63072000000L);// 2 yrs
         employeeController.acceptApplicaton(expiration);
-
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
     @FXML
-    public void reject(){
+    public void reject(ActionEvent event){
         employeeController.rejectApplication(form);
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
     public void setEmployee(UsEmployeeController employeeController, LabelApplication application) {

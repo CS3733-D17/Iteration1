@@ -133,6 +133,7 @@ public class ApplicationsController implements Initializable{
                     }
                 }
             });
+
             stage.showAndWait();
         } catch (SQLException ex) {
             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);

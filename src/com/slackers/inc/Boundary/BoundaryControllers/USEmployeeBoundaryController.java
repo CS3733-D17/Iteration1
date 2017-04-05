@@ -4,6 +4,7 @@ import com.slackers.inc.Controllers.LabelApplicationController;
 import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.UsEmployee;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import javax.xml.soap.Text;
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Jason on 4/2/2017.
@@ -120,7 +124,10 @@ public class USEmployeeBoundaryController implements Initializable{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");
         stage.setScene(new Scene(newApp));
-        stage.show();
+
+
+        stage.showAndWait();
+        this.addAccordianChildren();
     }
 
 
