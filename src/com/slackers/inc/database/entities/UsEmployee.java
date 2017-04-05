@@ -48,10 +48,12 @@ public class UsEmployee extends User{
         super.setEntityValues(values);
         if (values.containsKey("applications"))
         {
+            this.applications.clear();
             this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
         }
         if (values.containsKey("previousApplications"))
         {
+            this.previousApplications.clear();
             this.previousApplications.addAll(LabelApplication.applicationListFromString((String)values.get("previousApplications")));
         }
     }
@@ -83,8 +85,13 @@ public class UsEmployee extends User{
         return applications;
     }
 
-    public void setApplications(List<LabelApplication> applications) {
-        this.applications = applications;
+    public void removeApplication(LabelApplication application) {
+        this.applications.remove(application);
+    }
+    
+    public void addApplication(LabelApplication application) {
+        this.applications.remove(application);
+        this.applications.add(application);
     }
 
     public List<LabelApplication> getPreviousApplications() {

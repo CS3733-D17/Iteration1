@@ -61,6 +61,7 @@ public class USEmployeeBoundaryController implements Initializable{
 
 
     public void addAccordianChildren(){
+        UScontroller.refresh();
         List<LabelApplication> apps = UScontroller.getEmployee().getApplications();
         accordionID.getPanes().clear();
         if (apps != null && apps.size() != 0) {
@@ -124,7 +125,12 @@ public class USEmployeeBoundaryController implements Initializable{
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Review Form");
         stage.setScene(new Scene(newApp));
-
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent t) {
+                addAccordianChildren();
+            }
+        });
 
         stage.showAndWait();
         this.addAccordianChildren();

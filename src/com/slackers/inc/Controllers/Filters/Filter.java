@@ -17,8 +17,8 @@ import com.slackers.inc.database.entities.Label;
 public interface Filter {
     // Adds the characteristic held in the filter
     // to the label, and returns the label
-    Label preApply(Label aFilter);
+    public Label preApply(Label aFilter);
     // Gets the name of the column that the filter
     // applies to
-    String getColumn();
+    public String getColumn();
 }

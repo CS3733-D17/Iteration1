@@ -6,6 +6,8 @@ import com.slackers.inc.database.entities.LabelApplication;
 import com.slackers.inc.database.entities.Manufacturer;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ManufacturerController {
 
@@ -55,8 +57,12 @@ public class ManufacturerController {
     }
 //allows a manufacturer to edit the application in the database
     public boolean editApplication() throws SQLException {
-
-        return labelAppController.editApplication();
+        this.manufacturer.removeApplications(this.labelAppController.getLabelApplication());
+        this.manufacturer.addApplications(this.labelAppController.getLabelApplication());
+        System.out.println(this.labelAppController.getLabelApplication());
+        boolean res = labelAppController.editApplication();
+        this.updateManufacturer();
+        return res;
     }
 //allows a manufacturer to sabe an application in progress
     public boolean saveApplication() throws SQLException {
@@ -74,6 +80,16 @@ public class ManufacturerController {
  //allows a manufacturer to edit thier profile information
     public boolean updateManufacturer() throws SQLException {
         return DerbyConnection.getInstance().writeEntity(this.manufacturer, this.manufacturer.getPrimaryKeyName());
+    }
+    
+    public boolean refresh()
+    {
+        try {
+            return new AccountController(this.manufacturer).reload();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufacturerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
     
     public LabelApplicationController getLabelAppController(){

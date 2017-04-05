@@ -6,6 +6,8 @@ import com.slackers.inc.database.entities.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by paluro on 3/31/17.
@@ -76,6 +78,16 @@ public class UsEmployeeController {
         }
         return true;
 
+    }
+    
+    public boolean refresh()
+    {
+        try {
+            return new AccountController(this.employee).reload();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufacturerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public UsEmployee getEmployee() {

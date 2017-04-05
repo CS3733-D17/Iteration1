@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,9 +62,16 @@ public class ApplicationsController implements Initializable{
     }
 
     void addAccordianChildren(){
+        System.out.println("Adding children");
+        manufacturer.refresh();
         accordionID.getPanes().clear();
-        for (int i = 0; i < manufacturer.getManufacturer().getApplications().size(); i++) {
-
+        List<LabelApplication> apps = manufacturer.getManufacturer().getApplications();
+        for (LabelApplication a : apps)
+        {
+            System.out.println("ID: "+a.getApplicationId());
+        }
+        for (int i = 0; i < apps.size(); i++) {
+            System.out.println("Adding Panel "+i+ " of "+ apps.size());
             try {
                 FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
                 templateLoader.setController(this);
@@ -72,7 +80,7 @@ public class ApplicationsController implements Initializable{
                 e.printStackTrace();
             }
 
-            LabelApplication app = manufacturer.getManufacturer().getApplications().get(i);
+            LabelApplication app = apps.get(i);
             titleLabel.setText(app.getLabel().getBrandName());
             repID.setText(app.getLabel().getRepresentativeIdNumber());
             type.setText(app.getLabel().getProductType().toString());
@@ -131,6 +139,7 @@ public class ApplicationsController implements Initializable{
                             Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    addAccordianChildren();
                 }
             });
 
@@ -157,6 +166,7 @@ public class ApplicationsController implements Initializable{
             public void handle(WindowEvent t) {
                 try {
                     formController.manufacturer.getLabelAppController().editApplication();
+                    addAccordianChildren();
                 } catch (SQLException ex) {
                     Logger.getLogger(ApplicationsController.class.getName()).log(Level.SEVERE, null, ex);
                 }

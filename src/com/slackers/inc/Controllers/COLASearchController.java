@@ -5,6 +5,8 @@ import com.slackers.inc.database.entities.Label;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class COLASearchController {
 
@@ -43,6 +45,16 @@ public class COLASearchController {
         return searchControl;
     }
 
+    public boolean refresh()
+    {
+        try {
+            return new AccountController(this.colaUser).reload();
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufacturerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     /**
      * Created by Michael Steidel on 4/2/17
      * Searches the database for a specified label and returns the list of search results

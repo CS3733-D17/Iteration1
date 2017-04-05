@@ -7,7 +7,7 @@ package com.slackers.inc.database.entities;
 
 import com.slackers.inc.database.DerbyConnection;
 import com.slackers.inc.database.IEntity;
-import java.io.IOException;
+import com.slackers.inc.database.entities.Label.BeverageType;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -117,6 +118,7 @@ public class LabelApplication implements IEntity{
         if (this.applicationApproval!=null)
             values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());        
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
+        this.updateLabel();
         return values;
     }
 
@@ -142,6 +144,7 @@ public class LabelApplication implements IEntity{
         if (this.applicationApproval!=null)
             values.put("applicationApproval", (long)this.applicationApproval.getPrimaryKeyValue());          
         values.put("allowedRevisions", LabelApplication.allowedRevisionsToString(this.allowedRevisions));
+        this.updateLabel();
         return values;
     }
 
@@ -167,6 +170,10 @@ public class LabelApplication implements IEntity{
         {
             this.phoneNumber = (String) values.get("phoneNumber");
         }
+        if (values.containsKey("emailAddress"))
+        {
+            this.emailAddress = (String) values.get("emailAddress");
+        }
         if (values.containsKey("applicationDate"))
         {
             this.applicationDate = (Date) values.get("applicationDate");
@@ -191,6 +198,22 @@ public class LabelApplication implements IEntity{
         {
             this.label.setPrimaryKeyValue((Serializable)values.get("label"));
             try {
+                DerbyConnection.getInstance().getEntity(this.label, this.label.getPrimaryKeyName());
+                if (this.label.getProductType() == BeverageType.BEER)
+                {
+                    this.label = new BeerLabel();
+                    this.label.setPrimaryKeyValue((Serializable)values.get("label"));
+                }
+                else if (this.label.getProductType() == BeverageType.WINE)
+                {
+                    this.label = new WineLabel();
+                    this.label.setPrimaryKeyValue((Serializable)values.get("label"));
+                }
+                else if (this.label.getProductType() == BeverageType.DISTILLED)
+                {
+                    this.label = new DistilledLabel();
+                    this.label.setPrimaryKeyValue((Serializable)values.get("label"));
+                }
                 DerbyConnection.getInstance().getEntity(this.label, this.label.getPrimaryKeyName());
             } catch (SQLException ex) {
                 Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
@@ -434,6 +457,34 @@ public class LabelApplication implements IEntity{
         this.allowedRevisions = allowedRevisions;
     }
 
+    public void setLabelType(BeverageType type)
+    {
+        Long labelId = this.label.getLabelId();
+        Map<String, Object> entityValues = this.label.getEntityValues();
+        if (type == BeverageType.BEER && this.label.getProductType()!= BeverageType.BEER)
+        {
+            this.label = new BeerLabel();
+            this.label.setEntityValues(entityValues);
+            this.label.setPrimaryKeyValue(labelId);
+        }
+        else if (type == BeverageType.WINE && this.label.getProductType()!= BeverageType.WINE)
+        {
+            this.label = new WineLabel();
+            this.label.setEntityValues(entityValues);
+            this.label.setPrimaryKeyValue(labelId);
+        }
+        else if (type == BeverageType.DISTILLED && this.label.getProductType()!= BeverageType.DISTILLED)
+        {
+            this.label = new DistilledLabel();
+            this.label.setEntityValues(entityValues);
+            this.label.setPrimaryKeyValue(labelId);
+        }        
+        try {
+            DerbyConnection.getInstance().getEntity(this.label, this.label.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public static String applicationListToString(List<LabelApplication> applications)
     {
@@ -501,4 +552,52 @@ public class LabelApplication implements IEntity{
         application.setEntityValues(this.getEntityValues());
         return application;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + (int) (this.applicationId ^ (this.applicationId >>> 32));
+        hash = 47 * hash + Objects.hashCode(this.representativeId);
+        hash = 47 * hash + Objects.hashCode(this.phoneNumber);
+        hash = 47 * hash + Objects.hashCode(this.emailAddress);
+        hash = 47 * hash + Objects.hashCode(this.applicant);
+        hash = 47 * hash + Objects.hashCode(this.reviewer);
+        hash = 47 * hash + Objects.hashCode(this.submitter);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final LabelApplication other = (LabelApplication) obj;
+        if (this.applicationId != other.applicationId) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    private void updateLabel()
+    {
+        try {
+            DerbyConnection.getInstance().writeEntity(this.label, this.label.getPrimaryKeyName());
+        } catch (SQLException ex) {
+            Logger.getLogger(LabelApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Override
+    public String toString() {
+        return "LabelApplication{" + "applicationId=" + applicationId + ", representativeId=" + representativeId + ", applicantAddress=" + applicantAddress + ", mailingAddress=" + mailingAddress + ", phoneNumber=" + phoneNumber + ", emailAddress=" + emailAddress + ", applicationDate=" + applicationDate + ", status=" + status + ", applicant=" + applicant + ", reviewer=" + reviewer + ", submitter=" + submitter + ", label=" + label + '}';
+    }
+    
+    
 }

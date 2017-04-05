@@ -61,6 +61,7 @@ public class Manufacturer extends User{
     }
     
     public boolean addApplications(LabelApplication application) {
+        this.applications.remove(application);
         return this.applications.add(application);
     }
 
@@ -77,7 +78,11 @@ public class Manufacturer extends User{
         super.setEntityValues(values);
         if (values.containsKey("applications"))
         {
-            this.applications.addAll(LabelApplication.applicationListFromString((String)values.get("applications")));
+            List<LabelApplication> appList = LabelApplication.applicationListFromString((String)values.get("applications"));
+            for (LabelApplication app : appList)
+            {
+                this.addApplications(app);
+            }
         }
         if (values.containsKey("templateApplication"))
         {       

@@ -1,10 +1,16 @@
 package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Controllers.COLASearchController;
+import com.slackers.inc.Controllers.Filters.AlcoholFilter;
+import com.slackers.inc.Controllers.Filters.BrandNameFilter;
+import com.slackers.inc.Controllers.Filters.TypeFilter;
+import com.slackers.inc.database.entities.BeerLabel;
 import com.slackers.inc.database.entities.ColaUser;
+import com.slackers.inc.database.entities.DistilledLabel;
 import com.slackers.inc.database.entities.Label;
 import com.slackers.inc.database.entities.Label.BeverageType;
 import com.slackers.inc.database.entities.User;
+import com.slackers.inc.database.entities.WineLabel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +29,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 
 public class SearchBoundaryController implements Initializable {
 
@@ -46,17 +54,42 @@ public class SearchBoundaryController implements Initializable {
     @FXML
     private void getResultsClick(ActionEvent e) throws IOException, SQLException {
         
-        label = new Label();
+        search.getSearchControl().reset();
 
-        if(!alcoholContent.getText().equals("All")){
-            label.setAlcoholContent(Double.parseDouble(alcoholContent.getText()));
-        }
-
-        label.setBrandName(keyword.getText());
-
+        Label l = new Label();
         if(!type.getValue().toString().equals("All")) {
-            label.setProductType(Label.BeverageType.valueOf(type.getValue().toString()));
+            BeverageType btype = Label.BeverageType.valueOf(type.getValue().toString());
+            if (btype == BeverageType.BEER)
+            {
+                l = new BeerLabel();
+            }
+            else if (btype == BeverageType.WINE)
+            {
+                l = new WineLabel();
+            }
+            else if (btype == BeverageType.DISTILLED)
+            {
+                l = new DistilledLabel();
+            }
+            TypeFilter f = new TypeFilter(btype);
+            search.getSearchControl().addFilter(f);
         }
+        
+        if(!alcoholContent.getText().equals("All")){
+            try
+            {
+                AlcoholFilter f = new AlcoholFilter(Double.parseDouble(alcoholContent.getText()));
+                search.getSearchControl().addFilter(f);
+            }catch (Exception ee){}
+        }
+
+        if (keyword.getText()!=null && !keyword.getText().equals(""))
+        {
+            BrandNameFilter f = new BrandNameFilter(keyword.getText());
+            search.getSearchControl().addFilter(f);
+        }
+
+        
 
         FXMLLoader resultsLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/results.fxml"));
         Parent page = resultsLoader.load();
@@ -64,7 +97,7 @@ public class SearchBoundaryController implements Initializable {
         ResultsController resultsController = resultsLoader.getController();
         resultsController.setSearchBoundaryController(this);
 
-        results = search.search(label);
+        results = search.search(l);
         resultsController.displayResults(results);
 
         //TODO actually search shit by keyword, alcohol content or type
@@ -73,7 +106,12 @@ public class SearchBoundaryController implements Initializable {
         stage.setTitle("Main Stage");
         stage.setScene(new Scene(page));
         stage.show();
-
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(){
+            @Override
+            public void handle(WindowEvent t) {
+                resultsController.download(e);
+            }
+        });
 
     }
 

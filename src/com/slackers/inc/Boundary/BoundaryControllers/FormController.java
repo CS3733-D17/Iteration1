@@ -2,8 +2,6 @@ package com.slackers.inc.Boundary.BoundaryControllers;
 
 import com.slackers.inc.Boundary.InputValidator;
 import com.slackers.inc.Controllers.AccountController;
-import com.slackers.inc.Controllers.LabelApplicationController;
-import com.slackers.inc.Controllers.UsEmployeeController;
 import com.slackers.inc.database.entities.*;
 import com.slackers.inc.Controllers.ManufacturerController;
 import com.slackers.inc.database.entities.Label.BeverageSource;
@@ -21,6 +19,7 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,7 +117,6 @@ public class FormController implements Initializable {
         if(format == Mode.SUBMIT) {
             if (this.validateFields()) {
                 try {
-                    manufacturer.getLabelAppController().autoSelectReviewer();
                     manufacturer.submitApplication();
                     this.appController.addAccordianChildren();
                     System.out.println("SUBMITTED");
@@ -129,10 +127,12 @@ public class FormController implements Initializable {
             }
         }
         else{
-            this.validateFields();
-            manufacturer.editApplication();
-            this.appController.addAccordianChildren();
-            ((Node) (event.getSource())).getScene().getWindow().hide();            
+            if (this.validateFields())
+            {
+                manufacturer.editApplication();
+                this.appController.addAccordianChildren();
+                ((Node) (event.getSource())).getScene().getWindow().hide();  
+            }
         }
 
 
@@ -170,8 +170,11 @@ public class FormController implements Initializable {
         brand.setText(application.getLabel().getBrandName());
         repID.setText(application.getRepresentativeId());
         email.setText(application.getEmailAddress());
-        //vintage.setText(application.getLabel().getVintage());
-        //ph.setText(application.getLabel().getPH());
+        if (application.getLabel() instanceof WineLabel)
+        {
+            vintage.setText(Integer.toString(((WineLabel)application.getLabel()).getVintage()));
+            ph.setText(Double.toString(((WineLabel)application.getLabel()).getPhLevel()));
+        }
         validateFields();
     }
     
@@ -179,12 +182,14 @@ public class FormController implements Initializable {
     {
         try
         {
+            this.manufacturer.getLabelAppController().getLabelApplication().setLabelType(BeverageType.valueOf(type.getValue()));
             LabelApplication application = this.manufacturer.getLabelAppController().getLabelApplication();
             Label label = application.getLabel();            
             label.setAlcoholContent(InputValidator.validateDouble(alcoholContent.getText(), "Alcohol content", 0, 100));
             label.setBrandName(InputValidator.validateStringNotEmpty(brand.getText(),"Brand name"));
             label.setPlantNumber(InputValidator.validateStringNotEmpty(PBBNumber.getText(),"Plant registry number"));
             label.setRepresentativeIdNumber(repID.getText());
+            application.setPhoneNumber(InputValidator.validateStringWithinLength(phone.getText(),"Phone number",10,21));
             application.setEmailAddress(InputValidator.validateStringWithinLength(email.getText(),"Email",5,200));
             label.setProductType(BeverageType.valueOf(type.getValue()));
             label.setProductSource(BeverageSource.valueOf(source.getValue()));
@@ -192,7 +197,6 @@ public class FormController implements Initializable {
             application.setLabel(label);
             Address adr = Address.tryParse(address1Field.getText());
             Address adr2 = Address.tryParse(address2Field.getText());
-
 
             if (adr!=null && adr2!=null)
             {
@@ -208,6 +212,13 @@ public class FormController implements Initializable {
             {
                 throw new IllegalArgumentException("You must enter a valid address in the address field");
             }
+            
+            if (label instanceof WineLabel)
+            {
+                ((WineLabel)label).setPhLevel(InputValidator.validateDouble(ph.getText(), "PH level", 0, 14));
+                ((WineLabel)label).setVintage(InputValidator.validateInt(vintage.getText(), "Vintage", -5000, new Date().getYear()+1901));
+            }
+            
             info.setText("");
             System.out.println("VALID");
             return true;

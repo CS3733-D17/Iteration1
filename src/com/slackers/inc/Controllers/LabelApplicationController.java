@@ -163,6 +163,7 @@ public class LabelApplicationController {
                     }
                 });
                 UsEmployee reviewer = employees.get(0);
+                reviewer.removeApplication(application);
                 boolean add = true;
                 for (LabelApplication a : reviewer.getApplications())
                 {

@@ -118,6 +118,20 @@ public class AccountController {
         return db.writeEntity(user);
     }
     
+    public boolean reload()
+    {
+        String em = this.user.getEmail();
+        String pass = this.user.getPassword();
+        try {
+            return this.loginUser(em, pass)!=null;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public User getUser()
     {
         return this.user;

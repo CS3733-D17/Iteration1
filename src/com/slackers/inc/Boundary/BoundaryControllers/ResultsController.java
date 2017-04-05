@@ -31,7 +31,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  */
 public class ResultsController implements Initializable {
 
-    @FXML private Accordion accordionID;
+    @FXML private Accordion accordion;
     @FXML private TitledPane titledPane;
 
     @FXML private Label alcoholContent;
@@ -44,7 +44,7 @@ public class ResultsController implements Initializable {
     @FXML private Label titleLabel;
     @FXML private Button extraButton;
 
-    @FXML private AnchorPane template;
+    @FXML private TitledPane template;
 
     public MainController main;
     public SearchBoundaryController searchBoundaryController;
@@ -58,10 +58,9 @@ public class ResultsController implements Initializable {
     public void displayResults(List<com.slackers.inc.database.entities.Label> results) {
 
         this.results = results;
-
-        if (results != null && results.size() != 0) {
+        if (results != null && !results.isEmpty()) {
             for (int i = 0; i < results.size(); i++) {
-
+                com.slackers.inc.database.entities.Label l =((com.slackers.inc.database.entities.Label) results.get(i));
                 try {
                     FXMLLoader templateLoader = new FXMLLoader(getClass().getResource("/com/slackers/inc/Boundary/FXML/formTemplate.fxml"));
                     templateLoader.setController(this);
@@ -69,19 +68,27 @@ public class ResultsController implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
+                System.out.println(((com.slackers.inc.database.entities.Label) results.get(i)));
+                if (type!=null)
+                    type.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductType().toString());
+                if (source!=null)
+                    source.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductSource().toString());
+                if (brand!=null)
+                    brand.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getBrandName());
+                if (alcoholContent!=null)
+                    alcoholContent.setText(Double.toString(((com.slackers.inc.database.entities.Label) results.get(i)).getAlcoholContent()));
 
-                type.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductType().toString());
-                source.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getProductSource().toString());
-                brand.setText(((com.slackers.inc.database.entities.Label) results.get(i)).getBrandName());
-                alcoholContent.setText(Double.toString(((com.slackers.inc.database.entities.Label) results.get(i)).getAlcoholContent()));
-
-                extraButton.setText("More Info");
-
-                accordionID.getPanes().add(titledPane);
+                
+                if (type!=null)
+                    extraButton.setText("More Info");
+                
+                if (accordion!=null)
+                    accordion.getPanes().add(template);
             }
 
-            if (accordionID.getPanes().size() > 0) {
-                accordionID.setExpandedPane(accordionID.getPanes().get(0));
+            if (accordion!=null && accordion.getPanes().size() > 0) {
+                accordion.setExpandedPane(accordion.getPanes().get(0));
             }
         } else {
             System.out.println("No results to display!");
